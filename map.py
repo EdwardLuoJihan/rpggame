@@ -1,4 +1,4 @@
-c1 = 50
+c1 = 39
 c2 = 0
 from collections import deque
 

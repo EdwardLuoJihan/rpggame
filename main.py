@@ -60,7 +60,12 @@ locations = {
     12: ['City of Love', "U", "#FF9090"],
     13: ["City of Swans", "U", "#00FFEC"],
     14: ["Eternal Dawn", "U", "#FF9349"],
-    15: ["The Lonely City", "U", "#D8D8D8"]
+    15: ["The Lonely City", "U", "#D8D8D8"],
+    16: ["Mystic Falls", "U", "#5426b2"],
+    17: ["Sunflower Springs", "U", "#FFD700"],
+    18: ["Silver Shores", "U", "#C0C0C0"],
+    19: ["Whispering Pines", "U", "#228B22"],
+    20: ["Phoenix Heights", "U", "#FF2400"]
 }
 
 nodes = [
@@ -77,7 +82,15 @@ nodes = [
     [1,12,5],
     [7,13,2],
     [13,14,5],
-    [12,15,7]
+    [12,15,7],
+    [3,16,9],
+    [5,17,11],
+    [7,18,6],
+    [18,14,5],
+    [15,19,10],
+    [11,15,8],
+    [14,20,4],
+    [19,20,15]
 ]
 
 descriptions = {
@@ -95,7 +108,12 @@ descriptions = {
     12: "A city where love is in the air, its streets filled with romance and heartfelt connections.",
     13: "A city surrounded by swan-filled lakes, embodying grace, elegance, and beauty.",
     14: "A city where dawn lasts forever, bathing its streets in perpetual light and hope.",
-    15: "A city of solitude, where quiet contemplation and introspection reign supreme."
+    15: "A city of solitude, where quiet contemplation and introspection reign supreme.",
+    16: "A mysterious town enveloped in an aura of magic and mysticism, where secrets linger in the air.",
+    17: "A charming city known for its vast sunflower fields, radiating warmth and joy to all who visit.",
+    18: "A coastal paradise with shimmering silver shores, where the sea meets the sky in a breathtaking display.",
+    19: "A tranquil retreat nestled among whispering pine trees, offering solace and peace to weary souls.",
+    20: "A city rising from the ashes with fiery determination, symbolizing resilience and rebirth."
 }
 
 
@@ -131,7 +149,7 @@ def return_neighbors():
             disable = True
         else:
             disable = False
-        form += f"""<button class="locbutton disable-{disable}" id="{i}" onclick='moveto("{i}")'>{i}</button>"""
+        form += f"""<button class="locbutton disable-{disable}" id="{i}" onclick='moveto("{i}")'>{neighborsindex[n]} - {i}</button>"""
     return form
 
 @app.route('/location', methods=['GET'])
@@ -156,7 +174,7 @@ def getdsc():
 def getl():
     s = request.args.get("s")
     t = request.args.get("t")
-    return f"Distance of: {str(find_distance(int(s), int(t)))}"
+    return f"{str(find_distance(int(s), int(t)))}KM"
 
 @app.route('/moveto', methods=['GET'])
 def move_to():
