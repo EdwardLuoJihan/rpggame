@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RPG Game</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+  <div class="main-container">
+    <div class="player-status-container">
+      <div class="status-container">
+        <div class="location-container">
+          <h1>Location: <span id="loc"></span></h1>
+        </div>
+        <br>
+        <br>
+        <div class="player-container">
+          <h1 class="name {{race}}"><span id="nnn" class="{{race}}">{{name}} ( {{race}} )</span><span id="levl" class="{{race}}">Lvl. {{level}}</span></h1>
+          <br>
+          <br>
+          <div class="stats-container">
+            <div class="xp"><h2>xp:</h2></div>
+            <div class="bar"><progress id="xp" value="{{xp}}" max="{{xpmax}}"></progress> <span id="xp_progress_value"></span></div>
+            <div class="hp"><h2>HP:</h2></div>
+            <div class="bar"><progress id="health" value="{{hp}}" max="{{hpmax}}"></progress> <span id="hp_progress_value"></span></div>
+            {% for stat in option_stats %}
+              <div class="{{stat}}"><h2>{{stat}}:</h2></div>
+              <div class="bar"><progress id="{{stat}}" value="{{option_stats[stat][0]}}" max="{{option_stats[stat][1]}}"></progress> <span id="{{stat}}_progress_value"></span></div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div id="descbox">
+        description here
+      </div>
+      <div class="map" id="map">
+      </div>
+    </div>
+    <div class="main-actions-container">
+      <div id="select-location">
+
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    $( document ).ready(function() {
+      $(document).on("mouseover", ".node", function(ev) {
+        n = this.classList[1].replace(/\D/g,'');
+        $.get(`/dsc?n=${n}`, function(data){
+          $("#descbox").html(data)
+        });
+        $("#descbox").css({"visibility": "visible"});
+        
+        return false;
+      });
+      $(document).mouseout(".node", function(ev) {
+        $("#descbox").css({"visibility": "hidden"});
+      });
+      $(document).on("mouseover", ".line", function(ev) {
+        st = this.id.split("_")
+        s = st[0]
+        t = st[1]
+        console.log(s,t);
+        $.get(`/fd?s=${s}&t=${t}`, function(data){
+          $("#descbox").html(data)
+        });
+        $("#descbox").css({"visibility": "visible"});
+        
+        return false;
+      });
+      $(document).mouseout(".line", function(ev) {
+        $("#descbox").css({"visibility": "hidden"});
+      });
+    });
+
+    
+    $(document).on("mousemove", function (event) { 
+      console.log(event.pageY, event.pageX);
+      $("#descbox").css({'top':event.pageY-45, "left":event.pageX+5});
+    })
+
+    
+    
+    function decrease_health(h) {
+      document.getElementById("health").value = h;
+      document.getElementById("hp_progress_value").textContent = `${document.getElementById("health").value}/${document.getElementById("health").max}`;
+    }
+
+    function decrease_mana(h) {
+      document.getElementById("mana").value = h;
+      document.getElementById("mana_progress_value").textContent = `${document.getElementById("mana").value}/${document.getElementById("mana").max}`;
+    }
+
+    function decrease_stamina(h) {
+      document.getElementById("stamina").value = h;
+      document.getElementById("stamina_progress_value").textContent = `${document.getElementById("stamina").value}/${document.getElementById("stamina").max}`;
+    }
+
+    document.getElementById("hp_progress_value").textContent = `${document.getElementById("health").value}/${document.getElementById("health").max}`;
+    document.getElementById("mana_progress_value").textContent = `${document.getElementById("mana").value}/${document.getElementById("mana").max}`;
+    document.getElementById("stamina_progress_value").textContent = `${document.getElementById("stamina").value}/${document.getElementById("stamina").max}`;
+    document.getElementById("xp_progress_value").textContent = `${document.getElementById("xp").value}/${document.getElementById("xp").max}`;
+
+    function update(){
+      // validateCost()
+      $.get("/find_neighbors", function(data){
+        $("#select-location").html(data)
+      });
+      $.get("/location", function(data){
+        $("#loc").html(data)
+      });
+      $.get("/getstats", function(data){
+        decrease_health(data[0])
+        decrease_mana(data[1])
+        decrease_stamina(data[2])
+        document.getElementById("xp").value = data[3];
+        document.getElementById("xp").max = data[4];
+      });
+      $.get("/getmap", function(data){
+        $("#map").empty();
+        $("#map").prepend(data);
+      });
+    }
+    update()
+    var intervalId = setInterval(function() {
+        update()
+    }, 100000);
+    // function validateCost() {
+    //   buttons = document.getElementsByClassName("locbutton");
+    //   for (let i = 0; i < buttons.length; i++) {
+    //     button = buttons[i]
+    //     console.log(button)
+    //     $.get(`/validateCost?loc=${button.id}`, function(data){
+    //     if(data == "no bueno") {
+    //       console.log(`cannot go to ${button.id}`)
+    //       button.classList.add("nobueno");
+    //     } else {
+    //       if(button.classList.contains("nobueno"))
+    //         button.classList.remove("nobueno");
+    //     }
+    //   });
+    //   }
+    // }
+    function moveto(loc) {
+      $.get(`/moveto?loc=${loc}`, function(data){
+        console.log(data)
+        if(data != "no bueno") {
+          update()
+        }
+      });
+    }
+  </script>
+</body>
+</html>

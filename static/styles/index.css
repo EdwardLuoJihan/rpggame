@@ -1,0 +1,228 @@
+* {
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-family: "Silkscreen", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+} 
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.main-container {
+    width: 100%;
+    height: 100%;
+    background: black;
+    padding: 100px;
+    width: calc(100vw - 200px);
+}
+
+.human {
+    color: rgb(255, 221, 170);
+}
+
+.elf {
+    color: rgb(82, 255, 76);
+}
+
+.dark-elf {
+    color: rgb(105, 63, 23);
+}
+
+.demon {
+    color: rgb(151, 0, 0);
+}
+
+.angel {
+    color: gold;
+}
+
+.goblins {
+    color: rgb(0, 56, 0);
+}
+
+.troll {
+    color: rgb(86, 104, 126);
+}
+
+#health {
+    background-color: black;
+    border-radius: 0;
+    width: 700px;
+    border: 2px solid white;
+}
+
+#health::-webkit-progress-value {
+    background-color: red;
+    transition : width .5s ease;
+}
+
+#health::-webkit-progress-bar {
+    background-color: black;
+}
+
+#mana {
+    background-color: black;
+    border-radius: 0;
+    width: 700px;
+    border: 2px solid white;
+}
+
+#mana::-webkit-progress-value {
+    background-color: rgb(76, 204, 255);
+    transition : width .5s ease;
+}
+
+#mana::-webkit-progress-bar {
+    background-color: black;
+}
+
+#stamina {
+    background-color: black;
+    border-radius: 0;
+    width: 700px;
+    border: 2px solid white;
+}
+
+#stamina::-webkit-progress-value {
+    background-color: rgb(187, 153, 0);
+    transition : width .5s ease;
+}
+
+#stamina::-webkit-progress-bar {
+    background-color: black;
+}
+
+#xp {
+    background-color: black;
+    border-radius: 0;
+    width: 700px;
+    border: 2px solid white;
+}
+
+#xp::-webkit-progress-value {
+    background-color: #0099ff;
+    transition : width .5s ease;
+}
+
+#xp::-webkit-progress-bar {
+    background-color: black;
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: auto;
+    row-gap: 10px;
+    grid-template-rows: auto;
+    align-items: center;
+}
+
+.status-container {
+
+}
+
+.player-status-container {
+    display: grid;
+    grid-template-columns: .5fr auto;
+}
+
+.map {
+    border: 4px solid white;
+    margin-left: 20px;
+    position: relative;
+    grid-column: 2;
+}
+
+.bar {
+    width: max-content;
+}
+
+.inventory-container {
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.inventory {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    height: 214px;
+    gap: 10px;
+    width: 750px;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+}
+
+.item-container {
+    height: 71px;
+    width: 71px;
+    outline: 2px solid white;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+}
+
+button {
+    background: black;
+    color: white;
+    border: 2px solid white;
+    margin: 10px;
+    padding: 10px 20px;
+    transition: 0.2s ease;
+}
+
+.name {
+    position: relative;
+}
+
+#levl {
+    position: absolute;
+    top: 0;
+    right: 6%;
+
+}
+
+button:first-child {
+    margin-left: 0;
+}
+
+#select-location {
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+
+.disable-True {
+    color: grey!important;
+    cursor: not-allowed!important;
+    border: 2px solid grey!important;
+    background-color: black!important;
+}
+
+#descbox {
+    border: 2px solid white;
+    width: max-content;
+    height: max-content;
+    position: absolute;
+    background-color: black;
+    padding: 10px 15px;
+    visibility: hidden;
+    z-index: 99999;
+    overflow-wrap: break-word;
+    max-width: 8vw;
+}
+
+svg {
+    user-select: none;
+}
+
