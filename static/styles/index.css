@@ -32,31 +32,79 @@ h2 {
 }
 
 .human {
-    color: rgb(255, 221, 170);
+    color: rgb(255, 221, 170); /* Light Peach */
 }
 
 .elf {
-    color: rgb(82, 255, 76);
+    color: rgb(173, 255, 47); /* Green Yellow */
 }
 
-.dark-elf {
-    color: rgb(105, 63, 23);
+.dwarf {
+    color: rgb(218, 165, 32); /* Goldenrod */
+}
+
+.orc {
+    color: rgb(255, 69, 0); /* Red Orange */
+}
+
+.gnome {
+    color: rgb(255, 192, 203); /* Pink */
+}
+
+.halfling {
+    color: rgb(245, 222, 179); /* Wheat */
+}
+
+.dragonborn {
+    color: rgb(255, 140, 0); /* Dark Orange */
+}
+
+.tiefling {
+    color: rgb(178, 34, 34); /* Fire Brick */
+}
+
+.half-elf {
+    color: rgb(240, 230, 140); /* Khaki */
+}
+
+.half-orc {
+    color: rgb(210, 105, 30); /* Chocolate */
+}
+
+.undead {
+    color: rgb(112, 128, 144); /* Slate Gray */
+}
+
+.fairy {
+    color: rgb(127, 255, 0); /* Chartreuse */
+}
+
+.centaur {
+    color: rgb(210, 180, 140); /* Tan */
+}
+
+.celestial {
+    color: rgb(255, 250, 205); /* Lemon Chiffon */
 }
 
 .demon {
-    color: rgb(151, 0, 0);
+    color: rgb(255, 0, 0); /* Red */
+}
+
+.pixie {
+    color: rgb(173, 216, 230); /* Light Blue */
+}
+
+.satyr {
+    color: rgb(160, 82, 45); /* Sienna */
 }
 
 .angel {
-    color: gold;
+    color: rgb(255, 255, 204); /* Pale Yellow */
 }
 
-.goblins {
-    color: rgb(0, 56, 0);
-}
-
-.troll {
-    color: rgb(86, 104, 126);
+.dryad {
+    color: rgb(144, 238, 144); /* Light Green */
 }
 
 #health {
