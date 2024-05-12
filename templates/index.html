@@ -47,6 +47,9 @@
 
       </div>
     </div>
+    <div class="encounters">
+
+    </div>
   </div>
   
   <script>
@@ -60,14 +63,30 @@
         
         return false;
       });
-      $(document).mouseout(".node", function(ev) {
-        $("#descbox").css({"visibility": "hidden"});
+
+
+      $(document).on("mouseover", ".locbutton", function(ev) {
+        n = this.innerHTML.split(" - ")[0];
+        $.get(`/dsc?n=${n}`, function(data){
+          $.get(`/fd?s=CURRENT&t=${n}`, function(data2){
+            $(".encounters").html(`<div class='description'>${data}<br><br><br><span id='distancee'>Distance from current location: <span id='dd'>${data2}</span></span></div>`)
+          });
+        });
+        
+        return false;
       });
+      $(document).mouseout(".locbutton", function(ev) {
+        $(".encounters").html("");
+      });
+
+
+
+
+
       $(document).on("mouseover", ".line", function(ev) {
         st = this.id.split("_")
         s = st[0]
         t = st[1]
-        console.log(s,t);
         $.get(`/fd?s=${s}&t=${t}`, function(data){
           $("#descbox").html(data)
         });
@@ -82,7 +101,6 @@
 
     
     $(document).on("mousemove", function (event) { 
-      console.log(event.pageY, event.pageX);
       $("#descbox").css({'top':event.pageY-45, "left":event.pageX+5});
     })
 
@@ -150,7 +168,6 @@
     // }
     function moveto(loc) {
       $.get(`/moveto?loc=${loc}`, function(data){
-        console.log(data)
         if(data != "no bueno") {
           update()
         }

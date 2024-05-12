@@ -7,7 +7,7 @@ app = Flask(__name__)
 current_location = 1
 
 level_scaling_rate = 2
-level = 1000
+level = 100
 endurance_scaling_rate = 5
 player_stats = {
     "strength": 10+level*10,
@@ -133,7 +133,7 @@ def find_neighborsindex(x): #takes in variable for reference
 
 @app.route('/')
 def index():
-    return render_template("index.html", name='bob', race='elf', option_stats={
+    return render_template("index.html", name='bob', race='human', option_stats={
         "mana": [mana, maxmana],
         "stamina": [stamina, maxstamina]
     }, level=level, xp=xp, xpmax=xp_required, hp=hp, hpmax=hpmax)
@@ -174,6 +174,9 @@ def getdsc():
 def getl():
     s = request.args.get("s")
     t = request.args.get("t")
+    if s == "CURRENT":
+        s = current_location
+    print(f"{str(find_distance(int(s), int(t)))}KM")
     return f"{str(find_distance(int(s), int(t)))}KM"
 
 @app.route('/moveto', methods=['GET'])
