@@ -47,25 +47,25 @@ def find_distance(a, b):
 
 locations = {
     1: ["Starter Town", "V", "#B28719"], # city name, visited status, and color
-    2: ["Eldergrove", "V", "#3CB371"],
-    3: ["Crystal Peaks", "V", "#ADD8E6"],
-    4: ["Dragon's Hollow", "V", "#8B0000"],
-    5: ["Frostwind Citadel", "V", "#FFFFFF"],
-    6: ["Whispering Woods", "V", "#228B22"],
-    7: ["Mystic Falls", "V", "#4169E1"],
-    8: ["Sunset Harbor", "V", "#FF4500"],
-    9: ["Ancient Ruins of Zephyr", "V", "#DAA520"],
-    10: ["Shadowvale Village", "V", "#4B0082"],
-    11: ["Grimreach Caverns", "V", "#A0522D"],
-    12: ["Celestial City", "V", "#FFFF00"],
-    13: ["Thundering Steppes", "V", "#708090"],
-    14: ["Sands of Time Desert", "V", "#F5DEB3"],
-    15: ["Serpent's Spine", "V", "#8A2BE2"],
-    16: ["Abyssal Depths", "V", "#000080"],
-    17: ["Stormwatch Keep", "V", "#00CED1"],
-    18: ["Emberwood Grove", "V", "#8B4513"],
-    19: ["Shrouded Peaks", "V", "#778899"],
-    20: ["Lost City of Atlantis", "V", "#00FFFF"]
+    2: ["Eldergrove", "U", "#3CB371"],
+    3: ["Crystal Peaks", "U", "#ADD8E6"],
+    4: ["Dragon's Hollow", "U", "#8B0000"],
+    5: ["Frostwind Citadel", "U", "#FFFFFF"],
+    6: ["Whispering Woods", "U", "#228B22"],
+    7: ["Mystic Falls", "U", "#4169E1"],
+    8: ["Sunset Harbor", "U", "#FF4500"],
+    9: ["Ancient Ruins of Zephyr", "U", "#DAA520"],
+    10: ["Shadowvale Village", "U", "#4B0082"],
+    11: ["Grimreach Caverns", "U", "#A0522D"],
+    12: ["Celestial City", "U", "#FFFF00"],
+    13: ["Thundering Steppes", "U", "#708090"],
+    14: ["Sands of Time Desert", "U", "#F5DEB3"],
+    15: ["Serpent's Spine", "U", "#8A2BE2"],
+    16: ["Abyssal Depths", "U", "#000080"],
+    17: ["Stormwatch Keep", "U", "#00CED1"],
+    18: ["Emberwood Grove", "U", "#8B4513"],
+    19: ["Shrouded Peaks", "U", "#778899"],
+    20: ["Lost City of Atlantis", "U", "#00FFFF"]
 }
 
 nodes = [
