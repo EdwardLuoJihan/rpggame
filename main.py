@@ -3,6 +3,8 @@ import random
 from map import generate_html_tree
 
 app = Flask(__name__)
+app.secret_key = "your_secret_key_here"
+
 
 current_location = 1
 
@@ -46,10 +48,10 @@ def find_distance(a, b):
     return -1
 
 locations = {
-    1: ["Starter Town", "V", "#B28719"], # city name, visited status, and color
+    1: ["Starter Town", "U", "#B28719"], # city name, visited status, and color
     2: ["Eldergrove", "U", "#3CB371"],
     3: ["Crystal Peaks", "U", "#ADD8E6"],
-    4: ["Dragon's Hollow", "U", "#8B0000"],
+    4: ["Dragons Hollow", "U", "#8B0000"],
     5: ["Frostwind Citadel", "U", "#FFFFFF"],
     6: ["Whispering Woods", "U", "#228B22"],
     7: ["Mystic Falls", "U", "#4169E1"],
@@ -60,7 +62,7 @@ locations = {
     12: ["Celestial City", "U", "#FFFF00"],
     13: ["Thundering Steppes", "U", "#708090"],
     14: ["Sands of Time Desert", "U", "#F5DEB3"],
-    15: ["Serpent's Spine", "U", "#8A2BE2"],
+    15: ["Serpents Spine", "U", "#8A2BE2"],
     16: ["Abyssal Depths", "U", "#000080"],
     17: ["Stormwatch Keep", "U", "#00CED1"],
     18: ["Emberwood Grove", "U", "#8B4513"],
@@ -192,12 +194,33 @@ def find_neighborsindex(x): #takes in variable for reference
             neighbors.append([i for i in node if i != x][0])
     return neighbors
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template("index.html", name='bob', race='human', option_stats={
-        "mana": [mana, maxmana],
-        "stamina": [stamina, maxstamina]
-    }, level=level, xp=xp, xpmax=xp_required, hp=hp, hpmax=hpmax)
+    session.clear()
+    global current_location
+    if 'name' in session and 'race' in session:
+        return render_template("game.html", name=session['name'], race=session['race'], option_stats={
+            "mana": [mana, maxmana],
+            "stamina": [stamina, maxstamina]
+        }, level=level, xp=xp, xpmax=xp_required, hp=hp, hpmax=hpmax)
+    elif request.method == 'POST':
+        session['name'] = request.form['name']
+        session['race'] = request.form['race']
+        current_location = random.choice(race_descriptions[session['race']][1])
+        locations[current_location][1] = "V"
+        return redirect(url_for('game'))
+    else:
+        return render_template("signup.html")
+
+@app.route('/game')
+def game():
+    if 'name' in session and 'race' in session:
+        return render_template("game.html", name=session['name'], race=session['race'], option_stats={
+            "mana": [mana, maxmana],
+            "stamina": [stamina, maxstamina]
+        }, level=level, xp=xp, xpmax=xp_required, hp=hp, hpmax=hpmax)
+    else:
+        return redirect(url_for('index'))
 
 @app.route('/find_neighbors', methods=['GET'])
 def return_neighbors():
@@ -223,6 +246,7 @@ def getstats():
 
 @app.route('/getmap', methods=['GET'])
 def getmap():
+    print(current_location)
     m = generate_html_tree(locations, nodes, current_location)
     return m
 

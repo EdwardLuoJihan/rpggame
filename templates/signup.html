@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arvantis: Echoes of Destiny</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            color: white;
+            font-family: "Silkscreen", sans-serif;
+            font-weight: 400!important;
+            font-style: normal;
+            outline: none!important;
+        } 
+
+        input, select, option {
+            background: black;
+
+        }
+
+        select option:hover {
+            box-shadow: 0 0 10px 100px #ffffff inset;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+
+
+        .container {
+            background-color: black;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 40px;
+            color: white;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        select, input[type="text"] {
+            padding: 10px 20px;
+            width: calc(100% - 20px);
+            margin-bottom: 20px;
+            border: 2px solid white;
+            border-radius: 5px;
+            appearance: none;
+        }
+
+        
+
+        select:hover, input:hover{
+            background-color: white;
+            color: black;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #000000;
+            color: white;
+            border: 2px solid white;
+            cursor: pointer;
+            transition:  0.2s ease;
+        }
+
+        button:hover {
+            background-color: white;
+            color: black;
+        }
+        select, input, label, button {
+            cursor: pointer;
+            transition: 0.2s ease;  
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Arvantis: Echoes of Destiny</h1>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <form id="playerForm" method="POST">
+            <label for="race">Choose Your Race:</label>
+            <select id="race" name="race">
+                <option value="human">Human</option>
+                <option value="elf">Elf</option>
+                <option value="dwarf">Dwarf</option>
+                <option value="orc">Orc</option>
+                <option value="gnome">Gnome</option>
+                <option value="halfling">Halfling</option>
+                <option value="dragonborn">Dragonborn</option>
+                <option value="tiefling">Tiefling</option>
+                <option value="half-elf">Half-Elf</option>
+                <option value="half-orc">Half-Orc</option>
+                <option value="undead">Undead</option>
+                <option value="fairy">Fairy</option>
+                <option value="centaur">Centaur</option>
+                <option value="celestial">Celestial</option>
+                <option value="demon">Demon</option>
+                <option value="pixie">Pixie</option>
+                <option value="satyr">Satyr</option>
+                <option value="angel">Angel</option>
+                <option value="dryad">Dryad</option>
+            </select>
+            
+            <input type="text" id="name" name="name" placeholder="Name" required></input>
+            <br>
+            <br>
+            <br>
+            <br>
+            <button type="submit">Start Game</button>
+        </form>
+    </div>
+</body>
+</html>
