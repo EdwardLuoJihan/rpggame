@@ -81,11 +81,6 @@ nodes = [
     [12, 20, 11], # Celestial City to Lost City of Atlantis, distance: 11 days
     [13, 20, 12], # Thundering Steppes to Lost City of Atlantis, distance: 12 days
     [14, 20, 14], # Sands of Time Desert to Lost City of Atlantis, distance: 14 days
-    [15, 20, 9], # Serpent's Spine to Lost City of Atlantis, distance: 9 days
-    [16, 20, 16], # Abyssal Depths to Lost City of Atlantis, distance: 16 days
-    [17, 20, 10], # Stormwatch Keep to Lost City of Atlantis, distance: 10 days
-    [18, 20, 7], # Emberwood Grove to Lost City of Atlantis, distance: 7 days
-    [19, 20, 6], # Shrouded Peaks to Lost City of Atlantis, distance: 6 days
 ]
 
 descriptions = {
@@ -130,7 +125,7 @@ race_descriptions = {
     "halfling": ["Friendly and carefree, halflings prefer the comforts of home and the pleasures of good company. They dwell in quaint villages nestled amidst fertile farmlands and rolling hills, living off the land and sharing tales of adventure.",
                  [1, 8, 10]],
     
-    "dragonborn": ["Noble and proud, dragonborn are born warriors with a connection to ancient dragon heritage. They establish strongholds in rugged landscapes and seek to honor their draconic ancestors through deeds of valor.",
+    "chinese dragonborn": ["Noble and proud, chinese dragonborn are born warriors with a connection to ancient dragon heritage. They establish strongholds in rugged landscapes and seek to honor their draconic ancestors through deeds of valor.",
                    [4, 3, 17]],
     
     "tiefling": ["Mysterious and enigmatic, tieflings are often misunderstood due to their infernal ancestry. They find solace in hidden corners of the world, where they can pursue their own agendas away from prying eyes.",
@@ -230,8 +225,8 @@ race_stats = {
         "mana":(10 - 5) + level * (10 - 5),
         "agility":(10 + 8) + level * (10 + 8)
     },
-        "dragonborn": {
-        "description": "Noble and proud, dragonborn are born warriors with a connection to ancient dragon heritage. They establish strongholds in rugged landscapes and seek to honor their draconic ancestors through deeds of valor.",
+    "chinese dragonborn": {
+        "description": "Noble and proud, chinese dragonborn are born warriors with a connection to ancient dragon heritage. They establish strongholds in rugged landscapes and seek to honor their draconic ancestors through deeds of valor.",
         "traits": [
             ["Noble", [["strength", 4], ["endurance", 2], ["mana", -2]]],
             ["Proud", [["agility", 2]]]
@@ -451,8 +446,8 @@ class Player:
         "mana":(10 - 5) + self.level * (10 - 5),
         "agility":(10 + 8) + self.level * (10 + 8)
     },
-        "dragonborn": {
-        "description": "Noble and proud, dragonborn are born warriors with a connection to ancient dragon heritage. They establish strongholds in rugged landscapes and seek to honor their draconic ancestors through deeds of valor.",
+        "chinese dragonborn": {
+        "description": "Noble and proud, chinese dragonborn are born warriors with a connection to ancient dragon heritage. They establish strongholds in rugged landscapes and seek to honor their draconic ancestors through deeds of valor.",
         "traits": [
             ["Noble", [["strength", 4], ["endurance", 2], ["mana", -2]]],
             ["Proud", [["agility", 2]]]
@@ -656,8 +651,8 @@ class Player:
         "mana":(10 - 5) + self.level * (10 - 5),
         "agility":(10 + 8) + self.level * (10 + 8)
     },
-        "dragonborn": {
-        "description": "Noble and proud, dragonborn are born warriors with a connection to ancient dragon heritage. They establish strongholds in rugged landscapes and seek to honor their draconic ancestors through deeds of valor.",
+        "chinese dragonborn": {
+        "description": "Noble and proud, chinese dragonborn are born warriors with a connection to ancient dragon heritage. They establish strongholds in rugged landscapes and seek to honor their draconic ancestors through deeds of valor.",
         "traits": [
             ["Noble", [["strength", 4], ["endurance", 2], ["mana", -2]]],
             ["Proud", [["agility", 2]]]
@@ -1147,7 +1142,11 @@ def combat():
                     in_combat = False
                     player.xp += monsters[current_combat.monster]['health']
                     if player.xp >= player.xp_required:
+                        req = player.xp_required
+                        curxp = player.xp
+                        newxp = req - curxp
                         player.level_up()
+                        player.xp = newxp
                     return data
                 else:
 

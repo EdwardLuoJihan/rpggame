@@ -16,12 +16,12 @@
     <div class="player-status-container">
       <div class="status-container">
         <div class="location-container">
-          <h1>Location: <span id="loc"></span></h1>
+          <h1>Location: <span id="loc"></span><span id="levl" class="{{race}}">Lvl. {{level}}</span></h1>
         </div>
         <br>
         <br>
         <div class="player-container">
-          <h1 class="name {{race}}"><span id="nnn" class="{{race}}">{{name}} ( {{race}} )</span><span id="levl" class="{{race}}">Lvl. {{level}}</span></h1>
+          <h1 class="name {{race}}"><span id="nnn" class="{{race}}">{{name}} ( {{race}} )</span></h1>
           <br>
           <br>
           <div class="stats-container">
@@ -52,7 +52,7 @@
     </div>
   </div>
   <a href="/endsession" class="endlink">end session</a>
-  <a href="/level" id="levelup" class="levelup">level</a>
+  <!-- <a href="/level" id="levelup" class="levelup">level</a> -->
   <script>
     $( document ).ready(function() {
 
