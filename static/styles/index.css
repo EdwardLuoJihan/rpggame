@@ -342,3 +342,15 @@ svg {
     right: 0;
     z-index: 999999999999;
 }
+
+.encounters {
+    text-align: center;
+}
+
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}

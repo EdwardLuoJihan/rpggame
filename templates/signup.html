@@ -104,6 +104,14 @@
         .container {
             margin: 0px 100px;
         }
+
+        .r {
+    color: red;
+}
+
+.g {
+    color: rgb(53, 255, 53);
+}
     </style>
 </head>
 <body>
@@ -176,9 +184,15 @@
                 
                 var traits = ``
                 for (const t in data[4]) {
-                    var line = `${data[4][t[0]][0]}: <br>`
+                    var line = `<h3>${data[4][t[0]][0]}:</h3> <br>`
                     for (s in data[4][t[0]][1]) {
-                        line += `${data[4][t[0]][1][s][0]} (${data[4][t[0]][1][s][1]})`
+                        if (data[4][t[0]][1][s][1] > 0) {
+                            console.log("POSITIVE")
+                            var ss = "g"
+                        } else {
+                            var ss = 'r'
+                        }
+                        line += `${data[4][t[0]][1][s][0]} <span class='${ss}'>(${data[4][t[0]][1][s][1]})</span>`
                         line += '<br>'
                     }
                     traits += line
@@ -189,6 +203,7 @@
                 
             });
         });
+        
     </script>
 </body>
 </html>

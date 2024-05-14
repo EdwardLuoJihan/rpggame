@@ -48,7 +48,7 @@
       </div>
     </div>
     <div class="encounters">
-
+      
     </div>
   </div>
   <a href="/endsession" class="endlink">end session</a>
@@ -82,19 +82,25 @@
         btn = this
         $.get(`/dsc?n=${n}`, function(data){
           $.get(`/fd?s=CURRENT&t=${n}`, function(data2){
-            console.log(btn, btn.classList)
+            if (data2 != "no") {
+              
+            
             if (btn.classList[1] == "disable-True") {
-              console.log("RED")
               tec = "r"
             } else tec = "g"
             $(".encounters").html(`<div class='description'>${data}<br><br><br><span id='distancee'>Distance from current location: <span class="${tec}">${data2}</span></span></div>`)
-          });
+          
+        }});
         });
         
         return false;
       });
       $(document).mouseout(".locbutton", function(ev) {
-        $(".encounters").html("");
+        $.get(`/fd?s=CURRENT&t=0`, function(data2){
+            if (data2 != "no") {
+              $(".encounters").html("");
+        }});
+        
       });
 
 
@@ -149,6 +155,9 @@
 
     function update(){
       // validateCost()
+      $.post('/getlvl',function(data) {
+            $('#levl').html(`lvl. ${data}`)
+          });
       $.get("/find_neighbors", function(data){
         $("#select-location").html(data)
       });
@@ -160,7 +169,7 @@
         decrease_mana(data[2], data[3])
         decrease_stamina(data[4], data[5])
         document.getElementById("xp").value = data[6];
-        console.log(data)
+  
         document.getElementById("xp").max = data[7];
         document.getElementById("xp_progress_value").textContent = `${document.getElementById("xp").value}/${document.getElementById("xp").max}`;
       });
@@ -195,6 +204,44 @@
           update()
         }
       });
+    }
+
+    function playGame() {
+
+    }
+
+    setInterval(function () {
+      $.get("/find_neighbors", function(data){
+        $("#select-location").html(data)
+      });
+      $.post(`/combat?state=start`, function(data){
+        if(data[0] == "confirmed") {
+          $('.encounters').html(`<div class="center"><h1>${data[1]}</h1><br>${data[2]}</div>`)
+          playGame()
+          
+        } else if (data == "occupied") {
+          
+        }
+      });  
+    }, 1);
+
+    function sendattack(a) {
+      $.post(`/combat?attack=${a.id}`, function(data){
+        console.log()
+        if (data == "game over") {
+          location.reload()
+          alert("You died.")
+        }
+        if(data[0] == "confirmed") {
+            $('.encounters').html(`<div class="center"><h1>${data[1]}</h1><br>${data[2]}</div>`)
+
+            update()
+          } 
+        if ( data[2] == 'Combat over!') {
+        }
+          
+
+      });  
     }
   </script>
 </body>
