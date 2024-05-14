@@ -228,8 +228,8 @@ race_stats = {
     "chinese dragonborn": {
         "description": "Noble and proud, chinese dragonborn are born warriors with a connection to ancient dragon heritage. They establish strongholds in rugged landscapes and seek to honor their draconic ancestors through deeds of valor.",
         "traits": [
-            ["Noble", [["strength", 4], ["endurance", 2], ["mana", -2]]],
-            ["Proud", [["agility", 2]]]
+            ["Noble", [["strength", 4], ["endurance", 4], ["mana", 4]]],
+            ["Proud", [["agility", 4]]]
         ],
         "strength":(10 + 8) + level * (10 + 8),
         "endurance":(10 + 5) + level * (10 + 5),
@@ -449,8 +449,8 @@ class Player:
         "chinese dragonborn": {
         "description": "Noble and proud, chinese dragonborn are born warriors with a connection to ancient dragon heritage. They establish strongholds in rugged landscapes and seek to honor their draconic ancestors through deeds of valor.",
         "traits": [
-            ["Noble", [["strength", 4], ["endurance", 2], ["mana", -2]]],
-            ["Proud", [["agility", 2]]]
+            ["Noble", [["strength", 4], ["endurance", 4], ["mana", 4]]],
+            ["Proud", [["agility", 4]]]
         ],
         "strength":(10 + 8) + self.level * (10 + 8),
         "endurance":(10 + 5) + self.level * (10 + 5),
@@ -654,8 +654,8 @@ class Player:
         "chinese dragonborn": {
         "description": "Noble and proud, chinese dragonborn are born warriors with a connection to ancient dragon heritage. They establish strongholds in rugged landscapes and seek to honor their draconic ancestors through deeds of valor.",
         "traits": [
-            ["Noble", [["strength", 4], ["endurance", 2], ["mana", -2]]],
-            ["Proud", [["agility", 2]]]
+            ["Noble", [["strength", 4], ["endurance", 4], ["mana", 4]]],
+            ["Proud", [["agility", 4]]]
         ],
         "strength":(10 + 8) + self.level * (10 + 8),
         "endurance":(10 + 5) + self.level * (10 + 5),
