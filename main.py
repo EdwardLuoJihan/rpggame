@@ -232,9 +232,9 @@ race_stats = {
             ["Proud", [["agility", 4]]]
         ],
         "strength":(10 + 8) + level * (10 + 8),
-        "endurance":(10 + 5) + level * (10 + 5),
-        "mana":(10 - 5) + level * (10 - 5),
-        "agility":(10 + 5) + level * (10 + 5)
+        "endurance":(10 + 8) + level * (10 + 8),
+        "mana":(10 + 8) + level * (10 + 8),
+        "agility":(10 + 8) + level * (10 + 8)
     },
     "tiefling": {
         "description": "Mysterious and enigmatic, tieflings are often misunderstood due to their infernal ancestry. They find solace in hidden corners of the world, where they can pursue their own agendas away from prying eyes.",
@@ -453,9 +453,9 @@ class Player:
             ["Proud", [["agility", 4]]]
         ],
         "strength":(10 + 8) + self.level * (10 + 8),
-        "endurance":(10 + 5) + self.level * (10 + 5),
-        "mana":(10 - 5) + self.level * (10 - 5),
-        "agility":(10 + 5) + self.level * (10 + 5)
+        "endurance":(10 + 8) + self.level * (10 + 8),
+        "mana":(10 + 8) + self.level * (10 + 8),
+        "agility":(10 + 8) + self.level * (10 + 8)
     },
     "tiefling": {
         "description": "Mysterious and enigmatic, tieflings are often misunderstood due to their infernal ancestry. They find solace in hidden corners of the world, where they can pursue their own agendas away from prying eyes.",
@@ -658,9 +658,9 @@ class Player:
             ["Proud", [["agility", 4]]]
         ],
         "strength":(10 + 8) + self.level * (10 + 8),
-        "endurance":(10 + 5) + self.level * (10 + 5),
-        "mana":(10 - 5) + self.level * (10 - 5),
-        "agility":(10 + 5) + self.level * (10 + 5)
+        "endurance":(10 + 8) + self.level * (10 + 8),
+        "mana":(10 + 8) + self.level * (10 + 8),
+        "agility":(10 + 8) + self.level * (10 + 8)
     },
     "tiefling": {
         "description": "Mysterious and enigmatic, tieflings are often misunderstood due to their infernal ancestry. They find solace in hidden corners of the world, where they can pursue their own agendas away from prying eyes.",
