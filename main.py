@@ -1073,10 +1073,13 @@ current_combat = 0
 #every 3 player combats, encounter a boss
 
 class Combat:
-    def __init__(self, hp, m) -> None:
+    def __init__(self, hp, m, mlevel, pas, cas) -> None:
         self.turn = 0 # player
-        self.enemyhp = hp
+        self.enemyhp = hp * ((mlevel+1)/2)
         self.monster = m
+        self.level = mlevel
+        self.pas = pas
+        self.cas = cas
 
 bossrn = False
 
@@ -1102,39 +1105,48 @@ def combat():
             player_combat_count += 1
             monster = random.choice(nonboss)
             bosss = ''
-        current_combat = Combat(monsters[monster]['health'], monster)
-        data.append(f"you have encountered a {bosss}{monster}!<br><span class='g'>{current_combat.enemyhp}HP</span>")
+        mlevel = random.randint(1, player.level)
+        pas = {}
+        for a in attacks:
+            pas[a] = (attacks[a]['damage'] * ((player.level + 1)/2))
+        cas = {}
+        for a in attacks:
+            cas[a] = (attacks[a]['cost'] * ((player.level + 1)/2))
+        current_combat = Combat(monsters[monster]['health'], monster, mlevel, pas, cas)
+        data.append(f"you have encountered a level {mlevel} {bosss}{monster}!<br><span class='g'>{current_combat.enemyhp}HP</span>")
         l = ''
         for a in attacks:
             if a == 'Mana Blast':
                 if attacks[a]['cost'] > player.mana:
-                    l += f"""<button class='disable-True' onclick='sendattack(this)' id='{a}'>{a} - {attacks[a]['damage']} DMG ({attacks[a]['cost']})</button>"""
+                    l += f"""<button class='disable-True' onclick='sendattack(this)' id='{a}'>{a} - {pas[a]} DMG ({cas[a]})</button>"""
                 else:
-                    l += f"""<button class='disable-False' onclick='sendattack(this)' id='{a}'>{a} - {attacks[a]['damage']} DMG ({attacks[a]['cost']})</button>"""
+                    l += f"""<button class='disable-False' onclick='sendattack(this)' id='{a}'>{a} - {pas[a]} DMG ({cas[a]})</button>"""
                 
             else:
                 if attacks[a]['cost'] > player.stamina:
-                    l += f"""<button class='disable-True' onclick='sendattack(this)' id='{a}'>{a} - {attacks[a]['damage']} DMG ({attacks[a]['cost']})</button>"""
+                    l += f"""<button class='disable-True' onclick='sendattack(this)' id='{a}'>{a} - {pas[a]} DMG ({cas[a]})</button>"""
                 else:
-                    l += f"""<button class='disable-False' onclick='sendattack(this)' id='{a}'>{a} - {attacks[a]['damage']} DMG ({attacks[a]['cost']})</button>"""
+                    l += f"""<button class='disable-False' onclick='sendattack(this)' id='{a}'>{a} - {pas[a]} DMG ({cas[a]})</button>"""
         data.append(l)
         return data
     elif state == "start" and in_combat == True:
         return "occupied"
     elif a:
+            pas = current_combat.pas
+            cas = current_combat.cas
 
             data.append('confirmed')
             go = False
             if a == 'Mana Blast':
-                if player.mana >= attacks[a]['cost']:
+                if player.mana >= cas[a]:
                     go = True
-                    player.mana -= attacks[a]['cost']
-                    current_combat.enemyhp -= attacks[a]['damage']
+                    player.mana -= cas[a]
+                    current_combat.enemyhp -= pas[a]
             else:
-                if player.stamina >= attacks[a]['cost']:
+                if player.stamina >= cas[a]:
                     go = True
-                    player.stamina -= attacks[a]['cost']
-                    current_combat.enemyhp -= attacks[a]['damage']
+                    player.stamina -= cas[a]
+                    current_combat.enemyhp -= pas[a]
             if go:
                 if current_combat.enemyhp <= 0:
                     data.append("monster defeated!")
@@ -1153,7 +1165,7 @@ def combat():
                     data.append(f"you have encountered a {current_combat.monster}!<br><span class='g'>{current_combat.enemyhp}HP</span>")
                     l = ''
 
-                    dmg = monsters[current_combat.monster]['damage'] * (random.randint(10, 20)/10)
+                    dmg = monsters[current_combat.monster]['damage'] * (current_combat.level+1)/2
 
                     player.hp -= dmg
                     if player.hp <= 0:
@@ -1170,14 +1182,14 @@ def combat():
                     for a in attacks:
                         if a == 'Mana Blast':
                             if attacks[a]['cost'] > player.mana:
-                                l += f"""<button class='disable-True' onclick='sendattack(this)' id='{a}'>{a} - {attacks[a]['damage']} DMG ({attacks[a]['cost']})</button>"""
+                                l += f"""<button class='disable-True' onclick='sendattack(this)' id='{a}'>{a} - {pas[a]} DMG ({cas[a]})</button>"""
                             else:
-                                l += f"""<button class='disable-False' onclick='sendattack(this)' id='{a}'>{a} - {attacks[a]['damage']} DMG ({attacks[a]['cost']})</button>"""
+                                l += f"""<button class='disable-False' onclick='sendattack(this)' id='{a}'>{a} - {pas[a]} DMG ({cas[a]})</button>"""
                         else:
                             if attacks[a]['cost'] > player.stamina:
-                                l += f"""<button class='disable-True' onclick='sendattack(this)' id='{a}'>{a} - {attacks[a]['damage']} DMG ({attacks[a]['cost']})</button>"""
+                                l += f"""<button class='disable-True' onclick='sendattack(this)' id='{a}'>{a} - {pas[a]} DMG ({cas[a]})</button>"""
                             else:
-                                l += f"""<button class='disable-False' onclick='sendattack(this)' id='{a}'>{a} - {attacks[a]['damage']} DMG ({attacks[a]['cost']})</button>"""
+                                l += f"""<button class='disable-False' onclick='sendattack(this)' id='{a}'>{a} - {pas[a]} DMG ({attacks[a]['cost']})</button>"""
                     data.append(l)
                     return data
 
