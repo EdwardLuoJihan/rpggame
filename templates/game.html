@@ -51,9 +51,21 @@
 
     </div>
   </div>
-  
+  <a href="/endsession" class="endlink">end session</a>
+  <a href="/level" id="levelup" class="levelup">level</a>
   <script>
     $( document ).ready(function() {
+
+      $(function() {
+        $("#levelup").on("click",function(e) {
+          e.preventDefault(); // cancel the link itself
+          $.post(this.href,function(data) {
+            $('#levl').html(`lvl. ${data}`)
+            update()
+          });
+        });
+      });
+
       $(document).on("mouseover", ".node", function(ev) {
         n = this.classList[1].replace(/\D/g,'');
         $.get(`/dsc?n=${n}`, function(data){
@@ -67,9 +79,15 @@
 
       $(document).on("mouseover", ".locbutton", function(ev) {
         n = this.innerHTML.split(" - ")[0];
+        btn = this
         $.get(`/dsc?n=${n}`, function(data){
           $.get(`/fd?s=CURRENT&t=${n}`, function(data2){
-            $(".encounters").html(`<div class='description'>${data}<br><br><br><span id='distancee'>Distance from current location: <span id='dd'>${data2}</span></span></div>`)
+            console.log(btn, btn.classList)
+            if (btn.classList[1] == "disable-True") {
+              console.log("RED")
+              tec = "r"
+            } else tec = "g"
+            $(".encounters").html(`<div class='description'>${data}<br><br><br><span id='distancee'>Distance from current location: <span class="${tec}">${data2}</span></span></div>`)
           });
         });
         
@@ -106,18 +124,21 @@
 
     
     
-    function decrease_health(h) {
+    function decrease_health(h, m) {
       document.getElementById("health").value = h;
+      document.getElementById("health").max = m;
       document.getElementById("hp_progress_value").textContent = `${document.getElementById("health").value}/${document.getElementById("health").max}`;
     }
 
-    function decrease_mana(h) {
+    function decrease_mana(h, m) {
       document.getElementById("mana").value = h;
+      document.getElementById("mana").max = m;
       document.getElementById("mana_progress_value").textContent = `${document.getElementById("mana").value}/${document.getElementById("mana").max}`;
     }
 
-    function decrease_stamina(h) {
+    function decrease_stamina(h, m) {
       document.getElementById("stamina").value = h;
+      document.getElementById("stamina").max = m;
       document.getElementById("stamina_progress_value").textContent = `${document.getElementById("stamina").value}/${document.getElementById("stamina").max}`;
     }
 
@@ -135,11 +156,13 @@
         $("#loc").html(data)
       });
       $.get("/getstats", function(data){
-        decrease_health(data[0])
-        decrease_mana(data[1])
-        decrease_stamina(data[2])
-        document.getElementById("xp").value = data[3];
-        document.getElementById("xp").max = data[4];
+        decrease_health(data[0], data[1])
+        decrease_mana(data[2], data[3])
+        decrease_stamina(data[4], data[5])
+        document.getElementById("xp").value = data[6];
+        console.log(data)
+        document.getElementById("xp").max = data[7];
+        document.getElementById("xp_progress_value").textContent = `${document.getElementById("xp").value}/${document.getElementById("xp").max}`;
       });
       $.get("/getmap", function(data){
         $("#map").empty();

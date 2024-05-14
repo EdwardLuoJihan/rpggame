@@ -319,3 +319,26 @@ svg {
 #dd {
     color: rgb(53, 255, 53);
 }
+
+
+.endlink {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9999999999;
+}
+
+.r {
+    color: red;
+}
+
+.g {
+    color: rgb(53, 255, 53);
+}
+
+.levelup {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 999999999999;
+}

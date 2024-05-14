@@ -5,38 +5,22 @@ from map import generate_html_tree
 app = Flask(__name__)
 app.secret_key = "your_secret_key_here"
 
-
+# scaling constants
 current_location = 1
-
 level_scaling_rate = 2
-level = 100
+level = 1
 endurance_scaling_rate = 5
-player_stats = {
-    "strength": 10+level*10,
-    "endurance": 10+level*10, #calculate stamina required
-    "mana": 10+level*10,
-    "agility": 10+level*10, #calculate stamina required
-}
-mana = 100 + player_stats["mana"] * level_scaling_rate
-stamina = 100 + player_stats["endurance"] * endurance_scaling_rate
-maxmana = 100 + player_stats["mana"] * level_scaling_rate
-maxstamina = 100 + player_stats["endurance"] * endurance_scaling_rate
-xp = 0
 strength_factor = 8
 base_xp = 100
 scaling_factor = 10
-xp_required = base_xp + (level ** 2 * scaling_factor)
-hp = 100 + (player_stats["endurance"]*endurance_scaling_rate) + (level*level_scaling_rate) + (player_stats["strength"] * strength_factor)
-hpmax = 100 + (player_stats["endurance"]*endurance_scaling_rate) + (level*level_scaling_rate) + (player_stats["strength"] * strength_factor)
-
 
 ### USER INTERACTIONS ###
 
 
 def moveCost(d):
     global player_stats
-    e = player_stats["endurance"]
-    a = player_stats["agility"]
+    e = player.stats["endurance"]
+    a = player.stats["agility"]
 
     return 100 * (d/(a+e))
 
@@ -102,26 +86,26 @@ nodes = [
 ]
 
 descriptions = {
-    1: "Starter Town: A quaint town nestled at the foot of the mountains, where every journey begins.",
-    2: "Eldergrove: A mystical forest inhabited by ancient spirits, offering solace and wisdom to travelers.",
-    3: "Crystal Peaks: Majestic mountains adorned with sparkling crystals, harboring secrets of the past.",
-    4: "Dragon's Hollow: A desolate valley haunted by the remnants of mighty dragons, their presence felt in every shadow.",
-    5: "Frostwind Citadel: A towering fortress carved from ice, home to fierce warriors and frost magic.",
-    6: "Whispering Woods: Enchanted trees whisper secrets of forgotten lore, guiding wanderers with their eerie melodies.",
-    7: "Mystic Falls: Cascading waterfalls imbued with arcane energy, said to grant visions to those who dare to gaze into their depths.",
-    8: "Sunset Harbor: A bustling port city where traders from distant lands converge, bringing tales of adventure and riches.",
-    9: "Ancient Ruins of Zephyr: Crumbling ruins of a once-great civilization, now shrouded in mystery and danger.",
-    10: "Shadowvale Village: A secluded village hidden in the shadows, its inhabitants wary of outsiders and their own dark secrets.",
-    11: "Grimreach Caverns: Dark caverns teeming with creatures of the abyss, where only the bravest dare to tread.",
-    12: "Celestial City: A city floating among the clouds, its spires reaching towards the heavens, home to scholars and seekers of celestial knowledge.",
-    13: "Thundering Steppes: Rolling plains where storms rage endlessly, a testament to the raw power of nature.",
-    14: "Sands of Time Desert: Endless dunes whispering tales of forgotten empires buried beneath the sands.",
-    15: "Serpent's Spine: A treacherous mountain range inhabited by colossal serpents, guarding ancient treasures hidden within their coils.",
-    16: "Abyssal Depths: Unfathomable depths where darkness reigns supreme, home to creatures of nightmares.",
-    17: "Stormwatch Keep: A fortress perched on the edge of a stormy sea, its towers standing vigilant against the forces of chaos.",
-    18: "Emberwood Grove: A forest ablaze with the colors of autumn, where fire magic dances among the leaves.",
-    19: "Shrouded Peaks: Mist-shrouded peaks where echoes of the past linger, beckoning travelers to uncover their secrets.",
-    20: "Lost City of Atlantis: A legendary city submerged beneath the waves, said to hold untold riches and ancient artifacts of great power."
+    1: "A quaint town nestled at the foot of the mountains, where every journey begins.",
+    2: "A mystical forest inhabited by ancient spirits, offering solace and wisdom to travelers.",
+    3: "Majestic mountains adorned with sparkling crystals, harboring secrets of the past.",
+    4: "A desolate valley haunted by the remnants of mighty dragons, their presence felt in every shadow.",
+    5: "A towering fortress carved from ice, home to fierce warriors and frost magic.",
+    6: "Enchanted trees whisper secrets of forgotten lore, guiding wanderers with their eerie melodies.",
+    7: "Cascading waterfalls imbued with arcane energy, said to grant visions to those who dare to gaze into their depths.",
+    8: "A bustling port city where traders from distant lands converge, bringing tales of adventure and riches.",
+    9: "Crumbling ruins of a once-great civilization, now shrouded in mystery and danger.",
+    10: "A secluded village hidden in the shadows, its inhabitants wary of outsiders and their own dark secrets.",
+    11: "Dark caverns teeming with creatures of the abyss, where only the bravest dare to tread.",
+    12: "A city floating among the clouds, its spires reaching towards the heavens, home to scholars and seekers of celestial knowledge.",
+    13: "Rolling plains where storms rage endlessly, a testament to the raw power of nature.",
+    14: "Endless dunes whispering tales of forgotten empires buried beneath the sands.",
+    15: "A treacherous mountain range inhabited by colossal serpents, guarding ancient treasures hidden within their coils.",
+    16: "Unfathomable depths where darkness reigns supreme, home to creatures of nightmares.",
+    17: "A fortress perched on the edge of a stormy sea, its towers standing vigilant against the forces of chaos.",
+    18: "A forest ablaze with the colors of autumn, where fire magic dances among the leaves.",
+    19: "Mist-shrouded peaks where echoes of the past linger, beckoning travelers to uncover their secrets.",
+    20: "A legendary city submerged beneath the waves, said to hold untold riches and ancient artifacts of great power."
 }
 
 race_descriptions = {
@@ -180,6 +164,266 @@ race_descriptions = {
               [6, 2, 18]]
 }
 
+race_stats = {
+    "human": {
+        "description": "Versatile and adaptable, humans are found in every corner of Arvantis, thriving in diverse environments and cultures.",
+        "traits": [],
+        "strength":(10 + 0) + level * (10 + 0),
+        "endurance":(10 + 0) + level * (10 + 0),
+        "mana":(10 + 0) + level * (10 + 0),
+        "agility":(10 + 0) + level * (10 + 0)
+    },
+    "elf": {
+        "description": "Graceful and attuned to nature, elves make their homes in ancient forests, secluded groves, and mystical glades where the magic of the land flows freely.",
+        "traits": [
+            ["Graceful", [["agility", 2], ["strength", -2], ["endurance", -2]]],
+            ["Attuned to Nature", [["mana", 2]]]
+        ],
+        "strength":(10 - 5) + level * (10 - 5),
+        "endurance":(10 - 5) + level * (10 - 5),
+        "mana":(10 + 5) + level * (10 + 5),
+        "agility":(10 + 5) + level * (10 + 5)
+    },
+    "dwarf": {
+        "description": "Resilient and industrious, dwarves are known for their craftsmanship and love of the mountains. They carve out vast underground cities beneath the earth, mining precious metals and gems.",
+        "traits": [
+            ["Resilient", [["strength", 2], ["endurance", 2], ["agility", -2]]]
+        ],
+        "strength":(10 + 5) + level * (10 + 5),
+        "endurance":(10 + 5) + level * (10 + 5),
+        "mana":(10 + 0) + level * (10 + 0),
+        "agility":(10 - 5) + level * (10 - 5)
+    },
+    "orc": {
+        "description": "Fierce and tribal, orcs favor harsh environments such as rugged mountains, barren deserts, and untamed wilderness. They build formidable fortresses and conquer lands through brute strength.",
+        "traits": [
+            ["Fierce", [["strength", 4], ["endurance", 2], ["mana", -4]]],
+            ["Tribal", [["agility", 2]]]
+        ],
+        "strength":(10 + 8) + level * (10 + 8),
+        "endurance":(10 + 5) + level * (10 + 5),
+        "mana":(10 - 8) + level * (10 - 8),
+                "agility":(10 + 5) + level * (10 + 5)
+    },
+    "gnome": {
+        "description": "Inventive and curious, gnomes are drawn to places where knowledge and innovation flourish. They establish vibrant communities in bustling cities and hidden enclaves, delving into arcane mysteries and technological marvels.",
+        "traits": [
+            ["Inventive", [["mana", 4], ["agility", 2], ["strength", -4]]],
+            ["Curious", [["endurance", 2]]]
+        ],
+        "strength":(10 - 8) + level * (10 - 8),
+        "endurance":(10 + 5) + level * (10 + 5),
+        "mana":(10 + 8) + level * (10 + 8),
+        "agility":(10 + 5) + level * (10 + 5)
+    },
+    "halfling": {
+        "description": "Friendly and carefree, halflings prefer the comforts of home and the pleasures of good company. They dwell in quaint villages nestled amidst fertile farmlands and rolling hills, living off the land and sharing tales of adventure.",
+        "traits": [
+            ["Friendly", [["endurance", 2], ["mana", -2]]],
+            ["Carefree", [["agility", 4], ["strength", -2]]]
+        ],
+        "strength":(10 - 5) + level * (10 - 5),
+        "endurance":(10 + 5) + level * (10 + 5),
+        "mana":(10 - 5) + level * (10 - 5),
+        "agility":(10 + 8) + level * (10 + 8)
+    },
+        "dragonborn": {
+        "description": "Noble and proud, dragonborn are born warriors with a connection to ancient dragon heritage. They establish strongholds in rugged landscapes and seek to honor their draconic ancestors through deeds of valor.",
+        "traits": [
+            ["Noble", [["strength", 4], ["endurance", 2], ["mana", -2]]],
+            ["Proud", [["agility", 2]]]
+        ],
+        "strength":(10 + 8) + level * (10 + 8),
+        "endurance":(10 + 5) + level * (10 + 5),
+        "mana":(10 - 5) + level * (10 - 5),
+        "agility":(10 + 5) + level * (10 + 5)
+    },
+    "tiefling": {
+        "description": "Mysterious and enigmatic, tieflings are often misunderstood due to their infernal ancestry. They find solace in hidden corners of the world, where they can pursue their own agendas away from prying eyes.",
+        "traits": [
+            ["Mysterious", [["mana", 4], ["agility", 2], ["strength", -2]]],
+            ["Enigmatic", [["endurance", 2]]]
+        ],
+        "strength":(10 - 5) + level * (10 - 5),
+        "endurance":(10 + 5) + level * (10 + 5),
+        "mana":(10 + 8) + level * (10 + 8),
+        "agility":(10 + 5) + level * (10 + 5)
+    },
+    "half-elf": {
+        "description": "Born of two worlds, half-elves navigate between human society and elven kinship, seeking belonging and acceptance wherever they roam. They often dwell in cosmopolitan cities and remote wilderness alike, embracing their dual heritage.",
+        "traits": [
+            ["Dual Heritage", [["mana", 2]]],
+            ["Adaptable", [["strength", -2], ["endurance", -2]]]
+        ],
+        "strength":(10 - 5) + level * (10 - 5),
+        "endurance":(10 - 5) + level * (10 - 5),
+        "mana":(10 + 5) + level * (10 + 5),
+        "agility":(10 + 0) + level * (10 + 0)
+    },
+    "half-orc": {
+        "description": "Born of orc and human ancestry, half-orcs often face prejudice from both societies. They are renowned for their strength and resilience, often finding their place as warriors, laborers, or mercenaries.",
+        "traits": [
+            ["Orcish Strength", [["strength", 4], ["endurance", 2], ["mana", -2]]],
+            ["Human Adaptability", [["agility", 2]]]
+        ],
+        "strength":(10 + 8) + level * (10 + 8),
+        "endurance":(10 + 5) + level * (10 + 5),
+        "mana":(10 - 5) + level * (10 - 5),
+        "agility":(10 + 5) + level * (10 + 5)
+    },
+        "undead": {
+        "description": "Cursed and forsaken, the undead walk the realm as echoes of their former selves. Bound by dark magic or unresolved grievances, they often haunt desolate places or serve dark masters.",
+        "traits": [
+            ["Cursed Existence", [["endurance", 4], ["mana", 2], ["agility", -2]]],
+            ["Undead Resilience", [["strength", 2]]]
+        ],
+        "strength":(10 + 5) + level * (10 + 5),
+        "endurance":(10 + 8) + level * (10 + 8),
+        "mana":(10 + 5) + level * (10 + 5),
+        "agility":(10 - 5) + level * (10 - 5)
+    },
+    "fairy": {
+        "description": "Enigmatic and ethereal, fairies flit through the air on delicate wings, unseen by most mortals. They dwell in hidden realms of nature, where magic and whimsy hold sway.",
+        "traits": [
+            ["Ethereal Form", [["agility", 4], ["mana", 2], ["strength", -2]]],
+            ["Fleeting Presence", [["endurance", -2]]]
+        ],
+        "strength":(10 - 5) + level * (10 - 5),
+        "endurance":(10 - 5) + level * (10 - 5),
+        "mana":(10 + 5) + level * (10 + 5),
+        "agility":(10 + 8) + level * (10 + 8)
+    },
+    "centaur": {
+        "description": "Proud and majestic, centaurs are half-human, half-horse beings who roam vast plains and wooded glens. They embody the spirit of freedom and are renowned for their speed and strength.",
+        "traits": [
+            ["Equine Grace", [["agility", 4], ["endurance", 2], ["mana", -2]]],
+            ["Fleet-footed", [["strength", 2]]]
+        ],
+        "strength":(10 + 5) + level * (10 + 5),
+        "endurance":(10 + 5) + level * (10 + 5),
+        "mana":(10 - 5) + level * (10 - 5),
+        "agility":(10 + 8) + level * (10 + 8)
+    },
+            "celestial": {
+            "description": "Radiant and divine, celestials are beings of light and purity, serving as guardians of the heavens and protectors of mortal realms. They are imbued with celestial power and often intervene in the affairs of mortals to combat darkness and evil.",
+            "traits": [
+                ["Radiant Aura", [["mana", 4], ["endurance", 2], ["strength", -2]]],
+                ["Divine Blessing", [["agility", 2]]]
+            ],
+            "strength":(10 - 5) + level * (10 - 5),
+            "endurance":(10 + 5) + level * (10 + 5),
+            "mana":(10 + 8) + level * (10 + 8),
+            "agility":(10 + 5) + level * (10 + 5)
+        },
+        "demon": {
+            "description": "Infernal and malevolent, demons hail from the depths of the Abyss, where chaos reigns and suffering knows no end. They delight in corruption and destruction, seeking to spread chaos and consume souls.",
+            "traits": [
+                ["Infernal Power", [["strength", 4], ["mana", 2], ["endurance", -2]]],
+                ["Demonic Resilience", [["agility", 2]]]
+            ],
+            "strength":(10 + 8) + level * (10 + 8),
+            "endurance":(10 - 5) + level * (10 - 5),
+            "mana":(10 + 5) + level * (10 + 5),
+            "agility":(10 + 5) + level * (10 + 5)
+        },
+        "pixie": {
+                        "description": "Playful and mischievous, pixies are tiny fey creatures with delicate wings and boundless energy. They inhabit enchanted forests and shimmering meadows, where they frolic among flowers and trick unsuspecting travelers.",
+            "traits": [
+                ["Fey Magic", [["mana", 4], ["agility", 2], ["strength", -2]]],
+                ["Flighty Nature", [["endurance", -2]]]
+            ],
+            "strength":(10 - 5) + level * (10 - 5),
+            "endurance":(10 - 5) + level * (10 - 5),
+            "mana":(10 + 8) + level * (10 + 8),
+            "agility":(10 + 5) + level * (10 + 5)
+        },
+        "angel": {
+            "description": "Noble and celestial, angels are beings of pure light and virtue, serving as messengers of the divine and defenders of righteousness. They soar through the heavens on radiant wings, bringing hope and salvation to those in need.",
+            "traits": [
+                ["Divine Grace", [["mana", 4], ["endurance", 2], ["strength", -2]]],
+                ["Radiant Wings", [["agility", 2]]]
+            ],
+            "strength":(10 - 5) + level * (10 - 5),
+            "endurance":(10 + 5) + level * (10 + 5),
+            "mana":(10 + 8) + level * (10 + 8),
+            "agility":(10 + 5) + level * (10 + 5)
+        },
+        "dryad": {
+            "description": "Enigmatic and elusive, dryads are forest spirits bound to the trees they inhabit. They are guardians of nature, nurturing the woodlands and protecting them from harm. They rarely interact with mortals, preferring the company of the ancient trees.",
+            "traits": [
+                ["Forest Bound", [["mana", 4], ["agility", 2], ["strength", -2]]],
+                ["Nature's Blessing", [["endurance", 2]]]
+            ],
+            "strength":(10 - 5) + level * (10 - 5),
+            "endurance":(10 + 5) + level * (10 + 5),
+            "mana":(10 + 8) + level * (10 + 8),
+            "agility":(10 + 5) + level * (10 + 5)
+        }
+}
+
+
+
+@app.route('/racestats', methods=['GET'])
+def racestats():
+    r = request.args.get("race")
+    return [race_stats[r]['strength'], race_stats[r]['endurance'], race_stats[r]['mana'], race_stats[r]['agility'], race_stats[r]['traits']]
+    
+
+
+class Player:
+    def __init__(self, name, race, mana, stamina, hp, level):
+        self.name = name
+        self.race = race
+        self.level = level
+        self.xp = 0
+        self.xp_required = base_xp + (self.level ** 2 * scaling_factor)
+        self.stats = race_stats[race]
+        self.max_hp = hp
+        self.hp = self.max_hp
+        self.max_mana = mana
+        self.mana = self.max_mana
+        self.max_stamina = stamina
+        self.stamina = self.max_stamina
+
+    def level_up(self):
+        self.level += 1
+        # Adjust stats, HP, mana, etc. based on level increase
+        self.stats_update()
+
+    def stats_update(self):
+        player_stats = race_stats[self.race]
+
+        self.stats = player_stats
+
+        mana = 100 + player_stats["mana"] * level_scaling_rate
+        stamina = 100 + player_stats["endurance"] * endurance_scaling_rate
+        xp_required = base_xp + (self.level ** 2 * scaling_factor)
+        hp = 100 + (player_stats["endurance"]*endurance_scaling_rate) + (level*level_scaling_rate) + (player_stats["strength"] * strength_factor)
+
+
+        self.xp = 0
+        self.xp_required = xp_required
+        self.max_hp = hp
+        self.hp = self.max_hp
+        self.max_mana = mana
+        self.mana = self.max_mana
+        self.max_stamina = stamina
+        self.stamina = self.max_stamina
+
+    def gain_xp(self, amount):
+        self.xp += amount
+        if self.xp >= self.xp_required:
+            self.level_up()
+
+    def take_damage(self, damage):
+        self.hp -= damage
+
+
+def reset_visited(l):
+    for i in l:
+        l[i][1] = "U"
+    return l
+
 def find_neighbors(x): #takes in variable for reference
     neighbors = []
     for node in nodes:
@@ -194,32 +438,78 @@ def find_neighborsindex(x): #takes in variable for reference
             neighbors.append([i for i in node if i != x][0])
     return neighbors
 
+player = 0
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    try:
+        global current_location
+        global locations
+        global mana
+        global stamina
+        global maxmana
+        global maxstamina
+        global xp
+        global xp_required
+        global hp
+        global hpmax
+        global player
+        if 'name' in session and 'race' in session:
+            return render_template("game.html", name=session['name'], race=session['race'], option_stats={
+                "mana": [player.mana, player.max_mana],
+                "stamina": [player.stamina, player.max_stamina]
+            }, level=player.level, xp=player.xp, xpmax=player.xp_required, hp=player.hp, hpmax=player.max_hp)
+        elif request.method == 'POST':
+            session['name'] = request.form['name']
+            session['race'] = request.form['race']
+            current_location = random.choice(race_descriptions[session['race']][1])
+            locations = reset_visited(locations)
+            locations[current_location][1] = "V"
+            mana = 100 + race_stats[session['race']]["mana"] * level_scaling_rate
+            stamina = 100 + race_stats[session['race']]["endurance"] * endurance_scaling_rate
+            maxmana = 100 + race_stats[session['race']]["mana"] * level_scaling_rate
+            maxstamina = 100 + race_stats[session['race']]["endurance"] * endurance_scaling_rate
+            xp = 0
+            xp_required = base_xp + (level ** 2 * scaling_factor)
+            hp = 100 + (race_stats[session['race']]["endurance"]*endurance_scaling_rate) + (level*level_scaling_rate) + (race_stats[session['race']]["strength"] * strength_factor)
+            hpmax = 100 + (race_stats[session['race']]["endurance"]*endurance_scaling_rate) + (level*level_scaling_rate) + (race_stats[session['race']]["strength"] * strength_factor)
+            player = Player(session['name'], session['race'], mana, stamina, hp, level)
+            return redirect(url_for('game'))
+        else:
+            return render_template("signup.html")
+    except Exception as e:
+        print(e)
+        session.clear()
+        return redirect(url_for('index'))
+
+@app.route('/endsession')
+def endsession():
     session.clear()
-    global current_location
-    if 'name' in session and 'race' in session:
-        return render_template("game.html", name=session['name'], race=session['race'], option_stats={
-            "mana": [mana, maxmana],
-            "stamina": [stamina, maxstamina]
-        }, level=level, xp=xp, xpmax=xp_required, hp=hp, hpmax=hpmax)
-    elif request.method == 'POST':
-        session['name'] = request.form['name']
-        session['race'] = request.form['race']
-        current_location = random.choice(race_descriptions[session['race']][1])
-        locations[current_location][1] = "V"
-        return redirect(url_for('game'))
+    return redirect(url_for('index'))
+
+@app.route('/level', methods=['GET', 'POST'])
+def levelss():
+    if request.method == "GET":
+        return redirect(url_for("index"))
     else:
-        return render_template("signup.html")
+        global player
+        player.level_up()
+        return str(player.level)
 
 @app.route('/game')
 def game():
-    if 'name' in session and 'race' in session:
-        return render_template("game.html", name=session['name'], race=session['race'], option_stats={
-            "mana": [mana, maxmana],
-            "stamina": [stamina, maxstamina]
-        }, level=level, xp=xp, xpmax=xp_required, hp=hp, hpmax=hpmax)
-    else:
+    try:
+        #session.clear()
+        if 'name' in session and 'race' in session:
+            return render_template("game.html", name=session['name'], race=session['race'], option_stats={
+                "mana": [player.mana, player.max_mana],
+                "stamina": [player.stamina, player.max_stamina]
+            }, level=player.level, xp=player.xp, xpmax=player.xp_required, hp=player.hp, hpmax=player.max_hp)
+        else:
+            return redirect(url_for('index'))
+    except Exception as e:
+        print(e)
+        session.clear()
         return redirect(url_for('index'))
 
 @app.route('/find_neighbors', methods=['GET'])
@@ -229,7 +519,7 @@ def return_neighbors():
     form = ""
     for n, i in enumerate(neighbors):
         costToMove = moveCost(find_distance(current_location, neighborsindex[n]))
-        if costToMove > stamina:
+        if costToMove > player.stamina:
             disable = True
         else:
             disable = False
@@ -242,11 +532,10 @@ def return_location():
 
 @app.route('/getstats', methods=['GET'])
 def getstats():
-    return list(map(int, [hp, mana, stamina, xp, xp_required]))
+    return list(map(int, [player.hp, player.max_hp, player.mana, player.max_mana, player.stamina, player.max_stamina, player.xp, player.xp_required]))
 
 @app.route('/getmap', methods=['GET'])
 def getmap():
-    print(current_location)
     m = generate_html_tree(locations, nodes, current_location)
     return m
 
@@ -261,15 +550,11 @@ def getl():
     t = request.args.get("t")
     if s == "CURRENT":
         s = current_location
-    print(f"{str(find_distance(int(s), int(t)))}KM")
     return f"{str(find_distance(int(s), int(t)))}KM"
 
 @app.route('/moveto', methods=['GET'])
 def move_to():
     global current_location
-    global stamina
-    global hp
-    global mana
     newlocation = request.args.get("loc")
     for i in locations:
         if newlocation in locations[i]:
@@ -278,11 +563,10 @@ def move_to():
                     if n[0] == current_location or n[1] == current_location:
                         distance = n[2]
                         cost = moveCost(distance)
-                        print(stamina, cost)
-                        if stamina >= cost:
+                        if player.stamina >= cost:
                             current_location = i
                             locations[i][1] = "V"
-                            stamina -= cost
+                            player.stamina -= cost
                             return str(current_location)
                         else:
                             return "no bueno"

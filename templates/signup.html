@@ -94,9 +94,26 @@
             transition: 0.2s ease;  
             font-size: 16px;
         }
+
+        .lcontainer {
+            text-align: center;
+            overflow: hidden;
+            overflow-wrap: break-word;
+        }
+
+        .container {
+            margin: 0px 100px;
+        }
     </style>
 </head>
 <body>
+    <div class="lcontainer">
+        <h2>Character base stats:</h2>
+        <br>
+        <p id="stats">
+
+        </p>
+    </div>
     <div class="container">
         <h1>Arvantis: Echoes of Destiny</h1>
         <br>
@@ -136,5 +153,42 @@
             <button type="submit">Start Game</button>
         </form>
     </div>
+    <div class="rcontainer">
+        <h2>character traits:</h2>
+        <br>
+        <p id="traits">
+        </p>
+    </div>
+    <script>
+        $.get(`/racestats?race=human`, function(data){
+                $("#stats").html(`Strength: ${data[0]}<br>Endurance: ${data[1]}<br>mana: ${data[2]}<br>agility: ${data[3]}<br>`)
+                
+               
+
+                $("#traits").html("NONE")
+                
+            });
+        $('#race').on('change', function (e) {
+            var optionSelected = $("option:selected", this);
+            var valueSelected = this.value;
+            $.get(`/racestats?race=${valueSelected}`, function(data){
+                $("#stats").html(`Strength: ${data[0]}<br>Endurance: ${data[1]}<br>mana: ${data[2]}<br>agility: ${data[3]}<br>`)
+                
+                var traits = ``
+                for (const t in data[4]) {
+                    var line = `${data[4][t[0]][0]}: <br>`
+                    for (s in data[4][t[0]][1]) {
+                        line += `${data[4][t[0]][1][s][0]} (${data[4][t[0]][1][s][1]})`
+                        line += '<br>'
+                    }
+                    traits += line
+                    traits += '<br><br>'
+                }
+
+                $("#traits").html(traits)
+                
+            });
+        });
+    </script>
 </body>
 </html>
