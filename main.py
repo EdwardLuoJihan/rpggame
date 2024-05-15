@@ -21,21 +21,26 @@ player_combat_count = 0
 
 
 def moveCost(d):
+    """Calculates the cost to move to a place"""
     global player_stats
     e = player.stats["endurance"]
     a = player.stats["agility"]
 
-    return 100 * (d/(a+e))
+    return 100 * (d / (a + e))
+
 
 def find_distance(a, b):
+    """Finds the distance between two places"""
     for i in nodes:
         if i[0] == a or i[1] == a:
             if i[0] == b or i[1] == b:
                 return i[2]
     return -1
 
+
 locations = {
-    1: ["Starter Town", "U", "#B28719"], # city name, visited status, and color
+    # city name, visited status, and color
+    1: ["Starter Town", "U", "#B28719"],
     2: ["Eldergrove", "U", "#3CB371"],
     3: ["Crystal Peaks", "U", "#ADD8E6"],
     4: ["Dragons Hollow", "U", "#8B0000"],
@@ -54,33 +59,33 @@ locations = {
     17: ["Stormwatch Keep", "U", "#00CED1"],
     18: ["Emberwood Grove", "U", "#8B4513"],
     19: ["Shrouded Peaks", "U", "#778899"],
-    20: ["Lost City of Atlantis", "U", "#00FFFF"]
+    20: ["Lost City of Atlantis", "U", "#00FFFF"],
 }
 
 nodes = [
-    [1, 2, 5], # Starter Town to Eldergrove, distance: 5 days
-    [1, 3, 8], # Starter Town to Crystal Peaks, distance: 8 days
-    [1, 4, 10], # Starter Town to Dragon's Hollow, distance: 10 days
-    [2, 5, 4], # Eldergrove to Frostwind Citadel, distance: 4 days
-    [2, 6, 3], # Eldergrove to Whispering Woods, distance: 3 days
-    [3, 7, 6], # Crystal Peaks to Mystic Falls, distance: 6 days
-    [3, 8, 7], # Crystal Peaks to Sunset Harbor, distance: 7 days
-    [4, 9, 12], # Dragon's Hollow to Ancient Ruins of Zephyr, distance: 12 days
-    [5, 10, 9], # Frostwind Citadel to Shadowvale Village, distance: 9 days
-    [5, 11, 5], # Frostwind Citadel to Grimreach Caverns, distance: 5 days
-    [6, 12, 8], # Whispering Woods to Celestial City, distance: 8 days
-    [6, 13, 6], # Whispering Woods to Thundering Steppes, distance: 6 days
-    [7, 14, 10], # Mystic Falls to Sands of Time Desert, distance: 10 days
-    [7, 15, 7], # Mystic Falls to Serpent's Spine, distance: 7 days
-    [8, 16, 12], # Sunset Harbor to Abyssal Depths, distance: 12 days
-    [8, 17, 9], # Sunset Harbor to Stormwatch Keep, distance: 9 days
-    [9, 18, 5], # Ancient Ruins of Zephyr to Emberwood Grove, distance: 5 days
-    [9, 19, 8], # Ancient Ruins of Zephyr to Shrouded Peaks, distance: 8 days
-    [10, 20, 15], # Shadowvale Village to Lost City of Atlantis, distance: 15 days
-    [11, 20, 13], # Grimreach Caverns to Lost City of Atlantis, distance: 13 days
-    [12, 20, 11], # Celestial City to Lost City of Atlantis, distance: 11 days
-    [13, 20, 12], # Thundering Steppes to Lost City of Atlantis, distance: 12 days
-    [14, 20, 14], # Sands of Time Desert to Lost City of Atlantis, distance: 14 days
+    [1, 2, 5],  # Starter Town to Eldergrove, distance: 5 days
+    [1, 3, 8],  # Starter Town to Crystal Peaks, distance: 8 days
+    [1, 4, 10],  # Starter Town to Dragon's Hollow, distance: 10 days
+    [2, 5, 4],  # Eldergrove to Frostwind Citadel, distance: 4 days
+    [2, 6, 3],  # Eldergrove to Whispering Woods, distance: 3 days
+    [3, 7, 6],  # Crystal Peaks to Mystic Falls, distance: 6 days
+    [3, 8, 7],  # Crystal Peaks to Sunset Harbor, distance: 7 days
+    [4, 9, 12],  # Dragon's Hollow to Ancient Ruins of Zephyr, distance: 12 days
+    [5, 10, 9],  # Frostwind Citadel to Shadowvale Village, distance: 9 days
+    [5, 11, 5],  # Frostwind Citadel to Grimreach Caverns, distance: 5 days
+    [6, 12, 8],  # Whispering Woods to Celestial City, distance: 8 days
+    [6, 13, 6],  # Whispering Woods to Thundering Steppes, distance: 6 days
+    [7, 14, 10],  # Mystic Falls to Sands of Time Desert, distance: 10 days
+    [7, 15, 7],  # Mystic Falls to Serpent's Spine, distance: 7 days
+    [8, 16, 12],  # Sunset Harbor to Abyssal Depths, distance: 12 days
+    [8, 17, 9],  # Sunset Harbor to Stormwatch Keep, distance: 9 days
+    [9, 18, 5],  # Ancient Ruins of Zephyr to Emberwood Grove, distance: 5 days
+    [9, 19, 8],  # Ancient Ruins of Zephyr to Shrouded Peaks, distance: 8 days
+    [10, 20, 15],  # Shadowvale Village to Lost City of Atlantis, distance: 15 days
+    [11, 20, 13],  # Grimreach Caverns to Lost City of Atlantis, distance: 13 days
+    [12, 20, 11],  # Celestial City to Lost City of Atlantis, distance: 11 days
+    [13, 20, 12],  # Thundering Steppes to Lost City of Atlantis, distance: 12 days
+    [14, 20, 14],  # Sands of Time Desert to Lost City of Atlantis, distance: 14 days
 ]
 
 descriptions = {
@@ -103,280 +108,303 @@ descriptions = {
     17: "A fortress perched on the edge of a stormy sea, its towers standing vigilant against the forces of chaos.",
     18: "A forest ablaze with the colors of autumn, where fire magic dances among the leaves.",
     19: "Mist-shrouded peaks where echoes of the past linger, beckoning travelers to uncover their secrets.",
-    20: "A legendary city submerged beneath the waves, said to hold untold riches and ancient artifacts of great power."
+    20: "A legendary city submerged beneath the waves, said to hold untold riches and ancient artifacts of great power.",
 }
 
 race_descriptions = {
-    "human": ["Versatile and adaptable, humans are found in every corner of Arvantis, thriving in diverse environments and cultures.",
-              [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]],
-    
-    "elf": ["Graceful and attuned to nature, elves make their homes in ancient forests, secluded groves, and mystical glades where the magic of the land flows freely.",
-            [2, 6, 3]],
-    
-    "dwarf": ["Resilient and industrious, dwarves are known for their craftsmanship and love of the mountains. They carve out vast underground cities beneath the earth, mining precious metals and gems.",
-              [3, 4, 18]],
-    
-    "orc": ["Fierce and tribal, orcs favor harsh environments such as rugged mountains, barren deserts, and untamed wilderness. They build formidable fortresses and conquer lands through brute strength.",
-            [4, 14, 11]],
-    
-    "gnome": ["Inventive and curious, gnomes are drawn to places where knowledge and innovation flourish. They establish vibrant communities in bustling cities and hidden enclaves, delving into arcane mysteries and technological marvels.",
-              [12, 1, 7]],
-    
-    "halfling": ["Friendly and carefree, halflings prefer the comforts of home and the pleasures of good company. They dwell in quaint villages nestled amidst fertile farmlands and rolling hills, living off the land and sharing tales of adventure.",
-                 [1, 8, 10]],
-    
-    "chinese dragonborn": ["Noble and proud, chinese dragonborn are born warriors with a connection to ancient dragon heritage. They establish strongholds in rugged landscapes and seek to honor their draconic ancestors through deeds of valor.",
-                   [4, 3, 17]],
-    
-    "tiefling": ["Mysterious and enigmatic, tieflings are often misunderstood due to their infernal ancestry. They find solace in hidden corners of the world, where they can pursue their own agendas away from prying eyes.",
-                 [19, 16, 11]],
-    
-    "half-elf": ["Born of two worlds, half-elves navigate between human society and elven kinship, seeking belonging and acceptance wherever they roam. They often dwell in cosmopolitan cities and remote wilderness alike, embracing their dual heritage.",
-                 [1, 2, 15]],
-    
-    "half-orc": ["Torn between two cultures, half-orcs forge their own path through strength and determination. They often find kinship among other outcasts, forming tight-knit communities on the fringes of society.",
-                 [4, 10, 5]],
-    
-    "undead": ["Cursed and restless, the undead are beings trapped between life and death, their existence fueled by dark magic or vengeful spirits. They haunt desolate places and ancient crypts, seeking to fulfill their unending desires.",
-               [11, 9, 16]],
-    
-    "fairy": ["Playful and mischievous, fairies flit through enchanted forests and hidden meadows, reveling in the beauty of the natural world. They make their homes in hidden glens and secret clearings, far from the prying eyes of mortals.",
-              [6, 2, 15]],
-    
-    "centaur": ["Proud and noble, centaurs roam the open plains and lush meadows, their hooves pounding against the earth as they race beneath the open sky. They establish nomadic tribes and sacred hunting grounds, honoring the spirits of the land.",
-                [13, 15, 6]],
-    
-    "celestial": ["Radiant and divine, celestials embody the virtues of justice and righteousness, serving as beacons of hope in dark times. They dwell in celestial realms beyond mortal ken, intervening in the affairs of mortals when the balance of the world is at stake.",
-                  [12, 3, 20]],
-    
-    "demon": ["Twisted and malevolent, demons revel in chaos and destruction, their very presence warping the fabric of reality. They carve out domains in realms tainted by darkness, ruling over legions of fiendish minions with iron claws and fiery wrath.",
-              [16, 10, 11]],
-
-    "pixie": ["Whimsical and ethereal, pixies dance on the edges of dreams and reality, their laughter echoing through sun-dappled glades and moonlit clearings. They make their homes in hidden realms, where time flows differently and magic weaves its gentle embrace.",
-              [6, 2, 15]],
-              
-    "angel": ["Pure and luminous, angels are beings of divine grace and virtue, their presence bringing comfort and solace to those in need. They reside in celestial realms, watching over mortals with benevolent eyes and guiding them towards the path of righteousness.",
-              [12, 3, 20]],
-    
-    "dryad": ["Mysterious and elusive, dryads are spirits of the forest, bound to the ancient trees that shelter their sacred groves. They weave magic through the leaves and branches, protecting the natural world from harm and nurturing life with their gentle touch.",
-              [6, 2, 18]]
+    "human": [
+        "Versatile and adaptable, humans are found in every corner of Arvantis, thriving in diverse environments and cultures.",
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+    ],
+    "elf": [
+        "Graceful and attuned to nature, elves make their homes in ancient forests, secluded groves, and mystical glades where the magic of the land flows freely.",
+        [2, 6, 3],
+    ],
+    "dwarf": [
+        "Resilient and industrious, dwarves are known for their craftsmanship and love of the mountains. They carve out vast underground cities beneath the earth, mining precious metals and gems.",
+        [3, 4, 18],
+    ],
+    "orc": [
+        "Fierce and tribal, orcs favor harsh environments such as rugged mountains, barren deserts, and untamed wilderness. They build formidable fortresses and conquer lands through brute strength.",
+        [4, 14, 11],
+    ],
+    "gnome": [
+        "Inventive and curious, gnomes are drawn to places where knowledge and innovation flourish. They establish vibrant communities in bustling cities and hidden enclaves, delving into arcane mysteries and technological marvels.",
+        [12, 1, 7],
+    ],
+    "halfling": [
+        "Friendly and carefree, halflings prefer the comforts of home and the pleasures of good company. They dwell in quaint villages nestled amidst fertile farmlands and rolling hills, living off the land and sharing tales of adventure.",
+        [1, 8, 10],
+    ],
+    "chinese dragonborn": [
+        "Noble and proud, chinese dragonborn are born warriors with a connection to ancient dragon heritage. They establish strongholds in rugged landscapes and seek to honor their draconic ancestors through deeds of valor.",
+        [4, 3, 17],
+    ],
+    "tiefling": [
+        "Mysterious and enigmatic, tieflings are often misunderstood due to their infernal ancestry. They find solace in hidden corners of the world, where they can pursue their own agendas away from prying eyes.",
+        [19, 16, 11],
+    ],
+    "half-elf": [
+        "Born of two worlds, half-elves navigate between human society and elven kinship, seeking belonging and acceptance wherever they roam. They often dwell in cosmopolitan cities and remote wilderness alike, embracing their dual heritage.",
+        [1, 2, 15],
+    ],
+    "half-orc": [
+        "Torn between two cultures, half-orcs forge their own path through strength and determination. They often find kinship among other outcasts, forming tight-knit communities on the fringes of society.",
+        [4, 10, 5],
+    ],
+    "undead": [
+        "Cursed and restless, the undead are beings trapped between life and death, their existence fueled by dark magic or vengeful spirits. They haunt desolate places and ancient crypts, seeking to fulfill their unending desires.",
+        [11, 9, 16],
+    ],
+    "fairy": [
+        "Playful and mischievous, fairies flit through enchanted forests and hidden meadows, reveling in the beauty of the natural world. They make their homes in hidden glens and secret clearings, far from the prying eyes of mortals.",
+        [6, 2, 15],
+    ],
+    "centaur": [
+        "Proud and noble, centaurs roam the open plains and lush meadows, their hooves pounding against the earth as they race beneath the open sky. They establish nomadic tribes and sacred hunting grounds, honoring the spirits of the land.",
+        [13, 15, 6],
+    ],
+    "celestial": [
+        "Radiant and divine, celestials embody the virtues of justice and righteousness, serving as beacons of hope in dark times. They dwell in celestial realms beyond mortal ken, intervening in the affairs of mortals when the balance of the world is at stake.",
+        [12, 3, 20],
+    ],
+    "demon": [
+        "Twisted and malevolent, demons revel in chaos and destruction, their very presence warping the fabric of reality. They carve out domains in realms tainted by darkness, ruling over legions of fiendish minions with iron claws and fiery wrath.",
+        [16, 10, 11],
+    ],
+    "pixie": [
+        "Whimsical and ethereal, pixies dance on the edges of dreams and reality, their laughter echoing through sun-dappled glades and moonlit clearings. They make their homes in hidden realms, where time flows differently and magic weaves its gentle embrace.",
+        [6, 2, 15],
+    ],
+    "angel": [
+        "Pure and luminous, angels are beings of divine grace and virtue, their presence bringing comfort and solace to those in need. They reside in celestial realms, watching over mortals with benevolent eyes and guiding them towards the path of righteousness.",
+        [12, 3, 20],
+    ],
+    "dryad": [
+        "Mysterious and elusive, dryads are spirits of the forest, bound to the ancient trees that shelter their sacred groves. They weave magic through the leaves and branches, protecting the natural world from harm and nurturing life with their gentle touch.",
+        [6, 2, 18],
+    ],
 }
 
 race_stats = {
     "human": {
         "description": "Versatile and adaptable, humans are found in every corner of Arvantis, thriving in diverse environments and cultures.",
         "traits": [],
-        "strength":(10 + 0) + level * (10 + 0),
-        "endurance":(10 + 0) + level * (10 + 0),
-        "mana":(10 + 0) + level * (10 + 0),
-        "agility":(10 + 0) + level * (10 + 0)
+        "strength": (10 + 0) + level * (10 + 0),
+        "endurance": (10 + 0) + level * (10 + 0),
+        "mana": (10 + 0) + level * (10 + 0),
+        "agility": (10 + 0) + level * (10 + 0),
     },
     "elf": {
         "description": "Graceful and attuned to nature, elves make their homes in ancient forests, secluded groves, and mystical glades where the magic of the land flows freely.",
         "traits": [
             ["Graceful", [["agility", 2], ["strength", -2], ["endurance", -2]]],
-            ["Attuned to Nature", [["mana", 2]]]
+            ["Attuned to Nature", [["mana", 2]]],
         ],
-        "strength":(10 - 5) + level * (10 - 5),
-        "endurance":(10 - 5) + level * (10 - 5),
-        "mana":(10 + 5) + level * (10 + 5),
-        "agility":(10 + 5) + level * (10 + 5)
+        "strength": (10 - 5) + level * (10 - 5),
+        "endurance": (10 - 5) + level * (10 - 5),
+        "mana": (10 + 5) + level * (10 + 5),
+        "agility": (10 + 5) + level * (10 + 5),
     },
     "dwarf": {
         "description": "Resilient and industrious, dwarves are known for their craftsmanship and love of the mountains. They carve out vast underground cities beneath the earth, mining precious metals and gems.",
-        "traits": [
-            ["Resilient", [["strength", 2], ["endurance", 2], ["agility", -2]]]
-        ],
-        "strength":(10 + 5) + level * (10 + 5),
-        "endurance":(10 + 5) + level * (10 + 5),
-        "mana":(10 + 0) + level * (10 + 0),
-        "agility":(10 - 5) + level * (10 - 5)
+        "traits": [["Resilient", [["strength", 2], ["endurance", 2], ["agility", -2]]]],
+        "strength": (10 + 5) + level * (10 + 5),
+        "endurance": (10 + 5) + level * (10 + 5),
+        "mana": (10 + 0) + level * (10 + 0),
+        "agility": (10 - 5) + level * (10 - 5),
     },
     "orc": {
         "description": "Fierce and tribal, orcs favor harsh environments such as rugged mountains, barren deserts, and untamed wilderness. They build formidable fortresses and conquer lands through brute strength.",
         "traits": [
             ["Fierce", [["strength", 4], ["endurance", 2], ["mana", -4]]],
-            ["Tribal", [["agility", 2]]]
+            ["Tribal", [["agility", 2]]],
         ],
-        "strength":(10 + 8) + level * (10 + 8),
-        "endurance":(10 + 5) + level * (10 + 5),
-        "mana":(10 - 8) + level * (10 - 8),
-                "agility":(10 + 5) + level * (10 + 5)
+        "strength": (10 + 8) + level * (10 + 8),
+        "endurance": (10 + 5) + level * (10 + 5),
+        "mana": (10 - 8) + level * (10 - 8),
+        "agility": (10 + 5) + level * (10 + 5),
     },
     "gnome": {
         "description": "Inventive and curious, gnomes are drawn to places where knowledge and innovation flourish. They establish vibrant communities in bustling cities and hidden enclaves, delving into arcane mysteries and technological marvels.",
         "traits": [
             ["Inventive", [["mana", 4], ["agility", 2], ["strength", -4]]],
-            ["Curious", [["endurance", 2]]]
+            ["Curious", [["endurance", 2]]],
         ],
-        "strength":(10 - 8) + level * (10 - 8),
-        "endurance":(10 + 5) + level * (10 + 5),
-        "mana":(10 + 8) + level * (10 + 8),
-        "agility":(10 + 5) + level * (10 + 5)
+        "strength": (10 - 8) + level * (10 - 8),
+        "endurance": (10 + 5) + level * (10 + 5),
+        "mana": (10 + 8) + level * (10 + 8),
+        "agility": (10 + 5) + level * (10 + 5),
     },
     "halfling": {
         "description": "Friendly and carefree, halflings prefer the comforts of home and the pleasures of good company. They dwell in quaint villages nestled amidst fertile farmlands and rolling hills, living off the land and sharing tales of adventure.",
         "traits": [
             ["Friendly", [["endurance", 2], ["mana", -2]]],
-            ["Carefree", [["agility", 4], ["strength", -2]]]
+            ["Carefree", [["agility", 4], ["strength", -2]]],
         ],
-        "strength":(10 - 5) + level * (10 - 5),
-        "endurance":(10 + 5) + level * (10 + 5),
-        "mana":(10 - 5) + level * (10 - 5),
-        "agility":(10 + 8) + level * (10 + 8)
+        "strength": (10 - 5) + level * (10 - 5),
+        "endurance": (10 + 5) + level * (10 + 5),
+        "mana": (10 - 5) + level * (10 - 5),
+        "agility": (10 + 8) + level * (10 + 8),
     },
     "chinese dragonborn": {
         "description": "Noble and proud, chinese dragonborn are born warriors with a connection to ancient dragon heritage. They establish strongholds in rugged landscapes and seek to honor their draconic ancestors through deeds of valor.",
         "traits": [
             ["Noble", [["strength", 4], ["endurance", 4], ["mana", 4]]],
-            ["Proud", [["agility", 4]]]
+            ["Proud", [["agility", 4]]],
         ],
-        "strength":(10 + 8) + level * (10 + 8),
-        "endurance":(10 + 8) + level * (10 + 8),
-        "mana":(10 + 8) + level * (10 + 8),
-        "agility":(10 + 8) + level * (10 + 8)
+        "strength": (10 + 8) + level * (10 + 8),
+        "endurance": (10 + 8) + level * (10 + 8),
+        "mana": (10 + 8) + level * (10 + 8),
+        "agility": (10 + 8) + level * (10 + 8),
     },
     "tiefling": {
         "description": "Mysterious and enigmatic, tieflings are often misunderstood due to their infernal ancestry. They find solace in hidden corners of the world, where they can pursue their own agendas away from prying eyes.",
         "traits": [
             ["Mysterious", [["mana", 4], ["agility", 2], ["strength", -2]]],
-            ["Enigmatic", [["endurance", 2]]]
+            ["Enigmatic", [["endurance", 2]]],
         ],
-        "strength":(10 - 5) + level * (10 - 5),
-        "endurance":(10 + 5) + level * (10 + 5),
-        "mana":(10 + 8) + level * (10 + 8),
-        "agility":(10 + 5) + level * (10 + 5)
+        "strength": (10 - 5) + level * (10 - 5),
+        "endurance": (10 + 5) + level * (10 + 5),
+        "mana": (10 + 8) + level * (10 + 8),
+        "agility": (10 + 5) + level * (10 + 5),
     },
     "half-elf": {
         "description": "Born of two worlds, half-elves navigate between human society and elven kinship, seeking belonging and acceptance wherever they roam. They often dwell in cosmopolitan cities and remote wilderness alike, embracing their dual heritage.",
         "traits": [
             ["Dual Heritage", [["mana", 2]]],
-            ["Adaptable", [["strength", -2], ["endurance", -2]]]
+            ["Adaptable", [["strength", -2], ["endurance", -2]]],
         ],
-        "strength":(10 - 5) + level * (10 - 5),
-        "endurance":(10 - 5) + level * (10 - 5),
-        "mana":(10 + 5) + level * (10 + 5),
-        "agility":(10 + 0) + level * (10 + 0)
+        "strength": (10 - 5) + level * (10 - 5),
+        "endurance": (10 - 5) + level * (10 - 5),
+        "mana": (10 + 5) + level * (10 + 5),
+        "agility": (10 + 0) + level * (10 + 0),
     },
     "half-orc": {
         "description": "Born of orc and human ancestry, half-orcs often face prejudice from both societies. They are renowned for their strength and resilience, often finding their place as warriors, laborers, or mercenaries.",
         "traits": [
             ["Orcish Strength", [["strength", 4], ["endurance", 2], ["mana", -2]]],
-            ["Human Adaptability", [["agility", 2]]]
+            ["Human Adaptability", [["agility", 2]]],
         ],
-        "strength":(10 + 8) + level * (10 + 8),
-        "endurance":(10 + 5) + level * (10 + 5),
-        "mana":(10 - 5) + level * (10 - 5),
-        "agility":(10 + 5) + level * (10 + 5)
+        "strength": (10 + 8) + level * (10 + 8),
+        "endurance": (10 + 5) + level * (10 + 5),
+        "mana": (10 - 5) + level * (10 - 5),
+        "agility": (10 + 5) + level * (10 + 5),
     },
-        "undead": {
+    "undead": {
         "description": "Cursed and forsaken, the undead walk the realm as echoes of their former selves. Bound by dark magic or unresolved grievances, they often haunt desolate places or serve dark masters.",
         "traits": [
             ["Cursed Existence", [["endurance", 4], ["mana", 2], ["agility", -2]]],
-            ["Undead Resilience", [["strength", 2]]]
+            ["Undead Resilience", [["strength", 2]]],
         ],
-        "strength":(10 + 5) + level * (10 + 5),
-        "endurance":(10 + 8) + level * (10 + 8),
-        "mana":(10 + 5) + level * (10 + 5),
-        "agility":(10 - 5) + level * (10 - 5)
+        "strength": (10 + 5) + level * (10 + 5),
+        "endurance": (10 + 8) + level * (10 + 8),
+        "mana": (10 + 5) + level * (10 + 5),
+        "agility": (10 - 5) + level * (10 - 5),
     },
     "fairy": {
         "description": "Enigmatic and ethereal, fairies flit through the air on delicate wings, unseen by most mortals. They dwell in hidden realms of nature, where magic and whimsy hold sway.",
         "traits": [
             ["Ethereal Form", [["agility", 4], ["mana", 2], ["strength", -2]]],
-            ["Fleeting Presence", [["endurance", -2]]]
+            ["Fleeting Presence", [["endurance", -2]]],
         ],
-        "strength":(10 - 5) + level * (10 - 5),
-        "endurance":(10 - 5) + level * (10 - 5),
-        "mana":(10 + 5) + level * (10 + 5),
-        "agility":(10 + 8) + level * (10 + 8)
+        "strength": (10 - 5) + level * (10 - 5),
+        "endurance": (10 - 5) + level * (10 - 5),
+        "mana": (10 + 5) + level * (10 + 5),
+        "agility": (10 + 8) + level * (10 + 8),
     },
     "centaur": {
         "description": "Proud and majestic, centaurs are half-human, half-horse beings who roam vast plains and wooded glens. They embody the spirit of freedom and are renowned for their speed and strength.",
         "traits": [
             ["Equine Grace", [["agility", 4], ["endurance", 2], ["mana", -2]]],
-            ["Fleet-footed", [["strength", 2]]]
+            ["Fleet-footed", [["strength", 2]]],
         ],
-        "strength":(10 + 5) + level * (10 + 5),
-        "endurance":(10 + 5) + level * (10 + 5),
-        "mana":(10 - 5) + level * (10 - 5),
-        "agility":(10 + 8) + level * (10 + 8)
+        "strength": (10 + 5) + level * (10 + 5),
+        "endurance": (10 + 5) + level * (10 + 5),
+        "mana": (10 - 5) + level * (10 - 5),
+        "agility": (10 + 8) + level * (10 + 8),
     },
-            "celestial": {
-            "description": "Radiant and divine, celestials are beings of light and purity, serving as guardians of the heavens and protectors of mortal realms. They are imbued with celestial power and often intervene in the affairs of mortals to combat darkness and evil.",
-            "traits": [
-                ["Radiant Aura", [["mana", 4], ["endurance", 2], ["strength", -2]]],
-                ["Divine Blessing", [["agility", 2]]]
-            ],
-            "strength":(10 - 5) + level * (10 - 5),
-            "endurance":(10 + 5) + level * (10 + 5),
-            "mana":(10 + 8) + level * (10 + 8),
-            "agility":(10 + 5) + level * (10 + 5)
-        },
-        "demon": {
-            "description": "Infernal and malevolent, demons hail from the depths of the Abyss, where chaos reigns and suffering knows no end. They delight in corruption and destruction, seeking to spread chaos and consume souls.",
-            "traits": [
-                ["Infernal Power", [["strength", 4], ["mana", 2], ["endurance", -2]]],
-                ["Demonic Resilience", [["agility", 2]]]
-            ],
-            "strength":(10 + 8) + level * (10 + 8),
-            "endurance":(10 - 5) + level * (10 - 5),
-            "mana":(10 + 5) + level * (10 + 5),
-            "agility":(10 + 5) + level * (10 + 5)
-        },
-        "pixie": {
-                        "description": "Playful and mischievous, pixies are tiny fey creatures with delicate wings and boundless energy. They inhabit enchanted forests and shimmering meadows, where they frolic among flowers and trick unsuspecting travelers.",
-            "traits": [
-                ["Fey Magic", [["mana", 4], ["agility", 2], ["strength", -2]]],
-                ["Flighty Nature", [["endurance", -2]]]
-            ],
-            "strength":(10 - 5) + level * (10 - 5),
-            "endurance":(10 - 5) + level * (10 - 5),
-            "mana":(10 + 8) + level * (10 + 8),
-            "agility":(10 + 5) + level * (10 + 5)
-        },
-        "angel": {
-            "description": "Noble and celestial, angels are beings of pure light and virtue, serving as messengers of the divine and defenders of righteousness. They soar through the heavens on radiant wings, bringing hope and salvation to those in need.",
-            "traits": [
-                ["Divine Grace", [["mana", 4], ["endurance", 2], ["strength", -2]]],
-                ["Radiant Wings", [["agility", 2]]]
-            ],
-            "strength":(10 - 5) + level * (10 - 5),
-            "endurance":(10 + 5) + level * (10 + 5),
-            "mana":(10 + 8) + level * (10 + 8),
-            "agility":(10 + 5) + level * (10 + 5)
-        },
-        "dryad": {
-            "description": "Enigmatic and elusive, dryads are forest spirits bound to the trees they inhabit. They are guardians of nature, nurturing the woodlands and protecting them from harm. They rarely interact with mortals, preferring the company of the ancient trees.",
-            "traits": [
-                ["Forest Bound", [["mana", 4], ["agility", 2], ["strength", -2]]],
-                ["Nature's Blessing", [["endurance", 2]]]
-            ],
-            "strength":(10 - 5) + level * (10 - 5),
-            "endurance":(10 + 5) + level * (10 + 5),
-            "mana":(10 + 8) + level * (10 + 8),
-            "agility":(10 + 5) + level * (10 + 5)
-        }
+    "celestial": {
+        "description": "Radiant and divine, celestials are beings of light and purity, serving as guardians of the heavens and protectors of mortal realms. They are imbued with celestial power and often intervene in the affairs of mortals to combat darkness and evil.",
+        "traits": [
+            ["Radiant Aura", [["mana", 4], ["endurance", 2], ["strength", -2]]],
+            ["Divine Blessing", [["agility", 2]]],
+        ],
+        "strength": (10 - 5) + level * (10 - 5),
+        "endurance": (10 + 5) + level * (10 + 5),
+        "mana": (10 + 8) + level * (10 + 8),
+        "agility": (10 + 5) + level * (10 + 5),
+    },
+    "demon": {
+        "description": "Infernal and malevolent, demons hail from the depths of the Abyss, where chaos reigns and suffering knows no end. They delight in corruption and destruction, seeking to spread chaos and consume souls.",
+        "traits": [
+            ["Infernal Power", [["strength", 4], ["mana", 2], ["endurance", -2]]],
+            ["Demonic Resilience", [["agility", 2]]],
+        ],
+        "strength": (10 + 8) + level * (10 + 8),
+        "endurance": (10 - 5) + level * (10 - 5),
+        "mana": (10 + 5) + level * (10 + 5),
+        "agility": (10 + 5) + level * (10 + 5),
+    },
+    "pixie": {
+        "description": "Playful and mischievous, pixies are tiny fey creatures with delicate wings and boundless energy. They inhabit enchanted forests and shimmering meadows, where they frolic among flowers and trick unsuspecting travelers.",
+        "traits": [
+            ["Fey Magic", [["mana", 4], ["agility", 2], ["strength", -2]]],
+            ["Flighty Nature", [["endurance", -2]]],
+        ],
+        "strength": (10 - 5) + level * (10 - 5),
+        "endurance": (10 - 5) + level * (10 - 5),
+        "mana": (10 + 8) + level * (10 + 8),
+        "agility": (10 + 5) + level * (10 + 5),
+    },
+    "angel": {
+        "description": "Noble and celestial, angels are beings of pure light and virtue, serving as messengers of the divine and defenders of righteousness. They soar through the heavens on radiant wings, bringing hope and salvation to those in need.",
+        "traits": [
+            ["Divine Grace", [["mana", 4], ["endurance", 2], ["strength", -2]]],
+            ["Radiant Wings", [["agility", 2]]],
+        ],
+        "strength": (10 - 5) + level * (10 - 5),
+        "endurance": (10 + 5) + level * (10 + 5),
+        "mana": (10 + 8) + level * (10 + 8),
+        "agility": (10 + 5) + level * (10 + 5),
+    },
+    "dryad": {
+        "description": "Enigmatic and elusive, dryads are forest spirits bound to the trees they inhabit. They are guardians of nature, nurturing the woodlands and protecting them from harm. They rarely interact with mortals, preferring the company of the ancient trees.",
+        "traits": [
+            ["Forest Bound", [["mana", 4], ["agility", 2], ["strength", -2]]],
+            ["Nature's Blessing", [["endurance", 2]]],
+        ],
+        "strength": (10 - 5) + level * (10 - 5),
+        "endurance": (10 + 5) + level * (10 + 5),
+        "mana": (10 + 8) + level * (10 + 8),
+        "agility": (10 + 5) + level * (10 + 5),
+    },
 }
 
 
-
-@app.route('/racestats', methods=['GET'])
+@app.route("/racestats", methods=["GET"])
 def racestats():
     r = request.args.get("race")
-    return [race_stats[r]['strength'], race_stats[r]['endurance'], race_stats[r]['mana'], race_stats[r]['agility'], race_stats[r]['traits']]
-    
+    return [
+        race_stats[r]["strength"],
+        race_stats[r]["endurance"],
+        race_stats[r]["mana"],
+        race_stats[r]["agility"],
+        race_stats[r]["traits"],
+    ]
 
 
 class Player:
+    """A player."""
+
     def __init__(self, name, race, mana, stamina, hp, level):
-        
+        """Constructs a player"""
         self.name = name
         self.race = race
         self.level = level
         self.xp = 0
-        self.xp_required = base_xp + (self.level ** 2 * scaling_factor)
-        
+        self.xp_required = base_xp + (self.level**2 * scaling_factor)
+
         self.max_hp = hp
         self.hp = self.max_hp
         self.max_mana = mana
@@ -384,415 +412,439 @@ class Player:
         self.max_stamina = stamina
         self.stamina = self.max_stamina
         self.raceStats = {
-    "human": {
-        "description": "Versatile and adaptable, humans are found in every corner of Arvantis, thriving in diverse environments and cultures.",
-        "traits": [],
-        "strength":(10 + 0) + self.level * (10 + 0),
-        "endurance":(10 + 0) + self.level * (10 + 0),
-        "mana":(10 + 0) + self.level * (10 + 0),
-        "agility":(10 + 0) + self.level * (10 + 0)
-    },
-    "elf": {
-        "description": "Graceful and attuned to nature, elves make their homes in ancient forests, secluded groves, and mystical glades where the magic of the land flows freely.",
-        "traits": [
-            ["Graceful", [["agility", 2], ["strength", -2], ["endurance", -2]]],
-            ["Attuned to Nature", [["mana", 2]]]
-        ],
-        "strength":(10 - 5) + self.level * (10 - 5),
-        "endurance":(10 - 5) + self.level * (10 - 5),
-        "mana":(10 + 5) + self.level * (10 + 5),
-        "agility":(10 + 5) + self.level * (10 + 5)
-    },
-    "dwarf": {
-        "description": "Resilient and industrious, dwarves are known for their craftsmanship and love of the mountains. They carve out vast underground cities beneath the earth, mining precious metals and gems.",
-        "traits": [
-            ["Resilient", [["strength", 2], ["endurance", 2], ["agility", -2]]]
-        ],
-        "strength":(10 + 5) + self.level * (10 + 5),
-        "endurance":(10 + 5) + self.level * (10 + 5),
-        "mana":(10 + 0) + self.level * (10 + 0),
-        "agility":(10 - 5) + self.level * (10 - 5)
-    },
-    "orc": {
-        "description": "Fierce and tribal, orcs favor harsh environments such as rugged mountains, barren deserts, and untamed wilderness. They build formidable fortresses and conquer lands through brute strength.",
-        "traits": [
-            ["Fierce", [["strength", 4], ["endurance", 2], ["mana", -4]]],
-            ["Tribal", [["agility", 2]]]
-        ],
-        "strength":(10 + 8) + self.level * (10 + 8),
-        "endurance":(10 + 5) + self.level * (10 + 5),
-        "mana":(10 - 8) + self.level * (10 - 8),
-                "agility":(10 + 5) + self.level * (10 + 5)
-    },
-    "gnome": {
-        "description": "Inventive and curious, gnomes are drawn to places where knowledge and innovation flourish. They establish vibrant communities in bustling cities and hidden enclaves, delving into arcane mysteries and technological marvels.",
-        "traits": [
-            ["Inventive", [["mana", 4], ["agility", 2], ["strength", -4]]],
-            ["Curious", [["endurance", 2]]]
-        ],
-        "strength":(10 - 8) + self.level * (10 - 8),
-        "endurance":(10 + 5) + self.level * (10 + 5),
-        "mana":(10 + 8) + self.level * (10 + 8),
-        "agility":(10 + 5) + self.level * (10 + 5)
-    },
-    "halfling": {
-        "description": "Friendly and carefree, halflings prefer the comforts of home and the pleasures of good company. They dwell in quaint villages nestled amidst fertile farmlands and rolling hills, living off the land and sharing tales of adventure.",
-        "traits": [
-            ["Friendly", [["endurance", 2], ["mana", -2]]],
-            ["Carefree", [["agility", 4], ["strength", -2]]]
-        ],
-        "strength":(10 - 5) + self.level * (10 - 5),
-        "endurance":(10 + 5) + self.level * (10 + 5),
-        "mana":(10 - 5) + self.level * (10 - 5),
-        "agility":(10 + 8) + self.level * (10 + 8)
-    },
-        "chinese dragonborn": {
-        "description": "Noble and proud, chinese dragonborn are born warriors with a connection to ancient dragon heritage. They establish strongholds in rugged landscapes and seek to honor their draconic ancestors through deeds of valor.",
-        "traits": [
-            ["Noble", [["strength", 4], ["endurance", 4], ["mana", 4]]],
-            ["Proud", [["agility", 4]]]
-        ],
-        "strength":(10 + 8) + self.level * (10 + 8),
-        "endurance":(10 + 8) + self.level * (10 + 8),
-        "mana":(10 + 8) + self.level * (10 + 8),
-        "agility":(10 + 8) + self.level * (10 + 8)
-    },
-    "tiefling": {
-        "description": "Mysterious and enigmatic, tieflings are often misunderstood due to their infernal ancestry. They find solace in hidden corners of the world, where they can pursue their own agendas away from prying eyes.",
-        "traits": [
-            ["Mysterious", [["mana", 4], ["agility", 2], ["strength", -2]]],
-            ["Enigmatic", [["endurance", 2]]]
-        ],
-        "strength":(10 - 5) + self.level * (10 - 5),
-        "endurance":(10 + 5) + self.level * (10 + 5),
-        "mana":(10 + 8) + self.level * (10 + 8),
-        "agility":(10 + 5) + self.level * (10 + 5)
-    },
-    "half-elf": {
-        "description": "Born of two worlds, half-elves navigate between human society and elven kinship, seeking belonging and acceptance wherever they roam. They often dwell in cosmopolitan cities and remote wilderness alike, embracing their dual heritage.",
-        "traits": [
-            ["Dual Heritage", [["mana", 2]]],
-            ["Adaptable", [["strength", -2], ["endurance", -2]]]
-        ],
-        "strength":(10 - 5) + self.level * (10 - 5),
-        "endurance":(10 - 5) + self.level * (10 - 5),
-        "mana":(10 + 5) + self.level * (10 + 5),
-        "agility":(10 + 0) + self.level * (10 + 0)
-    },
-    "half-orc": {
-        "description": "Born of orc and human ancestry, half-orcs often face prejudice from both societies. They are renowned for their strength and resilience, often finding their place as warriors, laborers, or mercenaries.",
-        "traits": [
-            ["Orcish Strength", [["strength", 4], ["endurance", 2], ["mana", -2]]],
-            ["Human Adaptability", [["agility", 2]]]
-        ],
-        "strength":(10 + 8) + self.level * (10 + 8),
-        "endurance":(10 + 5) + self.level * (10 + 5),
-        "mana":(10 - 5) + self.level * (10 - 5),
-        "agility":(10 + 5) + self.level * (10 + 5)
-    },
-        "undead": {
-        "description": "Cursed and forsaken, the undead walk the realm as echoes of their former selves. Bound by dark magic or unresolved grievances, they often haunt desolate places or serve dark masters.",
-        "traits": [
-            ["Cursed Existence", [["endurance", 4], ["mana", 2], ["agility", -2]]],
-            ["Undead Resilience", [["strength", 2]]]
-        ],
-        "strength":(10 + 5) + self.level * (10 + 5),
-        "endurance":(10 + 8) + self.level * (10 + 8),
-        "mana":(10 + 5) + self.level * (10 + 5),
-        "agility":(10 - 5) + self.level * (10 - 5)
-    },
-    "fairy": {
-        "description": "Enigmatic and ethereal, fairies flit through the air on delicate wings, unseen by most mortals. They dwell in hidden realms of nature, where magic and whimsy hold sway.",
-        "traits": [
-            ["Ethereal Form", [["agility", 4], ["mana", 2], ["strength", -2]]],
-            ["Fleeting Presence", [["endurance", -2]]]
-        ],
-        "strength":(10 - 5) + self.level * (10 - 5),
-        "endurance":(10 - 5) + self.level * (10 - 5),
-        "mana":(10 + 5) + self.level * (10 + 5),
-        "agility":(10 + 8) + self.level * (10 + 8)
-    },
-    "centaur": {
-        "description": "Proud and majestic, centaurs are half-human, half-horse beings who roam vast plains and wooded glens. They embody the spirit of freedom and are renowned for their speed and strength.",
-        "traits": [
-            ["Equine Grace", [["agility", 4], ["endurance", 2], ["mana", -2]]],
-            ["Fleet-footed", [["strength", 2]]]
-        ],
-        "strength":(10 + 5) + self.level * (10 + 5),
-        "endurance":(10 + 5) + self.level * (10 + 5),
-        "mana":(10 - 5) + self.level * (10 - 5),
-        "agility":(10 + 8) + self.level * (10 + 8)
-    },
+            "human": {
+                "description": "Versatile and adaptable, humans are found in every corner of Arvantis, thriving in diverse environments and cultures.",
+                "traits": [],
+                "strength": (10 + 0) + self.level * (10 + 0),
+                "endurance": (10 + 0) + self.level * (10 + 0),
+                "mana": (10 + 0) + self.level * (10 + 0),
+                "agility": (10 + 0) + self.level * (10 + 0),
+            },
+            "elf": {
+                "description": "Graceful and attuned to nature, elves make their homes in ancient forests, secluded groves, and mystical glades where the magic of the land flows freely.",
+                "traits": [
+                    ["Graceful", [["agility", 2], ["strength", -2], ["endurance", -2]]],
+                    ["Attuned to Nature", [["mana", 2]]],
+                ],
+                "strength": (10 - 5) + self.level * (10 - 5),
+                "endurance": (10 - 5) + self.level * (10 - 5),
+                "mana": (10 + 5) + self.level * (10 + 5),
+                "agility": (10 + 5) + self.level * (10 + 5),
+            },
+            "dwarf": {
+                "description": "Resilient and industrious, dwarves are known for their craftsmanship and love of the mountains. They carve out vast underground cities beneath the earth, mining precious metals and gems.",
+                "traits": [
+                    ["Resilient", [["strength", 2], ["endurance", 2], ["agility", -2]]]
+                ],
+                "strength": (10 + 5) + self.level * (10 + 5),
+                "endurance": (10 + 5) + self.level * (10 + 5),
+                "mana": (10 + 0) + self.level * (10 + 0),
+                "agility": (10 - 5) + self.level * (10 - 5),
+            },
+            "orc": {
+                "description": "Fierce and tribal, orcs favor harsh environments such as rugged mountains, barren deserts, and untamed wilderness. They build formidable fortresses and conquer lands through brute strength.",
+                "traits": [
+                    ["Fierce", [["strength", 4], ["endurance", 2], ["mana", -4]]],
+                    ["Tribal", [["agility", 2]]],
+                ],
+                "strength": (10 + 8) + self.level * (10 + 8),
+                "endurance": (10 + 5) + self.level * (10 + 5),
+                "mana": (10 - 8) + self.level * (10 - 8),
+                "agility": (10 + 5) + self.level * (10 + 5),
+            },
+            "gnome": {
+                "description": "Inventive and curious, gnomes are drawn to places where knowledge and innovation flourish. They establish vibrant communities in bustling cities and hidden enclaves, delving into arcane mysteries and technological marvels.",
+                "traits": [
+                    ["Inventive", [["mana", 4], ["agility", 2], ["strength", -4]]],
+                    ["Curious", [["endurance", 2]]],
+                ],
+                "strength": (10 - 8) + self.level * (10 - 8),
+                "endurance": (10 + 5) + self.level * (10 + 5),
+                "mana": (10 + 8) + self.level * (10 + 8),
+                "agility": (10 + 5) + self.level * (10 + 5),
+            },
+            "halfling": {
+                "description": "Friendly and carefree, halflings prefer the comforts of home and the pleasures of good company. They dwell in quaint villages nestled amidst fertile farmlands and rolling hills, living off the land and sharing tales of adventure.",
+                "traits": [
+                    ["Friendly", [["endurance", 2], ["mana", -2]]],
+                    ["Carefree", [["agility", 4], ["strength", -2]]],
+                ],
+                "strength": (10 - 5) + self.level * (10 - 5),
+                "endurance": (10 + 5) + self.level * (10 + 5),
+                "mana": (10 - 5) + self.level * (10 - 5),
+                "agility": (10 + 8) + self.level * (10 + 8),
+            },
+            "chinese dragonborn": {
+                "description": "Noble and proud, chinese dragonborn are born warriors with a connection to ancient dragon heritage. They establish strongholds in rugged landscapes and seek to honor their draconic ancestors through deeds of valor.",
+                "traits": [
+                    ["Noble", [["strength", 4], ["endurance", 4], ["mana", 4]]],
+                    ["Proud", [["agility", 4]]],
+                ],
+                "strength": (10 + 8) + self.level * (10 + 8),
+                "endurance": (10 + 8) + self.level * (10 + 8),
+                "mana": (10 + 8) + self.level * (10 + 8),
+                "agility": (10 + 8) + self.level * (10 + 8),
+            },
+            "tiefling": {
+                "description": "Mysterious and enigmatic, tieflings are often misunderstood due to their infernal ancestry. They find solace in hidden corners of the world, where they can pursue their own agendas away from prying eyes.",
+                "traits": [
+                    ["Mysterious", [["mana", 4], ["agility", 2], ["strength", -2]]],
+                    ["Enigmatic", [["endurance", 2]]],
+                ],
+                "strength": (10 - 5) + self.level * (10 - 5),
+                "endurance": (10 + 5) + self.level * (10 + 5),
+                "mana": (10 + 8) + self.level * (10 + 8),
+                "agility": (10 + 5) + self.level * (10 + 5),
+            },
+            "half-elf": {
+                "description": "Born of two worlds, half-elves navigate between human society and elven kinship, seeking belonging and acceptance wherever they roam. They often dwell in cosmopolitan cities and remote wilderness alike, embracing their dual heritage.",
+                "traits": [
+                    ["Dual Heritage", [["mana", 2]]],
+                    ["Adaptable", [["strength", -2], ["endurance", -2]]],
+                ],
+                "strength": (10 - 5) + self.level * (10 - 5),
+                "endurance": (10 - 5) + self.level * (10 - 5),
+                "mana": (10 + 5) + self.level * (10 + 5),
+                "agility": (10 + 0) + self.level * (10 + 0),
+            },
+            "half-orc": {
+                "description": "Born of orc and human ancestry, half-orcs often face prejudice from both societies. They are renowned for their strength and resilience, often finding their place as warriors, laborers, or mercenaries.",
+                "traits": [
+                    [
+                        "Orcish Strength",
+                        [["strength", 4], ["endurance", 2], ["mana", -2]],
+                    ],
+                    ["Human Adaptability", [["agility", 2]]],
+                ],
+                "strength": (10 + 8) + self.level * (10 + 8),
+                "endurance": (10 + 5) + self.level * (10 + 5),
+                "mana": (10 - 5) + self.level * (10 - 5),
+                "agility": (10 + 5) + self.level * (10 + 5),
+            },
+            "undead": {
+                "description": "Cursed and forsaken, the undead walk the realm as echoes of their former selves. Bound by dark magic or unresolved grievances, they often haunt desolate places or serve dark masters.",
+                "traits": [
+                    [
+                        "Cursed Existence",
+                        [["endurance", 4], ["mana", 2], ["agility", -2]],
+                    ],
+                    ["Undead Resilience", [["strength", 2]]],
+                ],
+                "strength": (10 + 5) + self.level * (10 + 5),
+                "endurance": (10 + 8) + self.level * (10 + 8),
+                "mana": (10 + 5) + self.level * (10 + 5),
+                "agility": (10 - 5) + self.level * (10 - 5),
+            },
+            "fairy": {
+                "description": "Enigmatic and ethereal, fairies flit through the air on delicate wings, unseen by most mortals. They dwell in hidden realms of nature, where magic and whimsy hold sway.",
+                "traits": [
+                    ["Ethereal Form", [["agility", 4], ["mana", 2], ["strength", -2]]],
+                    ["Fleeting Presence", [["endurance", -2]]],
+                ],
+                "strength": (10 - 5) + self.level * (10 - 5),
+                "endurance": (10 - 5) + self.level * (10 - 5),
+                "mana": (10 + 5) + self.level * (10 + 5),
+                "agility": (10 + 8) + self.level * (10 + 8),
+            },
+            "centaur": {
+                "description": "Proud and majestic, centaurs are half-human, half-horse beings who roam vast plains and wooded glens. They embody the spirit of freedom and are renowned for their speed and strength.",
+                "traits": [
+                    ["Equine Grace", [["agility", 4], ["endurance", 2], ["mana", -2]]],
+                    ["Fleet-footed", [["strength", 2]]],
+                ],
+                "strength": (10 + 5) + self.level * (10 + 5),
+                "endurance": (10 + 5) + self.level * (10 + 5),
+                "mana": (10 - 5) + self.level * (10 - 5),
+                "agility": (10 + 8) + self.level * (10 + 8),
+            },
             "celestial": {
-            "description": "Radiant and divine, celestials are beings of light and purity, serving as guardians of the heavens and protectors of mortal realms. They are imbued with celestial power and often intervene in the affairs of mortals to combat darkness and evil.",
-            "traits": [
-                ["Radiant Aura", [["mana", 4], ["endurance", 2], ["strength", -2]]],
-                ["Divine Blessing", [["agility", 2]]]
-            ],
-            "strength":(10 - 5) + self.level * (10 - 5),
-            "endurance":(10 + 5) + self.level * (10 + 5),
-            "mana":(10 + 8) + self.level * (10 + 8),
-            "agility":(10 + 5) + self.level * (10 + 5)
-        },
-        "demon": {
-            "description": "Infernal and malevolent, demons hail from the depths of the Abyss, where chaos reigns and suffering knows no end. They delight in corruption and destruction, seeking to spread chaos and consume souls.",
-            "traits": [
-                ["Infernal Power", [["strength", 4], ["mana", 2], ["endurance", -2]]],
-                ["Demonic Resilience", [["agility", 2]]]
-            ],
-            "strength":(10 + 8) + self.level * (10 + 8),
-            "endurance":(10 - 5) + self.level * (10 - 5),
-            "mana":(10 + 5) + self.level * (10 + 5),
-            "agility":(10 + 5) + self.level * (10 + 5)
-        },
-        "pixie": {
-                        "description": "Playful and mischievous, pixies are tiny fey creatures with delicate wings and boundless energy. They inhabit enchanted forests and shimmering meadows, where they frolic among flowers and trick unsuspecting travelers.",
-            "traits": [
-                ["Fey Magic", [["mana", 4], ["agility", 2], ["strength", -2]]],
-                ["Flighty Nature", [["endurance", -2]]]
-            ],
-            "strength":(10 - 5) + self.level * (10 - 5),
-            "endurance":(10 - 5) + self.level * (10 - 5),
-            "mana":(10 + 8) + self.level * (10 + 8),
-            "agility":(10 + 5) + self.level * (10 + 5)
-        },
-        "angel": {
-            "description": "Noble and celestial, angels are beings of pure light and virtue, serving as messengers of the divine and defenders of righteousness. They soar through the heavens on radiant wings, bringing hope and salvation to those in need.",
-            "traits": [
-                ["Divine Grace", [["mana", 4], ["endurance", 2], ["strength", -2]]],
-                ["Radiant Wings", [["agility", 2]]]
-            ],
-            "strength":(10 - 5) + self.level * (10 - 5),
-            "endurance":(10 + 5) + self.level * (10 + 5),
-            "mana":(10 + 8) + self.level * (10 + 8),
-            "agility":(10 + 5) + self.level * (10 + 5)
-        },
-        "dryad": {
-            "description": "Enigmatic and elusive, dryads are forest spirits bound to the trees they inhabit. They are guardians of nature, nurturing the woodlands and protecting them from harm. They rarely interact with mortals, preferring the company of the ancient trees.",
-            "traits": [
-                ["Forest Bound", [["mana", 4], ["agility", 2], ["strength", -2]]],
-                ["Nature's Blessing", [["endurance", 2]]]
-            ],
-            "strength":(10 - 5) + self.level * (10 - 5),
-            "endurance":(10 + 5) + self.level * (10 + 5),
-            "mana":(10 + 8) + self.level * (10 + 8),
-            "agility":(10 + 5) + self.level * (10 + 5)
+                "description": "Radiant and divine, celestials are beings of light and purity, serving as guardians of the heavens and protectors of mortal realms. They are imbued with celestial power and often intervene in the affairs of mortals to combat darkness and evil.",
+                "traits": [
+                    ["Radiant Aura", [["mana", 4], ["endurance", 2], ["strength", -2]]],
+                    ["Divine Blessing", [["agility", 2]]],
+                ],
+                "strength": (10 - 5) + self.level * (10 - 5),
+                "endurance": (10 + 5) + self.level * (10 + 5),
+                "mana": (10 + 8) + self.level * (10 + 8),
+                "agility": (10 + 5) + self.level * (10 + 5),
+            },
+            "demon": {
+                "description": "Infernal and malevolent, demons hail from the depths of the Abyss, where chaos reigns and suffering knows no end. They delight in corruption and destruction, seeking to spread chaos and consume souls.",
+                "traits": [
+                    [
+                        "Infernal Power",
+                        [["strength", 4], ["mana", 2], ["endurance", -2]],
+                    ],
+                    ["Demonic Resilience", [["agility", 2]]],
+                ],
+                "strength": (10 + 8) + self.level * (10 + 8),
+                "endurance": (10 - 5) + self.level * (10 - 5),
+                "mana": (10 + 5) + self.level * (10 + 5),
+                "agility": (10 + 5) + self.level * (10 + 5),
+            },
+            "pixie": {
+                "description": "Playful and mischievous, pixies are tiny fey creatures with delicate wings and boundless energy. They inhabit enchanted forests and shimmering meadows, where they frolic among flowers and trick unsuspecting travelers.",
+                "traits": [
+                    ["Fey Magic", [["mana", 4], ["agility", 2], ["strength", -2]]],
+                    ["Flighty Nature", [["endurance", -2]]],
+                ],
+                "strength": (10 - 5) + self.level * (10 - 5),
+                "endurance": (10 - 5) + self.level * (10 - 5),
+                "mana": (10 + 8) + self.level * (10 + 8),
+                "agility": (10 + 5) + self.level * (10 + 5),
+            },
+            "angel": {
+                "description": "Noble and celestial, angels are beings of pure light and virtue, serving as messengers of the divine and defenders of righteousness. They soar through the heavens on radiant wings, bringing hope and salvation to those in need.",
+                "traits": [
+                    ["Divine Grace", [["mana", 4], ["endurance", 2], ["strength", -2]]],
+                    ["Radiant Wings", [["agility", 2]]],
+                ],
+                "strength": (10 - 5) + self.level * (10 - 5),
+                "endurance": (10 + 5) + self.level * (10 + 5),
+                "mana": (10 + 8) + self.level * (10 + 8),
+                "agility": (10 + 5) + self.level * (10 + 5),
+            },
+            "dryad": {
+                "description": "Enigmatic and elusive, dryads are forest spirits bound to the trees they inhabit. They are guardians of nature, nurturing the woodlands and protecting them from harm. They rarely interact with mortals, preferring the company of the ancient trees.",
+                "traits": [
+                    ["Forest Bound", [["mana", 4], ["agility", 2], ["strength", -2]]],
+                    ["Nature's Blessing", [["endurance", 2]]],
+                ],
+                "strength": (10 - 5) + self.level * (10 - 5),
+                "endurance": (10 + 5) + self.level * (10 + 5),
+                "mana": (10 + 8) + self.level * (10 + 8),
+                "agility": (10 + 5) + self.level * (10 + 5),
+            },
         }
-}
         self.stats = self.raceStats[race]
 
     def level_up(self):
+        """Levels up the player"""
         self.level += 1
         self.xp = 0
         # Adjust stats, HP, mana, etc. based on level increase
         self.stats_update()
 
     def stats_update(self):
+        """Update the player stats"""
         self.raceStats = {
-    "human": {
-        "description": "Versatile and adaptable, humans are found in every corner of Arvantis, thriving in diverse environments and cultures.",
-        "traits": [],
-        "strength":(10 + 0) + self.level * (10 + 0),
-        "endurance":(10 + 0) + self.level * (10 + 0),
-        "mana":(10 + 0) + self.level * (10 + 0),
-        "agility":(10 + 0) + self.level * (10 + 0)
-    },
-    "elf": {
-        "description": "Graceful and attuned to nature, elves make their homes in ancient forests, secluded groves, and mystical glades where the magic of the land flows freely.",
-        "traits": [
-            ["Graceful", [["agility", 2], ["strength", -2], ["endurance", -2]]],
-            ["Attuned to Nature", [["mana", 2]]]
-        ],
-        "strength":(10 - 5) + self.level * (10 - 5),
-        "endurance":(10 - 5) + self.level * (10 - 5),
-        "mana":(10 + 5) + self.level * (10 + 5),
-        "agility":(10 + 5) + self.level * (10 + 5)
-    },
-    "dwarf": {
-        "description": "Resilient and industrious, dwarves are known for their craftsmanship and love of the mountains. They carve out vast underground cities beneath the earth, mining precious metals and gems.",
-        "traits": [
-            ["Resilient", [["strength", 2], ["endurance", 2], ["agility", -2]]]
-        ],
-        "strength":(10 + 5) + self.level * (10 + 5),
-        "endurance":(10 + 5) + self.level * (10 + 5),
-        "mana":(10 + 0) + self.level * (10 + 0),
-        "agility":(10 - 5) + self.level * (10 - 5)
-    },
-    "orc": {
-        "description": "Fierce and tribal, orcs favor harsh environments such as rugged mountains, barren deserts, and untamed wilderness. They build formidable fortresses and conquer lands through brute strength.",
-        "traits": [
-            ["Fierce", [["strength", 4], ["endurance", 2], ["mana", -4]]],
-            ["Tribal", [["agility", 2]]]
-        ],
-        "strength":(10 + 8) + self.level * (10 + 8),
-        "endurance":(10 + 5) + self.level * (10 + 5),
-        "mana":(10 - 8) + self.level * (10 - 8),
-                "agility":(10 + 5) + self.level * (10 + 5)
-    },
-    "gnome": {
-        "description": "Inventive and curious, gnomes are drawn to places where knowledge and innovation flourish. They establish vibrant communities in bustling cities and hidden enclaves, delving into arcane mysteries and technological marvels.",
-        "traits": [
-            ["Inventive", [["mana", 4], ["agility", 2], ["strength", -4]]],
-            ["Curious", [["endurance", 2]]]
-        ],
-        "strength":(10 - 8) + self.level * (10 - 8),
-        "endurance":(10 + 5) + self.level * (10 + 5),
-        "mana":(10 + 8) + self.level * (10 + 8),
-        "agility":(10 + 5) + self.level * (10 + 5)
-    },
-    "halfling": {
-        "description": "Friendly and carefree, halflings prefer the comforts of home and the pleasures of good company. They dwell in quaint villages nestled amidst fertile farmlands and rolling hills, living off the land and sharing tales of adventure.",
-        "traits": [
-            ["Friendly", [["endurance", 2], ["mana", -2]]],
-            ["Carefree", [["agility", 4], ["strength", -2]]]
-        ],
-        "strength":(10 - 5) + self.level * (10 - 5),
-        "endurance":(10 + 5) + self.level * (10 + 5),
-        "mana":(10 - 5) + self.level * (10 - 5),
-        "agility":(10 + 8) + self.level * (10 + 8)
-    },
-        "chinese dragonborn": {
-        "description": "Noble and proud, chinese dragonborn are born warriors with a connection to ancient dragon heritage. They establish strongholds in rugged landscapes and seek to honor their draconic ancestors through deeds of valor.",
-        "traits": [
-            ["Noble", [["strength", 4], ["endurance", 4], ["mana", 4]]],
-            ["Proud", [["agility", 4]]]
-        ],
-        "strength":(10 + 8) + self.level * (10 + 8),
-        "endurance":(10 + 8) + self.level * (10 + 8),
-        "mana":(10 + 8) + self.level * (10 + 8),
-        "agility":(10 + 8) + self.level * (10 + 8)
-    },
-    "tiefling": {
-        "description": "Mysterious and enigmatic, tieflings are often misunderstood due to their infernal ancestry. They find solace in hidden corners of the world, where they can pursue their own agendas away from prying eyes.",
-        "traits": [
-            ["Mysterious", [["mana", 4], ["agility", 2], ["strength", -2]]],
-            ["Enigmatic", [["endurance", 2]]]
-        ],
-        "strength":(10 - 5) + self.level * (10 - 5),
-        "endurance":(10 + 5) + self.level * (10 + 5),
-        "mana":(10 + 8) + self.level * (10 + 8),
-        "agility":(10 + 5) + self.level * (10 + 5)
-    },
-    "half-elf": {
-        "description": "Born of two worlds, half-elves navigate between human society and elven kinship, seeking belonging and acceptance wherever they roam. They often dwell in cosmopolitan cities and remote wilderness alike, embracing their dual heritage.",
-        "traits": [
-            ["Dual Heritage", [["mana", 2]]],
-            ["Adaptable", [["strength", -2], ["endurance", -2]]]
-        ],
-        "strength":(10 - 5) + self.level * (10 - 5),
-        "endurance":(10 - 5) + self.level * (10 - 5),
-        "mana":(10 + 5) + self.level * (10 + 5),
-        "agility":(10 + 0) + self.level * (10 + 0)
-    },
-    "half-orc": {
-        "description": "Born of orc and human ancestry, half-orcs often face prejudice from both societies. They are renowned for their strength and resilience, often finding their place as warriors, laborers, or mercenaries.",
-        "traits": [
-            ["Orcish Strength", [["strength", 4], ["endurance", 2], ["mana", -2]]],
-            ["Human Adaptability", [["agility", 2]]]
-        ],
-        "strength":(10 + 8) + self.level * (10 + 8),
-        "endurance":(10 + 5) + self.level * (10 + 5),
-        "mana":(10 - 5) + self.level * (10 - 5),
-        "agility":(10 + 5) + self.level * (10 + 5)
-    },
-        "undead": {
-        "description": "Cursed and forsaken, the undead walk the realm as echoes of their former selves. Bound by dark magic or unresolved grievances, they often haunt desolate places or serve dark masters.",
-        "traits": [
-            ["Cursed Existence", [["endurance", 4], ["mana", 2], ["agility", -2]]],
-            ["Undead Resilience", [["strength", 2]]]
-        ],
-        "strength":(10 + 5) + self.level * (10 + 5),
-        "endurance":(10 + 8) + self.level * (10 + 8),
-        "mana":(10 + 5) + self.level * (10 + 5),
-        "agility":(10 - 5) + self.level * (10 - 5)
-    },
-    "fairy": {
-        "description": "Enigmatic and ethereal, fairies flit through the air on delicate wings, unseen by most mortals. They dwell in hidden realms of nature, where magic and whimsy hold sway.",
-        "traits": [
-            ["Ethereal Form", [["agility", 4], ["mana", 2], ["strength", -2]]],
-            ["Fleeting Presence", [["endurance", -2]]]
-        ],
-        "strength":(10 - 5) + self.level * (10 - 5),
-        "endurance":(10 - 5) + self.level * (10 - 5),
-        "mana":(10 + 5) + self.level * (10 + 5),
-        "agility":(10 + 8) + self.level * (10 + 8)
-    },
-    "centaur": {
-        "description": "Proud and majestic, centaurs are half-human, half-horse beings who roam vast plains and wooded glens. They embody the spirit of freedom and are renowned for their speed and strength.",
-        "traits": [
-            ["Equine Grace", [["agility", 4], ["endurance", 2], ["mana", -2]]],
-            ["Fleet-footed", [["strength", 2]]]
-        ],
-        "strength":(10 + 5) + self.level * (10 + 5),
-        "endurance":(10 + 5) + self.level * (10 + 5),
-        "mana":(10 - 5) + self.level * (10 - 5),
-        "agility":(10 + 8) + self.level * (10 + 8)
-    },
+            "human": {
+                "description": "Versatile and adaptable, humans are found in every corner of Arvantis, thriving in diverse environments and cultures.",
+                "traits": [],
+                "strength": (10 + 0) + self.level * (10 + 0),
+                "endurance": (10 + 0) + self.level * (10 + 0),
+                "mana": (10 + 0) + self.level * (10 + 0),
+                "agility": (10 + 0) + self.level * (10 + 0),
+            },
+            "elf": {
+                "description": "Graceful and attuned to nature, elves make their homes in ancient forests, secluded groves, and mystical glades where the magic of the land flows freely.",
+                "traits": [
+                    ["Graceful", [["agility", 2], ["strength", -2], ["endurance", -2]]],
+                    ["Attuned to Nature", [["mana", 2]]],
+                ],
+                "strength": (10 - 5) + self.level * (10 - 5),
+                "endurance": (10 - 5) + self.level * (10 - 5),
+                "mana": (10 + 5) + self.level * (10 + 5),
+                "agility": (10 + 5) + self.level * (10 + 5),
+            },
+            "dwarf": {
+                "description": "Resilient and industrious, dwarves are known for their craftsmanship and love of the mountains. They carve out vast underground cities beneath the earth, mining precious metals and gems.",
+                "traits": [
+                    ["Resilient", [["strength", 2], ["endurance", 2], ["agility", -2]]]
+                ],
+                "strength": (10 + 5) + self.level * (10 + 5),
+                "endurance": (10 + 5) + self.level * (10 + 5),
+                "mana": (10 + 0) + self.level * (10 + 0),
+                "agility": (10 - 5) + self.level * (10 - 5),
+            },
+            "orc": {
+                "description": "Fierce and tribal, orcs favor harsh environments such as rugged mountains, barren deserts, and untamed wilderness. They build formidable fortresses and conquer lands through brute strength.",
+                "traits": [
+                    ["Fierce", [["strength", 4], ["endurance", 2], ["mana", -4]]],
+                    ["Tribal", [["agility", 2]]],
+                ],
+                "strength": (10 + 8) + self.level * (10 + 8),
+                "endurance": (10 + 5) + self.level * (10 + 5),
+                "mana": (10 - 8) + self.level * (10 - 8),
+                "agility": (10 + 5) + self.level * (10 + 5),
+            },
+            "gnome": {
+                "description": "Inventive and curious, gnomes are drawn to places where knowledge and innovation flourish. They establish vibrant communities in bustling cities and hidden enclaves, delving into arcane mysteries and technological marvels.",
+                "traits": [
+                    ["Inventive", [["mana", 4], ["agility", 2], ["strength", -4]]],
+                    ["Curious", [["endurance", 2]]],
+                ],
+                "strength": (10 - 8) + self.level * (10 - 8),
+                "endurance": (10 + 5) + self.level * (10 + 5),
+                "mana": (10 + 8) + self.level * (10 + 8),
+                "agility": (10 + 5) + self.level * (10 + 5),
+            },
+            "halfling": {
+                "description": "Friendly and carefree, halflings prefer the comforts of home and the pleasures of good company. They dwell in quaint villages nestled amidst fertile farmlands and rolling hills, living off the land and sharing tales of adventure.",
+                "traits": [
+                    ["Friendly", [["endurance", 2], ["mana", -2]]],
+                    ["Carefree", [["agility", 4], ["strength", -2]]],
+                ],
+                "strength": (10 - 5) + self.level * (10 - 5),
+                "endurance": (10 + 5) + self.level * (10 + 5),
+                "mana": (10 - 5) + self.level * (10 - 5),
+                "agility": (10 + 8) + self.level * (10 + 8),
+            },
+            "chinese dragonborn": {
+                "description": "Noble and proud, chinese dragonborn are born warriors with a connection to ancient dragon heritage. They establish strongholds in rugged landscapes and seek to honor their draconic ancestors through deeds of valor.",
+                "traits": [
+                    ["Noble", [["strength", 4], ["endurance", 4], ["mana", 4]]],
+                    ["Proud", [["agility", 4]]],
+                ],
+                "strength": (10 + 8) + self.level * (10 + 8),
+                "endurance": (10 + 8) + self.level * (10 + 8),
+                "mana": (10 + 8) + self.level * (10 + 8),
+                "agility": (10 + 8) + self.level * (10 + 8),
+            },
+            "tiefling": {
+                "description": "Mysterious and enigmatic, tieflings are often misunderstood due to their infernal ancestry. They find solace in hidden corners of the world, where they can pursue their own agendas away from prying eyes.",
+                "traits": [
+                    ["Mysterious", [["mana", 4], ["agility", 2], ["strength", -2]]],
+                    ["Enigmatic", [["endurance", 2]]],
+                ],
+                "strength": (10 - 5) + self.level * (10 - 5),
+                "endurance": (10 + 5) + self.level * (10 + 5),
+                "mana": (10 + 8) + self.level * (10 + 8),
+                "agility": (10 + 5) + self.level * (10 + 5),
+            },
+            "half-elf": {
+                "description": "Born of two worlds, half-elves navigate between human society and elven kinship, seeking belonging and acceptance wherever they roam. They often dwell in cosmopolitan cities and remote wilderness alike, embracing their dual heritage.",
+                "traits": [
+                    ["Dual Heritage", [["mana", 2]]],
+                    ["Adaptable", [["strength", -2], ["endurance", -2]]],
+                ],
+                "strength": (10 - 5) + self.level * (10 - 5),
+                "endurance": (10 - 5) + self.level * (10 - 5),
+                "mana": (10 + 5) + self.level * (10 + 5),
+                "agility": (10 + 0) + self.level * (10 + 0),
+            },
+            "half-orc": {
+                "description": "Born of orc and human ancestry, half-orcs often face prejudice from both societies. They are renowned for their strength and resilience, often finding their place as warriors, laborers, or mercenaries.",
+                "traits": [
+                    [
+                        "Orcish Strength",
+                        [["strength", 4], ["endurance", 2], ["mana", -2]],
+                    ],
+                    ["Human Adaptability", [["agility", 2]]],
+                ],
+                "strength": (10 + 8) + self.level * (10 + 8),
+                "endurance": (10 + 5) + self.level * (10 + 5),
+                "mana": (10 - 5) + self.level * (10 - 5),
+                "agility": (10 + 5) + self.level * (10 + 5),
+            },
+            "undead": {
+                "description": "Cursed and forsaken, the undead walk the realm as echoes of their former selves. Bound by dark magic or unresolved grievances, they often haunt desolate places or serve dark masters.",
+                "traits": [
+                    [
+                        "Cursed Existence",
+                        [["endurance", 4], ["mana", 2], ["agility", -2]],
+                    ],
+                    ["Undead Resilience", [["strength", 2]]],
+                ],
+                "strength": (10 + 5) + self.level * (10 + 5),
+                "endurance": (10 + 8) + self.level * (10 + 8),
+                "mana": (10 + 5) + self.level * (10 + 5),
+                "agility": (10 - 5) + self.level * (10 - 5),
+            },
+            "fairy": {
+                "description": "Enigmatic and ethereal, fairies flit through the air on delicate wings, unseen by most mortals. They dwell in hidden realms of nature, where magic and whimsy hold sway.",
+                "traits": [
+                    ["Ethereal Form", [["agility", 4], ["mana", 2], ["strength", -2]]],
+                    ["Fleeting Presence", [["endurance", -2]]],
+                ],
+                "strength": (10 - 5) + self.level * (10 - 5),
+                "endurance": (10 - 5) + self.level * (10 - 5),
+                "mana": (10 + 5) + self.level * (10 + 5),
+                "agility": (10 + 8) + self.level * (10 + 8),
+            },
+            "centaur": {
+                "description": "Proud and majestic, centaurs are half-human, half-horse beings who roam vast plains and wooded glens. They embody the spirit of freedom and are renowned for their speed and strength.",
+                "traits": [
+                    ["Equine Grace", [["agility", 4], ["endurance", 2], ["mana", -2]]],
+                    ["Fleet-footed", [["strength", 2]]],
+                ],
+                "strength": (10 + 5) + self.level * (10 + 5),
+                "endurance": (10 + 5) + self.level * (10 + 5),
+                "mana": (10 - 5) + self.level * (10 - 5),
+                "agility": (10 + 8) + self.level * (10 + 8),
+            },
             "celestial": {
-            "description": "Radiant and divine, celestials are beings of light and purity, serving as guardians of the heavens and protectors of mortal realms. They are imbued with celestial power and often intervene in the affairs of mortals to combat darkness and evil.",
-            "traits": [
-                ["Radiant Aura", [["mana", 4], ["endurance", 2], ["strength", -2]]],
-                ["Divine Blessing", [["agility", 2]]]
-            ],
-            "strength":(10 - 5) + self.level * (10 - 5),
-            "endurance":(10 + 5) + self.level * (10 + 5),
-            "mana":(10 + 8) + self.level * (10 + 8),
-            "agility":(10 + 5) + self.level * (10 + 5)
-        },
-        "demon": {
-            "description": "Infernal and malevolent, demons hail from the depths of the Abyss, where chaos reigns and suffering knows no end. They delight in corruption and destruction, seeking to spread chaos and consume souls.",
-            "traits": [
-                ["Infernal Power", [["strength", 4], ["mana", 2], ["endurance", -2]]],
-                ["Demonic Resilience", [["agility", 2]]]
-            ],
-            "strength":(10 + 8) + self.level * (10 + 8),
-            "endurance":(10 - 5) + self.level * (10 - 5),
-            "mana":(10 + 5) + self.level * (10 + 5),
-            "agility":(10 + 5) + self.level * (10 + 5)
-        },
-        "pixie": {
-                        "description": "Playful and mischievous, pixies are tiny fey creatures with delicate wings and boundless energy. They inhabit enchanted forests and shimmering meadows, where they frolic among flowers and trick unsuspecting travelers.",
-            "traits": [
-                ["Fey Magic", [["mana", 4], ["agility", 2], ["strength", -2]]],
-                ["Flighty Nature", [["endurance", -2]]]
-            ],
-            "strength":(10 - 5) + self.level * (10 - 5),
-            "endurance":(10 - 5) + self.level * (10 - 5),
-            "mana":(10 + 8) + self.level * (10 + 8),
-            "agility":(10 + 5) + self.level * (10 + 5)
-        },
-        "angel": {
-            "description": "Noble and celestial, angels are beings of pure light and virtue, serving as messengers of the divine and defenders of righteousness. They soar through the heavens on radiant wings, bringing hope and salvation to those in need.",
-            "traits": [
-                ["Divine Grace", [["mana", 4], ["endurance", 2], ["strength", -2]]],
-                ["Radiant Wings", [["agility", 2]]]
-            ],
-            "strength":(10 - 5) + self.level * (10 - 5),
-            "endurance":(10 + 5) + self.level * (10 + 5),
-            "mana":(10 + 8) + self.level * (10 + 8),
-            "agility":(10 + 5) + self.level * (10 + 5)
-        },
-        "dryad": {
-            "description": "Enigmatic and elusive, dryads are forest spirits bound to the trees they inhabit. They are guardians of nature, nurturing the woodlands and protecting them from harm. They rarely interact with mortals, preferring the company of the ancient trees.",
-            "traits": [
-                ["Forest Bound", [["mana", 4], ["agility", 2], ["strength", -2]]],
-                ["Nature's Blessing", [["endurance", 2]]]
-            ],
-            "strength":(10 - 5) + self.level * (10 - 5),
-            "endurance":(10 + 5) + self.level * (10 + 5),
-            "mana":(10 + 8) + self.level * (10 + 8),
-            "agility":(10 + 5) + self.level * (10 + 5)
+                "description": "Radiant and divine, celestials are beings of light and purity, serving as guardians of the heavens and protectors of mortal realms. They are imbued with celestial power and often intervene in the affairs of mortals to combat darkness and evil.",
+                "traits": [
+                    ["Radiant Aura", [["mana", 4], ["endurance", 2], ["strength", -2]]],
+                    ["Divine Blessing", [["agility", 2]]],
+                ],
+                "strength": (10 - 5) + self.level * (10 - 5),
+                "endurance": (10 + 5) + self.level * (10 + 5),
+                "mana": (10 + 8) + self.level * (10 + 8),
+                "agility": (10 + 5) + self.level * (10 + 5),
+            },
+            "demon": {
+                "description": "Infernal and malevolent, demons hail from the depths of the Abyss, where chaos reigns and suffering knows no end. They delight in corruption and destruction, seeking to spread chaos and consume souls.",
+                "traits": [
+                    [
+                        "Infernal Power",
+                        [["strength", 4], ["mana", 2], ["endurance", -2]],
+                    ],
+                    ["Demonic Resilience", [["agility", 2]]],
+                ],
+                "strength": (10 + 8) + self.level * (10 + 8),
+                "endurance": (10 - 5) + self.level * (10 - 5),
+                "mana": (10 + 5) + self.level * (10 + 5),
+                "agility": (10 + 5) + self.level * (10 + 5),
+            },
+            "pixie": {
+                "description": "Playful and mischievous, pixies are tiny fey creatures with delicate wings and boundless energy. They inhabit enchanted forests and shimmering meadows, where they frolic among flowers and trick unsuspecting travelers.",
+                "traits": [
+                    ["Fey Magic", [["mana", 4], ["agility", 2], ["strength", -2]]],
+                    ["Flighty Nature", [["endurance", -2]]],
+                ],
+                "strength": (10 - 5) + self.level * (10 - 5),
+                "endurance": (10 - 5) + self.level * (10 - 5),
+                "mana": (10 + 8) + self.level * (10 + 8),
+                "agility": (10 + 5) + self.level * (10 + 5),
+            },
+            "angel": {
+                "description": "Noble and celestial, angels are beings of pure light and virtue, serving as messengers of the divine and defenders of righteousness. They soar through the heavens on radiant wings, bringing hope and salvation to those in need.",
+                "traits": [
+                    ["Divine Grace", [["mana", 4], ["endurance", 2], ["strength", -2]]],
+                    ["Radiant Wings", [["agility", 2]]],
+                ],
+                "strength": (10 - 5) + self.level * (10 - 5),
+                "endurance": (10 + 5) + self.level * (10 + 5),
+                "mana": (10 + 8) + self.level * (10 + 8),
+                "agility": (10 + 5) + self.level * (10 + 5),
+            },
+            "dryad": {
+                "description": "Enigmatic and elusive, dryads are forest spirits bound to the trees they inhabit. They are guardians of nature, nurturing the woodlands and protecting them from harm. They rarely interact with mortals, preferring the company of the ancient trees.",
+                "traits": [
+                    ["Forest Bound", [["mana", 4], ["agility", 2], ["strength", -2]]],
+                    ["Nature's Blessing", [["endurance", 2]]],
+                ],
+                "strength": (10 - 5) + self.level * (10 - 5),
+                "endurance": (10 + 5) + self.level * (10 + 5),
+                "mana": (10 + 8) + self.level * (10 + 8),
+                "agility": (10 + 5) + self.level * (10 + 5),
+            },
         }
-}
         player_stats = self.raceStats[self.race]
 
         self.stats = player_stats
 
         mana = 100 + player_stats["mana"] * level_scaling_rate
         stamina = 100 + player_stats["endurance"] * endurance_scaling_rate
-        xp_required = base_xp + (self.level ** 2 * scaling_factor)
-        hp = 100 + (player_stats["endurance"]*endurance_scaling_rate) + (level*level_scaling_rate) + (player_stats["strength"] * strength_factor)
-
+        xp_required = base_xp + (self.level**2 * scaling_factor)
+        hp = (
+            100
+            + (player_stats["endurance"] * endurance_scaling_rate)
+            + (level * level_scaling_rate)
+            + (player_stats["strength"] * strength_factor)
+        )
 
         self.xp = 0
         self.xp_required = xp_required
@@ -804,36 +856,45 @@ class Player:
         self.stamina = self.max_stamina
 
     def gain_xp(self, amount):
+        """Gives the player experience points"""
         self.xp += amount
         if self.xp >= self.xp_required:
             self.level_up()
 
     def take_damage(self, damage):
+        """Decreases the player's health"""
         self.hp -= damage
 
 
 def reset_visited(l):
+    """Resets a visited place"""
     for i in l:
         l[i][1] = "U"
     return l
 
-def find_neighbors(x): #takes in variable for reference
+
+def find_neighbors(x):  # takes in variable for reference
+    """Finds the neighbours of a node"""
     neighbors = []
     for node in nodes:
         if node[0] == x or node[1] == x:
             neighbors.append(locations[[i for i in node if i != x][0]][0])
     return neighbors
 
-def find_neighborsindex(x): #takes in variable for reference
+
+def find_neighborsindex(x):  # takes in variable for reference
+    """Finds the neighbours of a node, but returns the indices for those neighbours"""
     neighbors = []
     for node in nodes:
         if node[0] == x or node[1] == x:
             neighbors.append([i for i in node if i != x][0])
     return neighbors
 
+
 player = 0
 
-@app.route('/', methods=['GET', 'POST'])
+
+@app.route("/", methods=["GET", "POST"])
 def index():
     global in_combat
     global player_combat_count
@@ -851,40 +912,66 @@ def index():
         global hp
         global hpmax
         global player
-        if 'name' in session and 'race' in session:
-            return render_template("game.html", name=session['name'], race=session['race'], option_stats={
-                "mana": [player.mana, player.max_mana],
-                "stamina": [player.stamina, player.max_stamina]
-            }, level=player.level, xp=player.xp, xpmax=player.xp_required, hp=player.hp, hpmax=player.max_hp)
-        elif request.method == 'POST':
-            session['name'] = request.form['name']
-            session['race'] = request.form['race']
-            current_location = random.choice(race_descriptions[session['race']][1])
+        if "name" in session and "race" in session:
+            return render_template(
+                "game.html",
+                name=session["name"],
+                race=session["race"],
+                option_stats={
+                    "mana": [player.mana, player.max_mana],
+                    "stamina": [player.stamina, player.max_stamina],
+                },
+                level=player.level,
+                xp=player.xp,
+                xpmax=player.xp_required,
+                hp=player.hp,
+                hpmax=player.max_hp,
+            )
+        elif request.method == "POST":
+            session["name"] = request.form["name"]
+            session["race"] = request.form["race"]
+            current_location = random.choice(race_descriptions[session["race"]][1])
             locations = reset_visited(locations)
             locations[current_location][1] = "V"
-            mana = 100 + race_stats[session['race']]["mana"] * level_scaling_rate
-            stamina = 100 + race_stats[session['race']]["endurance"] * endurance_scaling_rate
-            maxmana = 100 + race_stats[session['race']]["mana"] * level_scaling_rate
-            maxstamina = 100 + race_stats[session['race']]["endurance"] * endurance_scaling_rate
+            mana = 100 + race_stats[session["race"]]["mana"] * level_scaling_rate
+            stamina = (
+                100 + race_stats[session["race"]]["endurance"] * endurance_scaling_rate
+            )
+            maxmana = 100 + race_stats[session["race"]]["mana"] * level_scaling_rate
+            maxstamina = (
+                100 + race_stats[session["race"]]["endurance"] * endurance_scaling_rate
+            )
             xp = 0
-            xp_required = base_xp + (level ** 2 * scaling_factor)
-            hp = 100 + (race_stats[session['race']]["endurance"]*endurance_scaling_rate) + (level*level_scaling_rate) + (race_stats[session['race']]["strength"] * strength_factor)
-            hpmax = 100 + (race_stats[session['race']]["endurance"]*endurance_scaling_rate) + (level*level_scaling_rate) + (race_stats[session['race']]["strength"] * strength_factor)
-            player = Player(session['name'], session['race'], mana, stamina, hp, level)
-            return redirect(url_for('game'))
+            xp_required = base_xp + (level**2 * scaling_factor)
+            hp = (
+                100
+                + (race_stats[session["race"]]["endurance"] * endurance_scaling_rate)
+                + (level * level_scaling_rate)
+                + (race_stats[session["race"]]["strength"] * strength_factor)
+            )
+            hpmax = (
+                100
+                + (race_stats[session["race"]]["endurance"] * endurance_scaling_rate)
+                + (level * level_scaling_rate)
+                + (race_stats[session["race"]]["strength"] * strength_factor)
+            )
+            player = Player(session["name"], session["race"], mana, stamina, hp, level)
+            return redirect(url_for("game"))
         else:
             return render_template("signup.html")
     except Exception as e:
         print(e)
         session.clear()
-        return redirect(url_for('index'))
+        return redirect(url_for("index"))
 
-@app.route('/endsession')
+
+@app.route("/endsession")
 def endsession():
     session.clear()
-    return redirect(url_for('index'))
+    return redirect(url_for("index"))
 
-@app.route('/level', methods=['GET', 'POST'])
+
+@app.route("/level", methods=["GET", "POST"])
 def levelss():
     if request.method == "GET":
         return redirect(url_for("index"))
@@ -893,27 +980,39 @@ def levelss():
         player.level_up()
         return str(player.level)
 
-@app.route('/game')
+
+@app.route("/game")
 def game():
     global in_combat
     global player_combat_count
     in_combat = False
     player_combat_count = 0
     try:
-        #session.clear()
-        if 'name' in session and 'race' in session:
-            return render_template("game.html", name=session['name'], race=session['race'], option_stats={
-                "mana": [player.mana, player.max_mana],
-                "stamina": [player.stamina, player.max_stamina]
-            }, level=player.level, xp=player.xp, xpmax=player.xp_required, hp=player.hp, hpmax=player.max_hp)
+        # session.clear()
+        if "name" in session and "race" in session:
+            return render_template(
+                "game.html",
+                name=session["name"],
+                race=session["race"],
+                option_stats={
+                    "mana": [player.mana, player.max_mana],
+                    "stamina": [player.stamina, player.max_stamina],
+                },
+                level=player.level,
+                xp=player.xp,
+                xpmax=player.xp_required,
+                hp=player.hp,
+                hpmax=player.max_hp,
+            )
         else:
-            return redirect(url_for('index'))
+            return redirect(url_for("index"))
     except Exception as e:
         print(e)
         session.clear()
-        return redirect(url_for('index'))
+        return redirect(url_for("index"))
 
-@app.route('/find_neighbors', methods=['GET'])
+
+@app.route("/find_neighbors", methods=["GET"])
 def return_neighbors():
     neighbors = find_neighbors(current_location)
     neighborsindex = find_neighborsindex(current_location)
@@ -930,29 +1029,48 @@ def return_neighbors():
         form += f"""<button class="locbutton disable-{disable}" id="{i}" onclick='moveto("{i}")'>{neighborsindex[n]} - {i}</button>"""
     return form
 
-@app.route('/location', methods=['GET'])
+
+@app.route("/location", methods=["GET"])
 def return_location():
     return f"<span style='color: {locations[current_location][2]}'>{locations[current_location][0]}</span>"
 
-@app.route('/getstats', methods=['GET'])
-def getstats():
-    return list(map(int, [player.hp, player.max_hp, player.mana, player.max_mana, player.stamina, player.max_stamina, player.xp, player.xp_required]))
 
-@app.route('/getmap', methods=['GET'])
+@app.route("/getstats", methods=["GET"])
+def getstats():
+    return list(
+        map(
+            int,
+            [
+                player.hp,
+                player.max_hp,
+                player.mana,
+                player.max_mana,
+                player.stamina,
+                player.max_stamina,
+                player.xp,
+                player.xp_required,
+            ],
+        )
+    )
+
+
+@app.route("/getmap", methods=["GET"])
 def getmap():
     m = generate_html_tree(locations, nodes, current_location)
     return m
 
-@app.route('/dsc', methods=['GET'])
+
+@app.route("/dsc", methods=["GET"])
 def getdsc():
     n = request.args.get("n")
     return descriptions[int(n)]
 
-@app.route('/fd', methods=['GET'])
+
+@app.route("/fd", methods=["GET"])
 def getl():
     if in_combat:
         return "no"
-    
+
     else:
         s = request.args.get("s")
         t = request.args.get("t")
@@ -960,15 +1078,17 @@ def getl():
             s = current_location
         return f"{str(find_distance(int(s), int(t)))}KM"
 
-@app.route('/getlvl', methods=['POST'])
+
+@app.route("/getlvl", methods=["POST"])
 def gggg():
     global player
     return str(player.level)
 
-@app.route('/moveto', methods=['GET'])
+
+@app.route("/moveto", methods=["GET"])
 def move_to():
     if in_combat:
-        return 'no bueno'
+        return "no bueno"
     global current_location
     newlocation = request.args.get("loc")
     for i in locations:
@@ -987,6 +1107,7 @@ def move_to():
                             return "no bueno"
     return "no bueno"
 
+
 # @app.route('/validateCost', methods=['GET'])
 # def validateCost():
 #     loc = request.args.get("loc")
@@ -1003,88 +1124,51 @@ def move_to():
 #                             return "no bueno"
 #     return "no bueno"
 
-#player combat
+# player combat
+
 
 attacks = {
-    "Slash": {
-        "damage": 20,
-        "cost": 10
-    },
-    "Stab": {
-        "damage": 25,
-        "cost": 15
-    },
-    "Mana Blast": {
-        "damage": 30,
-        "cost": 20
-    }
+    "Slash": {"damage": 20, "cost": 10},
+    "Stab": {"damage": 25, "cost": 15},
+    "Mana Blast": {"damage": 30, "cost": 20},
 }
 
 monsters = {
-    "Goblin": {
-        "health": 50,
-        "damage": 10,
-        "defense": 5,
-        "boss": False
-    },
-    "Orc": {
-        "health": 80,
-        "damage": 15,
-        "defense": 8,
-        "boss": False
-    },
-    "Dragon": {
-        "health": 200,
-        "damage": 30,
-        "defense": 20,
-        "boss": True
-    },
-    "Skeleton": {
-        "health": 40,
-        "damage": 8,
-        "defense": 3,
-        "boss": False
-    },
-    "Zombie": {
-        "health": 70,
-        "damage": 12,
-        "defense": 6,
-        "boss": False
-    },
-    "Werewolf": {
-        "health": 100,
-        "damage": 18,
-        "defense": 10,
-        "boss": False
-    },
-    "Kraken": {
-        "health": 250,
-        "damage": 35,
-        "defense": 25,
-        "boss": True
-    }
+    "Goblin": {"health": 50, "damage": 10, "defense": 5, "boss": False},
+    "Orc": {"health": 80, "damage": 15, "defense": 8, "boss": False},
+    "Dragon": {"health": 200, "damage": 30, "defense": 20, "boss": True},
+    "Skeleton": {"health": 40, "damage": 8, "defense": 3, "boss": False},
+    "Zombie": {"health": 70, "damage": 12, "defense": 6, "boss": False},
+    "Werewolf": {"health": 100, "damage": 18, "defense": 10, "boss": False},
+    "Kraken": {"health": 250, "damage": 35, "defense": 25, "boss": True},
 }
 
-nonboss = ['Goblin', 'Orc', 'Skeleton', 'Zombie', 'Werewolf']
-boss = ['Dragon', 'Kraken']
+nonboss = ["Goblin", "Orc", "Skeleton", "Zombie", "Werewolf"]
+boss = ["Dragon", "Kraken"]
 
 current_combat = 0
 
-#every 3 player combats, encounter a boss
+# every 3 player combats, encounter a boss
+
 
 class Combat:
+    """The combat state"""
+
     def __init__(self, hp, m, mlevel, pas, cas) -> None:
-        self.turn = 0 # player
-        self.enemyhp = hp * (mlevel+3)/2
+        """Creates a combat state"""
+        self.turn = 0  # player
+        self.enemyhp = hp * (mlevel + 3) / 2
         self.monster = m
         self.level = mlevel
         self.pas = pas
         self.cas = cas
 
+
 bossrn = False
 
-@app.route('/combat', methods=['POST'])
-def combat(): 
+
+@app.route("/combat", methods=["POST"])
+def combat():
     global current_combat
     global in_combat
     global player_combat_count
@@ -1095,7 +1179,7 @@ def combat():
     data = []
     if state == "start" and in_combat == False:
         in_combat = True
-        data.append('confirmed')
+        data.append("confirmed")
         if player_combat_count == 4:
             bossrn = True
             player_combat_count = 0
@@ -1104,26 +1188,28 @@ def combat():
         else:
             player_combat_count += 1
             monster = random.choice(nonboss)
-            bosss = ''
+            bosss = ""
         mlevel = random.randint(1, player.level)
         pas = {}
         for a in attacks:
-            pas[a] = (attacks[a]['damage'] * ((player.level + 1)/2))
+            pas[a] = attacks[a]["damage"] * ((player.level + 1) / 2)
         cas = {}
         for a in attacks:
-            cas[a] = (attacks[a]['cost'] * ((player.level + 1)/2))
-        current_combat = Combat(monsters[monster]['health'], monster, mlevel, pas, cas)
-        data.append(f"you have encountered a level {mlevel} {bosss}{monster}!<br><span class='g'>{current_combat.enemyhp}HP</span>")
-        l = ''
+            cas[a] = attacks[a]["cost"] * ((player.level + 1) / 2)
+        current_combat = Combat(monsters[monster]["health"], monster, mlevel, pas, cas)
+        data.append(
+            f"you have encountered a level {mlevel} {bosss}{monster}!<br><span class='g'>{current_combat.enemyhp}HP</span>"
+        )
+        l = ""
         for a in attacks:
-            if a == 'Mana Blast':
-                if attacks[a]['cost'] > player.mana:
+            if a == "Mana Blast":
+                if attacks[a]["cost"] > player.mana:
                     l += f"""<button class='disable-True' onclick='sendattack(this)' id='{a}'>{a} - {pas[a]} DMG ({cas[a]})</button>"""
                 else:
                     l += f"""<button class='disable-False' onclick='sendattack(this)' id='{a}'>{a} - {pas[a]} DMG ({cas[a]})</button>"""
-                
+
             else:
-                if attacks[a]['cost'] > player.stamina:
+                if attacks[a]["cost"] > player.stamina:
                     l += f"""<button class='disable-True' onclick='sendattack(this)' id='{a}'>{a} - {pas[a]} DMG ({cas[a]})</button>"""
                 else:
                     l += f"""<button class='disable-False' onclick='sendattack(this)' id='{a}'>{a} - {pas[a]} DMG ({cas[a]})</button>"""
@@ -1135,9 +1221,9 @@ def combat():
         pas = current_combat.pas
         cas = current_combat.cas
 
-        data.append('confirmed')
+        data.append("confirmed")
         go = False
-        if a == 'Mana Blast':
+        if a == "Mana Blast":
             if player.mana >= cas[a]:
                 go = True
                 player.mana -= cas[a]
@@ -1148,15 +1234,19 @@ def combat():
                 player.stamina -= cas[a]
                 current_combat.enemyhp -= pas[a]
 
-        if cas['Slash'] > player.stamina and cas['Stab'] > player.stamina and cas['Mana Blast'] > player.mana:
+        if (
+            cas["Slash"] > player.stamina
+            and cas["Stab"] > player.stamina
+            and cas["Mana Blast"] > player.mana
+        ):
             session.clear()
-            return 'game over'
+            return "game over"
 
         if current_combat.enemyhp <= 0:
             data.append("monster defeated!")
-            data.append('Combat over!')
+            data.append("Combat over!")
             in_combat = False
-            player.xp += monsters[current_combat.monster]['health']
+            player.xp += monsters[current_combat.monster]["health"]
             if player.xp >= player.xp_required:
                 req = player.xp_required
                 curxp = player.xp
@@ -1165,23 +1255,29 @@ def combat():
                 player.xp = abs(newxp)
             return data
         else:
-
-            data.append(f"{current_combat.monster} Current health: <br><span class='g'>{current_combat.enemyhp}HP</span>")
-            l = ''
+            data.append(
+                f"{current_combat.monster} Current health: <br><span class='g'>{current_combat.enemyhp}HP</span>"
+            )
+            l = ""
 
             if go:
-                dmg = monsters[current_combat.monster]['damage'] * (current_combat.level+1)/2
+                dmg = (
+                    monsters[current_combat.monster]["damage"]
+                    * (current_combat.level + 1)
+                    / 2
+                )
 
                 player.hp -= dmg
-                l += f"""{current_combat.monster} hit the player for {int(dmg)}HP!<br>"""
+                l += (
+                    f"""{current_combat.monster} hit the player for {int(dmg)}HP!<br>"""
+                )
 
-            
             if player.hp <= 0:
                 session.clear()
-                return 'game over'
-            
+                return "game over"
+
             for a in attacks:
-                if a == 'Mana Blast':
+                if a == "Mana Blast":
                     if cas[a] > player.mana:
                         l += f"""<button class='disable-True' onclick='sendattack(this)' id='{a}'>{a} - {pas[a]} DMG ({cas[a]})</button>"""
                     else:
@@ -1194,12 +1290,9 @@ def combat():
             data.append(l)
             return data
 
-        
-
-
 
 if __name__ == "__main__":
     app.jinja_env.cache = {}
     app.jinja_env.auto_reload = True
-    app.config['TEMPLATES_AUTO_RELOAD'] = True
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.config["TEMPLATES_AUTO_RELOAD"] = True
+    app.run(debug=True, host="0.0.0.0", port=5000)
