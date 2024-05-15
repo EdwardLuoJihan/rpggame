@@ -1141,10 +1141,20 @@ monsters = {
     "Zombie": {"health": 70, "damage": 12, "defense": 6, "boss": False},
     "Werewolf": {"health": 100, "damage": 18, "defense": 10, "boss": False},
     "Kraken": {"health": 250, "damage": 35, "defense": 25, "boss": True},
+    "Giant Spider": {"health": 60, "damage": 12, "defense": 6, "boss": False},
+    "Vampire": {"health": 120, "damage": 20, "defense": 15, "boss": False},
+    "Wraith": {"health": 90, "damage": 16, "defense": 12, "boss": False},
+    "Minotaur": {"health": 150, "damage": 25, "defense": 18, "boss": False},
+    "Banshee": {"health": 80, "damage": 14, "defense": 8, "boss": False},
+    "Hydra": {"health": 180, "damage": 28, "defense": 22, "boss": True},
+    "Demon": {"health": 160, "damage": 22, "defense": 16, "boss": False},
+    "Specter": {"health": 100, "damage": 18, "defense": 12, "boss": False},
+    "Cyclops": {"health": 200, "damage": 30, "defense": 20, "boss": False},
+    "Ghost": {"health": 70, "damage": 14, "defense": 8, "boss": False},
 }
 
-nonboss = ["Goblin", "Orc", "Skeleton", "Zombie", "Werewolf"]
-boss = ["Dragon", "Kraken"]
+nonboss = ["Goblin", "Orc", "Skeleton", "Zombie", "Werewolf", "Giant Spider", "Vampire", "Wraith", "Minotaur", "Banshee", "Specter", "Cyclops", "Ghost"]
+boss = ["Dragon", "Kraken", "Hydra", "Demon"]
 
 current_combat = 0
 
@@ -1261,16 +1271,21 @@ def combat():
             l = ""
 
             if go:
-                dmg = (
-                    monsters[current_combat.monster]["damage"]
-                    * (current_combat.level + 1)
-                    / 2
-                )
+                if random.random() < .5:
+                    dmg = (
+                        monsters[current_combat.monster]["damage"]
+                        * (current_combat.level + 1)
+                        / 2
+                    )
 
-                player.hp -= dmg
-                l += (
-                    f"""{current_combat.monster} hit the player for {int(dmg)}HP!<br>"""
-                )
+                    player.hp -= dmg
+                    l += (
+                        f"""{current_combat.monster} hit the player for {int(dmg)}HP!<br>"""
+                    )
+                else:
+                    l += (
+                        f"""{current_combat.monster}'s attack missed the player!<br>"""
+                    )
 
             if player.hp <= 0:
                 session.clear()
