@@ -16,7 +16,7 @@
     <div class="player-status-container">
       <div class="status-container">
         <div class="location-container">
-          <h1>Location: <span id="loc"></span><span id="levl" class="{{race}}">Lvl. {{level}}</span></h1>
+          <h1>Location: <span id="loc"></span><span id="levl" class="{{race}}">lvl. {{level}}</span></h1>
         </div>
         <br>
         <br>
@@ -156,6 +156,9 @@
     function update(){
       // validateCost()
       $.post('/getlvl',function(data) {
+        if (`lvl. ${data}` != $('#levl').text()) {
+          alert(`Level Up! ${$('#levl').text()} -> lvl. ${data}`)
+        }
             $('#levl').html(`lvl. ${data}`)
           });
       $.get("/find_neighbors", function(data){

@@ -1075,7 +1075,7 @@ current_combat = 0
 class Combat:
     def __init__(self, hp, m, mlevel, pas, cas) -> None:
         self.turn = 0 # player
-        self.enemyhp = hp * ((mlevel+1)/2)
+        self.enemyhp = hp * (mlevel+3)/2
         self.monster = m
         self.level = mlevel
         self.pas = pas
@@ -1132,66 +1132,67 @@ def combat():
     elif state == "start" and in_combat == True:
         return "occupied"
     elif a:
-            pas = current_combat.pas
-            cas = current_combat.cas
+        pas = current_combat.pas
+        cas = current_combat.cas
 
-            data.append('confirmed')
-            go = False
-            if a == 'Mana Blast':
-                if player.mana >= cas[a]:
-                    go = True
-                    player.mana -= cas[a]
-                    current_combat.enemyhp -= pas[a]
-            else:
-                if player.stamina >= cas[a]:
-                    go = True
-                    player.stamina -= cas[a]
-                    current_combat.enemyhp -= pas[a]
+        data.append('confirmed')
+        go = False
+        if a == 'Mana Blast':
+            if player.mana >= cas[a]:
+                go = True
+                player.mana -= cas[a]
+                current_combat.enemyhp -= pas[a]
+        else:
+            if player.stamina >= cas[a]:
+                go = True
+                player.stamina -= cas[a]
+                current_combat.enemyhp -= pas[a]
+
+        if cas['Slash'] > player.stamina and cas['Stab'] > player.stamina and cas['Mana Blast'] > player.mana:
+            session.clear()
+            return 'game over'
+
+        if current_combat.enemyhp <= 0:
+            data.append("monster defeated!")
+            data.append('Combat over!')
+            in_combat = False
+            player.xp += monsters[current_combat.monster]['health']
+            if player.xp >= player.xp_required:
+                req = player.xp_required
+                curxp = player.xp
+                newxp = req - curxp
+                player.level_up()
+                player.xp = abs(newxp)
+            return data
+        else:
+
+            data.append(f"{current_combat.monster} Current health: <br><span class='g'>{current_combat.enemyhp}HP</span>")
+            l = ''
+
             if go:
-                if current_combat.enemyhp <= 0:
-                    data.append("monster defeated!")
-                    data.append('Combat over!')
-                    in_combat = False
-                    player.xp += monsters[current_combat.monster]['health']
-                    if player.xp >= player.xp_required:
-                        req = player.xp_required
-                        curxp = player.xp
-                        newxp = req - curxp
-                        player.level_up()
-                        player.xp = newxp
-                    return data
+                dmg = monsters[current_combat.monster]['damage'] * (current_combat.level+1)/2
+
+                player.hp -= dmg
+                l += f"""{current_combat.monster} hit the player for {int(dmg)}HP!<br>"""
+
+            
+            if player.hp <= 0:
+                session.clear()
+                return 'game over'
+            
+            for a in attacks:
+                if a == 'Mana Blast':
+                    if cas[a] > player.mana:
+                        l += f"""<button class='disable-True' onclick='sendattack(this)' id='{a}'>{a} - {pas[a]} DMG ({cas[a]})</button>"""
+                    else:
+                        l += f"""<button class='disable-False' onclick='sendattack(this)' id='{a}'>{a} - {pas[a]} DMG ({cas[a]})</button>"""
                 else:
-
-                    data.append(f"you have encountered a {current_combat.monster}!<br><span class='g'>{current_combat.enemyhp}HP</span>")
-                    l = ''
-
-                    dmg = monsters[current_combat.monster]['damage'] * (current_combat.level+1)/2
-
-                    player.hp -= dmg
-                    if player.hp <= 0:
-                        session.clear()
-                        return 'game over'
-
-
-                    l += f"""
-
-        {current_combat.monster} hit the player for {int(dmg)}HP!<br>
-
-        """
-
-                    for a in attacks:
-                        if a == 'Mana Blast':
-                            if attacks[a]['cost'] > player.mana:
-                                l += f"""<button class='disable-True' onclick='sendattack(this)' id='{a}'>{a} - {pas[a]} DMG ({cas[a]})</button>"""
-                            else:
-                                l += f"""<button class='disable-False' onclick='sendattack(this)' id='{a}'>{a} - {pas[a]} DMG ({cas[a]})</button>"""
-                        else:
-                            if attacks[a]['cost'] > player.stamina:
-                                l += f"""<button class='disable-True' onclick='sendattack(this)' id='{a}'>{a} - {pas[a]} DMG ({cas[a]})</button>"""
-                            else:
-                                l += f"""<button class='disable-False' onclick='sendattack(this)' id='{a}'>{a} - {pas[a]} DMG ({attacks[a]['cost']})</button>"""
-                    data.append(l)
-                    return data
+                    if cas[a] > player.stamina:
+                        l += f"""<button class='disable-True' onclick='sendattack(this)' id='{a}'>{a} - {pas[a]} DMG ({cas[a]})</button>"""
+                    else:
+                        l += f"""<button class='disable-False' onclick='sendattack(this)' id='{a}'>{a} - {pas[a]} DMG ({cas[a]})</button>"""
+            data.append(l)
+            return data
 
         
 
