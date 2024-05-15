@@ -1026,7 +1026,11 @@ def return_neighbors():
                 disable = True
             else:
                 disable = False
-        form += f"""<button class="locbutton disable-{disable}" id="{i}" onclick='moveto("{i}")'>{neighborsindex[n]} - {i}</button>"""
+        if locations[neighborsindex[n]][1] == "U":
+            cnew = " new!"
+        else:
+            cnew = ""
+        form += f"""<button class="locbutton disable-{disable}" id="{i}" onclick='moveto("{i}")'>{neighborsindex[n]} - {i} <span class='r'>{cnew}</span></button>"""
     return form
 
 
@@ -1128,9 +1132,9 @@ def move_to():
 
 
 attacks = {
-    "Slash": {"damage": 20, "cost": 10},
-    "Stab": {"damage": 25, "cost": 15},
-    "Mana Blast": {"damage": 30, "cost": 20},
+    "Slash": {"damage": 40, "cost": 20},
+    "Stab": {"damage": 50, "cost": 30},
+    "Mana Blast": {"damage": 100, "cost": 50},
 }
 
 monsters = {
@@ -1141,10 +1145,20 @@ monsters = {
     "Zombie": {"health": 70, "damage": 12, "defense": 6, "boss": False},
     "Werewolf": {"health": 100, "damage": 18, "defense": 10, "boss": False},
     "Kraken": {"health": 250, "damage": 35, "defense": 25, "boss": True},
+    "Giant Spider": {"health": 60, "damage": 12, "defense": 6, "boss": False},
+    "Vampire": {"health": 120, "damage": 20, "defense": 15, "boss": False},
+    "Wraith": {"health": 90, "damage": 16, "defense": 12, "boss": False},
+    "Minotaur": {"health": 150, "damage": 25, "defense": 18, "boss": False},
+    "Banshee": {"health": 80, "damage": 14, "defense": 8, "boss": False},
+    "Hydra": {"health": 180, "damage": 28, "defense": 22, "boss": True},
+    "Demon": {"health": 160, "damage": 22, "defense": 16, "boss": False},
+    "Specter": {"health": 100, "damage": 18, "defense": 12, "boss": False},
+    "Cyclops": {"health": 200, "damage": 30, "defense": 20, "boss": False},
+    "Ghost": {"health": 70, "damage": 14, "defense": 8, "boss": False},
 }
 
-nonboss = ["Goblin", "Orc", "Skeleton", "Zombie", "Werewolf"]
-boss = ["Dragon", "Kraken"]
+nonboss = ["Goblin", "Orc", "Skeleton", "Zombie", "Werewolf", "Giant Spider", "Vampire", "Wraith", "Minotaur", "Banshee", "Specter", "Cyclops", "Ghost"]
+boss = ["Dragon", "Kraken", "Hydra", "Demon"]
 
 current_combat = 0
 
@@ -1192,7 +1206,7 @@ def combat():
         mlevel = random.randint(1, player.level)
         pas = {}
         for a in attacks:
-            pas[a] = attacks[a]["damage"] * ((player.level + 1) / 2)
+            pas[a] = (attacks[a]["damage"]+10) * ((player.level + 1) / 2)
         cas = {}
         for a in attacks:
             cas[a] = attacks[a]["cost"] * ((player.level + 1) / 2)
@@ -1246,7 +1260,7 @@ def combat():
             data.append("monster defeated!")
             data.append("Combat over!")
             in_combat = False
-            player.xp += monsters[current_combat.monster]["health"] * (current_combat.level+1)/2
+            player.xp += monsters[current_combat.monster]["health"] * ((current_combat.level)/2)
             if player.xp >= player.xp_required:
                 req = player.xp_required
                 curxp = player.xp
@@ -1261,16 +1275,39 @@ def combat():
             l = ""
 
             if go:
-                dmg = (
-                    monsters[current_combat.monster]["damage"]
-                    * (current_combat.level + 1)
-                    / 2
-                )
+                rng = random.random()
+                if rng <= 1 and rng >= .7:
+                    dmg = (
+                        (
+                            monsters[current_combat.monster]["damage"]
+                            * 5
+                        )
+                        * (current_combat.level + 1)
+                        / 2
+                    )
+                    player.hp -= dmg
+                    l += (
+                        f"""{current_combat.monster} hit the player with crit for {int(dmg)}HP!<br>"""
+                    )
+                elif rng < .7 and rng >= .3:
+                    l += (
+                        f"""ATtack missed!<br>"""
+                    )
+                else:
+                    dmg = (
+                        (
+                            monsters[current_combat.monster]["damage"]
+                            * 3
+                        )
+                        * (current_combat.level + 1)
+                        / 2
+                    )
+                    player.hp -= dmg
+                    l += (
+                        f"""{current_combat.monster} hit the player for {int(dmg)}HP!<br>"""
+                    )
 
-                player.hp -= dmg
-                l += (
-                    f"""{current_combat.monster} hit the player for {int(dmg)}HP!<br>"""
-                )
+        
 
             if player.hp <= 0:
                 session.clear()
