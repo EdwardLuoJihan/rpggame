@@ -218,7 +218,7 @@
         $("#select-location").html(data)
       });
       $.post(`/combat?state=start`, function(data){
-        if(data[0] == "confirmed") {
+        if(data[0] == "confirmed") {update()
           $('.encounters').html(`<div class="center"><h1>${data[1]}</h1><br>${data[2]}</div>`)
           playGame()
           

@@ -1202,7 +1202,7 @@ def combat():
         mlevel = random.randint(1, player.level)
         pas = {}
         for a in attacks:
-            pas[a] = attacks[a]["damage"] * ((player.level + 1) / 2)
+            pas[a] = (attacks[a]["damage"]+10) * ((player.level + 1) / 2)
         cas = {}
         for a in attacks:
             cas[a] = attacks[a]["cost"] * ((player.level + 1) / 2)
@@ -1271,21 +1271,33 @@ def combat():
             l = ""
 
             if go:
-                if random.random() < .5:
+                if random.random() < .3:
                     dmg = (
-                        monsters[current_combat.monster]["damage"]
+                        (
+                            monsters[current_combat.monster]["damage"]
+                            * 5
+                        )
                         * (current_combat.level + 1)
                         / 2
                     )
-
+                    player.hp -= dmg
+                    l += (
+                        f"""{current_combat.monster} hit the player with crit for {int(dmg)}HP!<br>"""
+                    )
+                else:
+                    dmg = (
+                        (
+                            monsters[current_combat.monster]["damage"]
+                        )
+                        * (current_combat.level + 1)
+                        / 2
+                    )
                     player.hp -= dmg
                     l += (
                         f"""{current_combat.monster} hit the player for {int(dmg)}HP!<br>"""
                     )
-                else:
-                    l += (
-                        f"""{current_combat.monster}'s attack missed the player!<br>"""
-                    )
+
+        
 
             if player.hp <= 0:
                 session.clear()
