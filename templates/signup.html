@@ -37,6 +37,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            overflow: hidden;
         }
 
 
@@ -112,9 +113,53 @@
 .g {
     color: rgb(53, 255, 53);
 }
+
+.lore {
+    visibility: visible;
+    position: absolute;
+    width: calc(100vw - 200px);
+    height: calc(100vh - 170px);
+
+    background-color: black;
+    z-index: 999;
+    text-align: center;
+    padding: 100px;
+    padding-top: 70px;
+}
+
+.lore p {
+    width: 60%;
+    margin: auto;
+    font-size: 16px;
+    line-height: 25px;
+}
+
+.lore a {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 30px;
+}
     </style>
 </head>
 <body>
+    <div class="lore">
+        <p>
+            In the annals of time, the world of Arvantis stands as a testament to both the resilience of life and the fragility of existence. Once, it was a realm of unparalleled magic and prosperity, where the High Council of Elders guided civilization to heights of splendor. But fate is a fickle mistress, and the tranquility of Arvantis was shattered by a cataclysmic event known as the Sundering.
+<br><br>
+The Sundering rent the world asunder, tearing apart the very fabric of reality and plunging Arvantis into an era of darkness and chaos. Magic waned, civilizations crumbled, and the once-mighty High Council of Elders vanished into obscurity, leaving the denizens of Arvantis to fend for themselves amidst the ruins of their shattered world.
+<br><br>
+Yet, even in the darkest of times, hope still flickers like a lone candle in the night. Adventurers from all corners of Arvantis now traverse its diverse landscapes, seeking fortune, glory, and perhaps even redemption amidst the remnants of the old world.
+<br><br>
+From the towering peaks of the Crystal Peaks to the sun-drenched shores of Sunset Harbor, Arvantis beckons to those brave enough to heed its call. Ancient ruins whisper secrets of forgotten empires, mystical forests offer solace and wisdom to weary travelers, and bustling cities teem with life and intrigue.
+<br><br>
+But danger lurks in every shadow, for the Great Beasts of Arvantis still roam the land, their immense power a force to be reckoned with. From the depths of the Abyssal Depths to the mist-shrouded peaks of the Shrouded Peaks, these creatures command respect and fear from all who encounter them.
+<br><br>
+Yet amidst the peril and the chaos, the prophecy of the Chosen One lingers like a guiding star in the night sky. It foretells of a hero who will rise from the ashes of the Sundering, unite the fractured lands of Arvantis, and restore balance to the world once more.
+<br><br>
+And so, the stage is set for a new chapter in the saga of Arvantis, where heroes will rise, legends will be forged, and the fate of the world will hang in the balance. The journey ahead will be fraught with peril and uncertainty, but for those who dare to tread its path, the rewards may be beyond imagining.
+        </p><a href="" id="continue">continue to game</a>
+    </div>
     <div class="lcontainer">
         <h2>Character base stats:</h2>
         <br>
@@ -202,6 +247,11 @@
                 $("#traits").html(traits)
                 
             });
+        });
+
+        $('#continue').click(function(e) {
+            e.preventDefault();
+            $('.lore').css('visibility', "hidden")
         });
         
     </script>

@@ -1246,7 +1246,7 @@ def combat():
             data.append("monster defeated!")
             data.append("Combat over!")
             in_combat = False
-            player.xp += monsters[current_combat.monster]["health"]
+            player.xp += monsters[current_combat.monster]["health"] * (current_combat.level+1)/2
             if player.xp >= player.xp_required:
                 req = player.xp_required
                 curxp = player.xp

@@ -217,16 +217,18 @@
       $.get("/find_neighbors", function(data){
         $("#select-location").html(data)
       });
+      update()
       $.post(`/combat?state=start`, function(data){
         if(data[0] == "confirmed") {
           $('.encounters').html(`<div class="center"><h1>${data[1]}</h1><br>${data[2]}</div>`)
           playGame()
+          update()
           
         } else if (data == "occupied") {
           
         }
       });  
-    }, 20000);
+    }, 15000);
 
     function sendattack(a) {
       $.post(`/combat?attack=${a.id}`, function(data){
