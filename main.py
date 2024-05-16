@@ -1280,7 +1280,7 @@ def combat():
                     dmg = (
                         (
                             monsters[current_combat.monster]["damage"]
-                            * 5
+                            * 4
                         )
                         * (current_combat.level + 1)
                         / 2
@@ -1297,7 +1297,7 @@ def combat():
                     dmg = (
                         (
                             monsters[current_combat.monster]["damage"]
-                            * 3
+                            * 2
                         )
                         * (current_combat.level + 1)
                         / 2
