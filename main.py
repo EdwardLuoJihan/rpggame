@@ -1248,13 +1248,7 @@ def combat():
                 player.stamina -= cas[a]
                 current_combat.enemyhp -= pas[a]
 
-        if (
-            cas["Slash"] > player.stamina
-            and cas["Stab"] > player.stamina
-            and cas["Mana Blast"] > player.mana
-        ):
-            session.clear()
-            return "game over"
+    
 
         if current_combat.enemyhp <= 0:
             data.append("monster defeated!")
@@ -1267,6 +1261,13 @@ def combat():
                 newxp = req - curxp
                 player.level_up()
                 player.xp = abs(newxp)
+            if (
+                cas["Slash"] > player.stamina
+                and cas["Stab"] > player.stamina
+                and cas["Mana Blast"] > player.mana
+            ):
+                session.clear()
+                return "game over"
             return data
         else:
             data.append(
@@ -1307,7 +1308,13 @@ def combat():
                         f"""{current_combat.monster} hit the player for {int(dmg)}HP!<br>"""
                     )
 
-        
+            if (
+                cas["Slash"] > player.stamina
+                and cas["Stab"] > player.stamina
+                and cas["Mana Blast"] > player.mana
+            ):
+                session.clear()
+                return "game over"
 
             if player.hp <= 0:
                 session.clear()
