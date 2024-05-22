@@ -15,6 +15,7 @@ base_xp = 100
 scaling_factor = 10
 
 in_combat = False
+is_resting = False
 player_combat_count = 0
 
 ### USER INTERACTIONS ###
@@ -87,20 +88,21 @@ nodes = [
     [13, 20, 12],  # Thundering Steppes to Lost City of Atlantis, distance: 12 days
     [14, 20, 14],  # Sands of Time Desert to Lost City of Atlantis, distance: 14 days
 ]
+resting_areas = [1, 2, 7, 8, 12]
 
 descriptions = {
-    1: "A quaint town nestled at the foot of the mountains, where every journey begins.",
-    2: "A mystical forest inhabited by ancient spirits, offering solace and wisdom to travelers.",
+    1: "A quaint town nestled at the foot of the mountains, where every journey begins.<br><span class='g'>Resting Area</span>",
+    2: "A mystical forest inhabited by ancient spirits, offering solace and wisdom to travelers.<br><span class='g'>Resting Area</span>",
     3: "Majestic mountains adorned with sparkling crystals, harboring secrets of the past.",
     4: "A desolate valley haunted by the remnants of mighty dragons, their presence felt in every shadow.",
     5: "A towering fortress carved from ice, home to fierce warriors and frost magic.",
     6: "Enchanted trees whisper secrets of forgotten lore, guiding wanderers with their eerie melodies.",
-    7: "Cascading waterfalls imbued with arcane energy, said to grant visions to those who dare to gaze into their depths.",
-    8: "A bustling port city where traders from distant lands converge, bringing tales of adventure and riches.",
+    7: "Cascading waterfalls imbued with arcane energy, said to grant visions to those who dare to gaze into their depths.<br><span class='g'>Resting Area</span>",
+    8: "A bustling port city where traders from distant lands converge, bringing tales of adventure and riches.<br><span class='g'>Resting Area</span>",
     9: "Crumbling ruins of a once-great civilization, now shrouded in mystery and danger.",
     10: "A secluded village hidden in the shadows, its inhabitants wary of outsiders and their own dark secrets.",
     11: "Dark caverns teeming with creatures of the abyss, where only the bravest dare to tread.",
-    12: "A city floating among the clouds, its spires reaching towards the heavens, home to scholars and seekers of celestial knowledge.",
+    12: "A city floating among the clouds, its spires reaching towards the heavens, home to scholars and seekers of celestial knowledge.<br><span class='g'>Resting Area</span>",
     13: "Rolling plains where storms rage endlessly, a testament to the raw power of nature.",
     14: "Endless dunes whispering tales of forgotten empires buried beneath the sands.",
     15: "A treacherous mountain range inhabited by colossal serpents, guarding ancient treasures hidden within their coils.",
@@ -1180,6 +1182,39 @@ class Combat:
 
 bossrn = False
 
+@app.route("/resting", methods=["POST"])
+def rest():
+    if not in_combat and current_location in resting_areas:
+        rm = player.max_mana * 0.02
+        rs = player.max_stamina * 0.02
+        rh = player.max_hp * 0.02
+        if player.mana < player.max_mana:
+            if player.mana + player.max_mana * 0.02 > player.max_mana:
+                player.mana = player.max_mana
+                rm = player.max_mana = player.mana
+            else:
+                player.mana += player.max_mana * 0.02
+        if player.stamina < player.max_stamina:
+            if player.stamina + player.max_stamina * 0.02 > player.max_stamina:
+                player.stamina = player.max_stamina
+                rs = player.max_stamina - stamina
+            else:
+                player.stamina += player.max_stamina * 0.02
+        if player.hp < player.max_hp:
+            if player.hp + player.max_hp * 0.02 > player.max_hp:
+                player.hp = player.max_hp
+                rh = player.max_hp - player.hp
+            else:
+                player.hp += player.max_hp * 0.02
+        t = f"""
+                Recovered <span class='g'>{rm}</span> mana! <br>
+                Recovered <span class='g'>{rs}</span> stamina! <br>
+                Recovered <span class='g'>{rh}</span> health! <br>
+            """
+        return t
+    return " "
+    
+
 
 @app.route("/combat", methods=["POST"])
 def combat():
@@ -1280,7 +1315,7 @@ def combat():
                     dmg = (
                         (
                             monsters[current_combat.monster]["damage"]
-                            * 4
+                            * 5
                         )
                         * (current_combat.level + 1)
                         / 2
@@ -1289,7 +1324,7 @@ def combat():
                     l += (
                         f"""{current_combat.monster} hit the player with crit for {int(dmg)}HP!<br>"""
                     )
-                elif rng < .7 and rng >= .3:
+                elif rng < .5 and rng >= .3:
                     l += (
                         f"""ATtack missed!<br>"""
                     )
