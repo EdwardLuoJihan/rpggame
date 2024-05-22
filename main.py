@@ -1325,7 +1325,7 @@ def combat():
                     l += (
                         f"""{current_combat.monster} hit the player with crit for {int(dmg)}HP!<br>"""
                     )
-                elif rng < .6 and rng >= .3:
+                elif rng == .5:
                     l += (
                         f"""ATtack missed!<br>"""
                     )
