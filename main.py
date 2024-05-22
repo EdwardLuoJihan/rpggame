@@ -1238,7 +1238,7 @@ def combat():
             player_combat_count += 1
             monster = random.choice(nonboss)
             bosss = ""
-        mlevel = random.randint(1, player.level)
+        mlevel = random.randint(int(player.level/2), player.level)
         pas = {}
         for a in attacks:
             pas[a] = (attacks[a]["damage"]+10) * ((player.level + 1) / 2)
