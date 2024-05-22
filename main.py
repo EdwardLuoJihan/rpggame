@@ -1312,11 +1312,11 @@ def combat():
 
             if go:
                 rng = random.random()
-                if rng <= 1 and rng >= .7:
+                if rng <= 1 and rng >= .8:
                     dmg = (
                         (
                             monsters[current_combat.monster]["damage"]
-                            * 5
+                            * 4
                         )
                         * (current_combat.level + 1)
                         / 2
@@ -1325,7 +1325,7 @@ def combat():
                     l += (
                         f"""{current_combat.monster} hit the player with crit for {int(dmg)}HP!<br>"""
                     )
-                elif rng < .5 and rng >= .3:
+                elif rng < .6 and rng >= .3:
                     l += (
                         f"""ATtack missed!<br>"""
                     )

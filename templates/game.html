@@ -22,6 +22,7 @@
         <br>
         <div class="player-container">
           <h1 class="name {{race}}"><span id="nnn" class="{{race}}">{{name}} ( {{race}} )</span></h1>
+          <p id="resting"></p>
           <br>
           <br>
           <div class="stats-container">
@@ -235,7 +236,7 @@
     setInterval(function () {
       $.post(`/resting`, function(data){
         if(data != " ") {
-          $('.encounters').html(`<div class="center"><h1>Resting!</h1></div>`)
+          $('#resting').html(`Resting!`)
           update()
         }
       });  
