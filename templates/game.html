@@ -69,7 +69,7 @@
       $(document).on("mouseover", ".node", function(ev) {
         console.log("HOVER")
         n = this.classList[1].replace(/\D/g,'');
-        $.get(`/dsc?n=${n}`, function(data){
+        $.post(`/dsc?n=${n}`, function(data){
           $("#descbox").html(data)
         });
         $("#descbox").css({"visibility": "visible"});
@@ -82,8 +82,8 @@
         console.log("HOVER")
         n = this.innerHTML.split(" - ")[0];
         btn = this
-        $.get(`/dsc?n=${n}`, function(data){
-          $.get(`/fd?s=CURRENT&t=${n}`, function(data2){
+        $.post(`/dsc?n=${n}`, function(data){
+          $.post(`/fd?s=CURRENT&t=${n}`, function(data2){
             if (data2 != "no") {
               
             
@@ -98,7 +98,7 @@
         return false;
       });
       $(document).mouseout(".locbutton", function(ev) {
-        $.get(`/fd?s=CURRENT&t=0`, function(data2){
+        $.post(`/fd?s=CURRENT&t=0`, function(data2){
             if (data2 != "no") {
               $(".encounters").html("");
         }});
@@ -114,7 +114,7 @@
         st = this.id.split("_")
         s = st[0]
         t = st[1]
-        $.get(`/fd?s=${s}&t=${t}`, function(data){
+        $.post(`/fd?s=${s}&t=${t}`, function(data){
           $("#descbox").html(data)
         });
         $("#descbox").css({"visibility": "visible"});
@@ -164,13 +164,13 @@
         }
             $('#levl').html(`lvl. ${data}`)
           });
-      $.get("/find_neighbors", function(data){
+      $.post("/find_neighbors", function(data){
         $("#select-location").html(data)
       });
-      $.get("/location", function(data){
+      $.post("/location", function(data){
         $("#loc").html(data)
       });
-      $.get("/getstats", function(data){
+      $.post("/getstats", function(data){
         decrease_health(data[0], data[1])
         decrease_mana(data[2], data[3])
         decrease_stamina(data[4], data[5])
@@ -179,7 +179,7 @@
         document.getElementById("xp").max = data[7];
         document.getElementById("xp_progress_value").textContent = `${document.getElementById("xp").value}/${document.getElementById("xp").max}`;
       });
-      $.get("/getmap", function(data){
+      $.post("/getmap", function(data){
         $("#map").empty();
         $("#map").prepend(data);
       });
@@ -193,7 +193,7 @@
     //   for (let i = 0; i < buttons.length; i++) {
     //     button = buttons[i]
     //     console.log(button)
-    //     $.get(`/validateCost?loc=${button.id}`, function(data){
+    //     $.post(`/validateCost?loc=${button.id}`, function(data){
     //     if(data == "no bueno") {
     //       console.log(`cannot go to ${button.id}`)
     //       button.classList.add("nobueno");
@@ -205,7 +205,7 @@
     //   }
     // }
     function moveto(loc) {
-      $.get(`/moveto?loc=${loc}`, function(data){
+      $.post(`/moveto?loc=${loc}`, function(data){
         if(data != "no bueno") {
           update()
         }
@@ -217,7 +217,7 @@
     }
 
     setInterval(function () {
-      $.get("/find_neighbors", function(data){
+      $.post("/find_neighbors", function(data){
         $("#select-location").html(data)
       });
       update()

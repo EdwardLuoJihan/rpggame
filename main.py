@@ -384,7 +384,7 @@ race_stats = {
 }
 
 
-@app.route("/racestats", methods=["GET"])
+@app.route("/racestats", methods=["POST"])
 def racestats():
     r = request.args.get("race")
     return [
@@ -973,7 +973,7 @@ def endsession():
     return redirect(url_for("index"))
 
 
-@app.route("/level", methods=["GET", "POST"])
+@app.route("/level", methods=["POST"])
 def levelss():
     if request.method == "GET":
         return redirect(url_for("index"))
@@ -1014,7 +1014,7 @@ def game():
         return redirect(url_for("index"))
 
 
-@app.route("/find_neighbors", methods=["GET"])
+@app.route("/find_neighbors", methods=["POST"])
 def return_neighbors():
     neighbors = find_neighbors(current_location)
     neighborsindex = find_neighborsindex(current_location)
@@ -1032,16 +1032,16 @@ def return_neighbors():
             cnew = " new!"
         else:
             cnew = ""
-        form += f"""<button class="locbutton disable-{disable}" id="{i}" onclick='moveto("{i}")'>{neighborsindex[n]} - {i} <span class='r'>{cnew}</span></button>"""
+        form += f"""<button class="locbutton disable-{disable}" id="{i}" onclick='moveto("{i}")'>{neighborsindex[n]} - {i} <span id='r'>{cnew}</span></button>"""
     return form
 
 
-@app.route("/location", methods=["GET"])
+@app.route("/location", methods=["POST"])
 def return_location():
     return f"<span style='color: {locations[current_location][2]}'>{locations[current_location][0]}</span>"
 
 
-@app.route("/getstats", methods=["GET"])
+@app.route("/getstats", methods=["POST"])
 def getstats():
     return list(
         map(
@@ -1060,19 +1060,19 @@ def getstats():
     )
 
 
-@app.route("/getmap", methods=["GET"])
+@app.route("/getmap", methods=["POST"])
 def getmap():
     m = generate_html_tree(locations, nodes, current_location)
     return m
 
 
-@app.route("/dsc", methods=["GET"])
+@app.route("/dsc", methods=["POST"])
 def getdsc():
     n = request.args.get("n")
     return descriptions[int(n)]
 
 
-@app.route("/fd", methods=["GET"])
+@app.route("/fd", methods=["POST"])
 def getl():
     if in_combat:
         return "no"
@@ -1091,7 +1091,7 @@ def gggg():
     return str(player.level)
 
 
-@app.route("/moveto", methods=["GET"])
+@app.route("/moveto", methods=["POST"])
 def move_to():
     if in_combat:
         return "no bueno"
