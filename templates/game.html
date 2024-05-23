@@ -22,7 +22,7 @@
         <br>
         <div class="player-container">
           <h1 class="name {{race}}"><span id="nnn" class="{{race}}">{{name}} ( {{race}} )</span></h1>
-          <p id="resting"></p>
+          <p id="status">Idle</p>
           <br>
           <br>
           <div class="stats-container">
@@ -222,7 +222,10 @@
       });
       update()
       $.post(`/combat?state=start`, function(data){
-        if(data[0] == "confirmed") {update()
+        if(data[0] == "confirmed") {
+          console.log("COMBAT STARTED")
+          $('#status').html(`In Combat`)
+          update()
           $('.encounters').html(`<div class="center"><h1>${data[1]}</h1><br>${data[2]}</div>`)
           playGame()
           update()
@@ -235,9 +238,13 @@
 
     setInterval(function () {
       $.post(`/resting`, function(data){
-        if(data != " ") {
-          $('#resting').html(`Resting!`)
+        if(data == "rest") {
+          $('#status').html(`Resting`)
           update()
+        } else if (data == "idle"){
+          $('#status').html(`Idle`)
+        } else {
+          $('#status').html(`In combat`)
         }
       });  
     }, 1000);
@@ -250,11 +257,13 @@
           alert("You died.")
         }
         if(data[0] == "confirmed") {
+           $('#status').html(`In Combat`)
             $('.encounters').html(`<div class="center"><h1>${data[1]}</h1><br>${data[2]}</div>`)
 
             update()
           } 
         if ( data[2] == 'Combat over!') {
+          $('#status').html(`Idle`)
         }
           
 

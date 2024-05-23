@@ -1206,13 +1206,11 @@ def rest():
                 rh = player.max_hp - player.hp
             else:
                 player.hp += player.max_hp * 0.02
-        t = f"""
-                Recovered <span class='g'>{rm}</span> mana! <br>
-                Recovered <span class='g'>{rs}</span> stamina! <br>
-                Recovered <span class='g'>{rh}</span> health! <br>
-            """
-        return t
-    return " "
+        return "rest"
+    elif in_combat:
+        return "in combat"
+    else:
+        return "idle"
     
 
 
