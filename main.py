@@ -8,11 +8,11 @@ app.secret_key = "your_secret_key_here"
 # scaling constants
 current_location = 1
 level_scaling_rate = 2
-level = 1
+level = 100
 endurance_scaling_rate = 5
 strength_factor = 8
 base_xp = 100
-scaling_factor = 5
+scaling_factor = 7
 
 in_combat = False
 is_resting = False
@@ -1134,9 +1134,9 @@ def move_to():
 
 
 attacks = {
-    "Slash": {"damage": 40, "cost": 5},
-    "Stab": {"damage": 50, "cost": 10},
-    "Mana Blast": {"damage": 100, "cost": 20},
+    "Slash": {"damage": 20, "cost": 5},
+    "Stab": {"damage": 40, "cost": 10},
+    "Mana Blast": {"damage": 80, "cost": 20},
 }
 
 monsters = {
@@ -1232,14 +1232,15 @@ def combat():
             player_combat_count = 0
             monster = random.choice(boss)
             bosss = "boss monster "
+            mlevel = player.level
         else:
             player_combat_count += 1
             monster = random.choice(nonboss)
+            mlevel = random.randint(max(1, int(player.level/2)), player.level)
             bosss = ""
-        mlevel = random.randint(max(1, int(player.level/2)), player.level)
         pas = {}
         for a in attacks:
-            pas[a] = (attacks[a]["damage"]+10) * ((player.level * 3 + 1) / 2)
+            pas[a] = (attacks[a]["damage"]+10) * ((player.level * 2 + 1) / 2)
         cas = {}
         for a in attacks:
             cas[a] = attacks[a]["cost"] * ((player.level) / 2)
