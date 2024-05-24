@@ -12,7 +12,7 @@ level = 1
 endurance_scaling_rate = 5
 strength_factor = 8
 base_xp = 100
-scaling_factor = 10
+scaling_factor = 5
 
 in_combat = False
 is_resting = False
@@ -839,7 +839,7 @@ class Player:
         self.stats = player_stats
 
         mana = 100 + player_stats["mana"] * level_scaling_rate
-        stamina = 100 + player_stats["endurance"] * endurance_scaling_rate
+        stamina = 200 + player_stats["endurance"] * endurance_scaling_rate
         xp_required = base_xp + (self.level**2 * scaling_factor)
         hp = (
             100
@@ -937,11 +937,11 @@ def index():
             locations[current_location][1] = "V"
             mana = 100 + race_stats[session["race"]]["mana"] * level_scaling_rate
             stamina = (
-                100 + race_stats[session["race"]]["endurance"] * endurance_scaling_rate
+                200 + race_stats[session["race"]]["endurance"] * endurance_scaling_rate
             )
             maxmana = 100 + race_stats[session["race"]]["mana"] * level_scaling_rate
             maxstamina = (
-                100 + race_stats[session["race"]]["endurance"] * endurance_scaling_rate
+                200 + race_stats[session["race"]]["endurance"] * endurance_scaling_rate
             )
             xp = 0
             xp_required = base_xp + (level**2 * scaling_factor)
@@ -1134,9 +1134,9 @@ def move_to():
 
 
 attacks = {
-    "Slash": {"damage": 40, "cost": 20},
-    "Stab": {"damage": 50, "cost": 30},
-    "Mana Blast": {"damage": 100, "cost": 50},
+    "Slash": {"damage": 40, "cost": 5},
+    "Stab": {"damage": 50, "cost": 10},
+    "Mana Blast": {"damage": 100, "cost": 20},
 }
 
 monsters = {
@@ -1173,7 +1173,7 @@ class Combat:
     def __init__(self, hp, m, mlevel, pas, cas) -> None:
         """Creates a combat state"""
         self.turn = 0  # player
-        self.enemyhp = hp * (mlevel + 3) / 2
+        self.enemyhp = hp * (mlevel * 2 + 3) / 2
         self.monster = m
         self.level = mlevel
         self.pas = pas
@@ -1239,10 +1239,10 @@ def combat():
         mlevel = random.randint(max(1, int(player.level/2)), player.level)
         pas = {}
         for a in attacks:
-            pas[a] = (attacks[a]["damage"]+10) * ((player.level + 1) / 2)
+            pas[a] = (attacks[a]["damage"]+10) * ((player.level * 3 + 1) / 2)
         cas = {}
         for a in attacks:
-            cas[a] = attacks[a]["cost"] * ((player.level + 1) / 2)
+            cas[a] = attacks[a]["cost"] * ((player.level) / 2)
         current_combat = Combat(monsters[monster]["health"], monster, mlevel, pas, cas)
         data.append(
             f"you have encountered a level {mlevel} {bosss}{monster}!<br><span class='g'>{current_combat.enemyhp}HP</span>"
@@ -1314,7 +1314,7 @@ def combat():
                     dmg = (
                         (
                             monsters[current_combat.monster]["damage"]
-                            * 4
+                            * 5
                         )
                         * (current_combat.level + 1)
                         / 2
@@ -1331,7 +1331,7 @@ def combat():
                     dmg = (
                         (
                             monsters[current_combat.monster]["damage"]
-                            * 2
+                            * 3
                         )
                         * (current_combat.level + 1)
                         / 2
