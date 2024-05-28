@@ -8,7 +8,7 @@ app.secret_key = "your_secret_key_here"
 # scaling constants
 current_location = 1
 level_scaling_rate = 2
-level = 100
+level = 1
 endurance_scaling_rate = 5
 strength_factor = 8
 base_xp = 100
